@@ -117,13 +117,13 @@ Choose a brandable name (not required to be exact-match for converters). Point D
 
 This repo assumes **apex** in docs; either works if redirects are consistent.
 
-### 3.3 Cloudflare DNS (recommended with Pages)
+### 3.3 Cloudflare DNS (recommended with Workers)
 
 1. Add site to Cloudflare → import DNS.
 2. At registrar, set nameservers to Cloudflare.
 3. In **DNS → Records**:
-   - **Apex** `@` → Cloudflare Pages (auto when you attach custom domain) or CNAME flattening
-   - **www** → CNAME to your `*.pages.dev` target (Pages wizard creates these)
+   - **Apex** `@` → Worker custom domain (auto when you attach the domain) or CNAME flattening
+   - **www** → CNAME / custom domain on the same Worker
 4. **SSL/TLS → Overview:** **Full (strict)**
 5. **SSL/TLS → Edge Certificates:** enable **Always Use HTTPS**
 6. **Rules → Redirect Rules:**  
@@ -337,7 +337,7 @@ Cloudflare/Vercel/Netlify auto-build on push to production branch.
 
 | Host | Action |
 |---|---|
-| **Cloudflare Pages** | Deployments → select previous successful deployment → **Rollback to this deployment** |
+| **Cloudflare Workers** | Deployments → select previous successful deployment → **Rollback** |
 | **Vercel** | Deployments → … → **Promote to Production** on an older build |
 | **Netlify** | Deploys → **Publish deploy** on a previous build |
 
@@ -345,7 +345,7 @@ Also revert the Git commit on `main` if the failure is in source.
 
 ### Invalidate caches
 
-Hashed assets under `/_astro/` are immutable. HTML updates propagate on new deploy. If using Cloudflare CDN cache for HTML (unusual on Pages), purge cache after deploy.
+Hashed assets under `/_astro/` are immutable. HTML updates propagate on new deploy. If using Cloudflare CDN cache for HTML, purge cache after deploy.
 
 ---
 
@@ -377,7 +377,7 @@ Copy this into your issue tracker and check off on launch day.
 
 ### Hosting
 
-- [ ] Production deploy green on Cloudflare Pages (or chosen host)
+- [ ] Production deploy green on Cloudflare Worker `file-converter-tools` (or chosen host)
 - [ ] Apex + www DNS correct; one canonical host 301 redirect
 - [ ] HTTPS valid; `curl -I` shows 200
 
