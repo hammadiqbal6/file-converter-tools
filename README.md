@@ -119,7 +119,7 @@ All owner-specific values live in **`src/config/site.ts`** (overridable via env 
 |---|---|
 | `name`, `tagline`, `organizationName` | Brand strings |
 | `PUBLIC_SITE_URL` → `url` | Canonical origin (HTTPS, no trailing slash) |
-| `contactEmail` | Contact page mailto |
+| `PUBLIC_CONTACT_EMAIL` → `contactEmail` | Public support email (Contact, legal pages, footer, schema) |
 | `PUBLIC_ADSENSE_PUBLISHER_ID` | Empty = ads disabled |
 | `adsenseAutoAds` | Auto ads flag when ID set |
 | `PUBLIC_GA4_MEASUREMENT_ID` | Analytics |
