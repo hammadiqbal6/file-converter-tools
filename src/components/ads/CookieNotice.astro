@@ -1,12 +1,35 @@
 ---
 import { siteConfig } from '../../config/site';
+
+const usesAnalytics = Boolean(siteConfig.ga4MeasurementId);
+const usesAds = Boolean(siteConfig.adsensePublisherId);
 ---
 
 <div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie notice" hidden>
   <p>
-    We use essential cookies for preferences. If you enable Google AdSense or Analytics later, advertising/measurement
-    cookies may be used. See our <a href="/privacy/">Privacy Policy</a>. EEA/UK/CH visitors need a Google-certified CMP
-    before personalized ads.
+    We store a local preference when you dismiss this notice (`lf_cookie_notice_v1`).
+    {
+      usesAnalytics && (
+        <>
+          {' '}
+          Google Analytics (GA4) loads for aggregate usage metrics when configured — see our{' '}
+          <a href="/privacy/">Privacy Policy</a>.
+        </>
+      )
+    }
+    {
+      !usesAnalytics && (
+        <>
+          {' '}
+          Analytics stays off until a measurement ID is configured. See our <a href="/privacy/">Privacy Policy</a>.
+        </>
+      )
+    }
+    {
+      usesAds
+        ? ' Advertising cookies may be used when AdSense is enabled. EEA/UK/CH visitors need a Google-certified CMP before personalized ads.'
+        : ' Personalized ads stay off until AdSense and a Google-certified CMP (EEA/UK/CH) are configured.'
+    }
   </p>
   <div class="btn-group">
     <button type="button" class="btn btn-primary" id="cookie-accept">OK</button>

@@ -35,7 +35,7 @@ curl -s "https://api.indexnow.org/indexnow?url=${URL}&key=${KEY}"
 
 ## GA4
 
-Set `PUBLIC_GA4_MEASUREMENT_ID` and add the gtag snippet via Astro integration or manual script when ready.
+Set `PUBLIC_GA4_MEASUREMENT_ID` at build time; `BaseLayout.astro` emits the standard gtag.js snippet when it is set (see [DEPLOYMENT.md](./DEPLOYMENT.md) §9).
 
 ## Keyword workflow (free tools)
 

@@ -30,8 +30,10 @@ import { siteConfig } from '../config/site';
     </p>
     <h2>Google Analytics (GA4)</h2>
     <p>
-      GA4 is inactive until `PUBLIC_GA4_MEASUREMENT_ID` is set. When enabled, Google Analytics collects usage metrics via
-      cookies or similar identifiers per Google’s documentation.
+      GA4 is inactive until `PUBLIC_GA4_MEASUREMENT_ID` is set at build time. When enabled, every page loads Google’s
+      standard gtag.js snippet for that measurement ID and Google Analytics may collect usage metrics via cookies or
+      similar identifiers per Google’s documentation. The on-site cookie notice is informational (dismiss-only); it is
+      not an accept/decline gate for analytics.
     </p>
     <h2>EEA, UK, and Switzerland</h2>
     <p>

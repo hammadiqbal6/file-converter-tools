@@ -304,9 +304,11 @@ Compare to committed budgets in `docs/proof/lighthouse/summary.md`. Field CWV wi
 ## 9. Analytics (GA4)
 
 1. Create GA4 property → **Web** data stream for `yourdomain.com`.
-2. Copy Measurement ID → `PUBLIC_GA4_MEASUREMENT_ID`.
-3. Wire gtag in `BaseLayout.astro` (placeholder hook exists via `window.LF_GA4`) or inject Google's snippet.
-4. In GA4, mark **conversions** if you add events later (tool_success, download_click).
+2. Copy Measurement ID → set `PUBLIC_GA4_MEASUREMENT_ID` on the **build** environment (Cloudflare Workers Builds, Pages, etc.), then rebuild.
+3. `BaseLayout.astro` injects the standard `gtag.js` loader + `gtag('config', …)` on every page when that env var is non-empty. Leave it unset to emit no GA code.
+4. **Consent:** the site cookie banner (`CookieNotice.astro`, `lf_cookie_notice_v1`) is informational (OK dismiss only — not accept/decline). GA4 therefore loads immediately when the measurement ID is present. For EEA/UK/CH personalized ads you still need a Google-certified CMP (see [ADSENSE.md](./ADSENSE.md)); do not treat this banner as that CMP.
+5. **CSP:** `public/_headers` does not set a site-wide `Content-Security-Policy` that would block `googletagmanager.com` / `google-analytics.com`. If you add a CSP later, allow those hosts for `script-src` / `connect-src` (and GTM’s usual companions).
+6. In GA4, mark **conversions** if you add events later (`tool_success`, `download_click`).
 
 ### Weekly monitoring checklist
 
