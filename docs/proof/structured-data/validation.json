@@ -1,0 +1,106 @@
+{
+  "generatedAt": "2026-10-19T07:01:01.205Z",
+  "failed": [],
+  "samplePasses": [
+    {
+      "urlPath": "/category/cad-3d/",
+      "ok": true,
+      "type": "CollectionPage"
+    },
+    {
+      "urlPath": "/category/data/",
+      "ok": true,
+      "type": "CollectionPage"
+    },
+    {
+      "urlPath": "/category/documents/",
+      "ok": true,
+      "type": "CollectionPage"
+    },
+    {
+      "urlPath": "/category/images/",
+      "ok": true,
+      "type": "CollectionPage"
+    },
+    {
+      "urlPath": "/guides/bank-statements-as-data/",
+      "ok": true,
+      "type": "Article"
+    },
+    {
+      "urlPath": "/guides/bank-statements-as-data/",
+      "ok": true,
+      "type": "BreadcrumbList"
+    },
+    {
+      "urlPath": "/guides/csv-json-pipelines/",
+      "ok": true,
+      "type": "Article"
+    },
+    {
+      "urlPath": "/guides/csv-json-pipelines/",
+      "ok": true,
+      "type": "BreadcrumbList"
+    },
+    {
+      "urlPath": "/guides/privacy-first-conversion/",
+      "ok": true,
+      "type": "Article"
+    },
+    {
+      "urlPath": "/guides/privacy-first-conversion/",
+      "ok": true,
+      "type": "BreadcrumbList"
+    },
+    {
+      "urlPath": "/guides/psd-without-photoshop/",
+      "ok": true,
+      "type": "Article"
+    },
+    {
+      "urlPath": "/guides/psd-without-photoshop/",
+      "ok": true,
+      "type": "BreadcrumbList"
+    },
+    {
+      "urlPath": "/guides/stl-formats-explained/",
+      "ok": true,
+      "type": "Article"
+    },
+    {
+      "urlPath": "/guides/stl-formats-explained/",
+      "ok": true,
+      "type": "BreadcrumbList"
+    },
+    {
+      "urlPath": "/guides/yaml-vs-json/",
+      "ok": true,
+      "type": "Article"
+    },
+    {
+      "urlPath": "/guides/yaml-vs-json/",
+      "ok": true,
+      "type": "BreadcrumbList"
+    },
+    {
+      "urlPath": "/",
+      "ok": true,
+      "type": "WebSite"
+    },
+    {
+      "urlPath": "/",
+      "ok": true,
+      "type": "Organization"
+    },
+    {
+      "urlPath": "/tools/csv-to-json/",
+      "ok": true,
+      "type": "BreadcrumbList"
+    },
+    {
+      "urlPath": "/tools/csv-to-json/",
+      "ok": true,
+      "type": "WebApplication"
+    }
+  ]
+}

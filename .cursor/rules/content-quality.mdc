@@ -1,0 +1,11 @@
+---
+description: Content and AdSense quality bar
+globs: src/data/**,src/pages/**,docs/**
+alwaysApply: false
+---
+
+- No lorem ipsum, TODOs, or stub tools in production pages.
+- Answer-first paragraph (40–60 words) on tool and guide pages.
+- Cite authoritative sources with links.
+- FAQs use real user phrasing; no mass near-duplicate pages.
+- See `docs/MARKET-RESEARCH.md` AdSense checklist.

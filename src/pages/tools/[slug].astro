@@ -1,0 +1,43 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import { tools, getTool } from '../../data/tools';
+import YamlJsonTool from '../../components/tools/YamlJsonTool.astro';
+import CsvJsonTool from '../../components/tools/CsvJsonTool.astro';
+import XmlJsonTool from '../../components/tools/XmlJsonTool.astro';
+import TomlJsonTool from '../../components/tools/TomlJsonTool.astro';
+import MarkdownHtmlTool from '../../components/tools/MarkdownHtmlTool.astro';
+import PsdToPngTool from '../../components/tools/PsdToPngTool.astro';
+import HeicToJpgTool from '../../components/tools/HeicToJpgTool.astro';
+import ImageFormatTool from '../../components/tools/ImageFormatTool.astro';
+import SvgToPngTool from '../../components/tools/SvgToPngTool.astro';
+import StlTool from '../../components/tools/StlTool.astro';
+import StlGcodeTool from '../../components/tools/StlGcodeTool.astro';
+import PdfBankTool from '../../components/tools/PdfBankTool.astro';
+
+export function getStaticPaths() {
+  return tools.map((t) => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const tool = getTool(slug!);
+if (!tool) throw new Error(`Unknown tool ${slug}`);
+---
+
+<ToolLayout tool={tool}>
+  <Fragment slot="tool">
+    {tool.slug === 'yaml-to-json' && <YamlJsonTool mode="yaml-to-json" />}
+    {tool.slug === 'json-to-yaml' && <YamlJsonTool mode="json-to-yaml" />}
+    {tool.slug === 'json-to-csv' && <CsvJsonTool mode="json-to-csv" />}
+    {tool.slug === 'csv-to-json' && <CsvJsonTool mode="csv-to-json" />}
+    {tool.slug === 'xml-to-json' && <XmlJsonTool />}
+    {tool.slug === 'toml-to-json' && <TomlJsonTool />}
+    {tool.slug === 'markdown-to-html' && <MarkdownHtmlTool />}
+    {tool.slug === 'psd-to-png' && <PsdToPngTool />}
+    {tool.slug === 'heic-to-jpg' && <HeicToJpgTool />}
+    {tool.slug === 'image-format-converter' && <ImageFormatTool />}
+    {tool.slug === 'svg-to-png' && <SvgToPngTool />}
+    {tool.slug === 'stl-to-obj' && <StlTool />}
+    {tool.slug === 'stl-to-gcode' && <StlGcodeTool />}
+    {tool.slug === 'pdf-bank-statement-to-csv' && <PdfBankTool />}
+  </Fragment>
+</ToolLayout>

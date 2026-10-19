@@ -1,0 +1,166 @@
+---
+import '../styles/global.css';
+import { siteConfig, absoluteUrl } from '../config/site';
+import { tools, categories } from '../data/tools';
+import JsonLd from '../components/seo/JsonLd.astro';
+import AdSlot from '../components/ads/AdSlot.astro';
+import CookieNotice from '../components/ads/CookieNotice.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  ogType?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+  preload?: { href: string; as: string; type?: string }[];
+  prefetch?: string[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogType = 'website',
+  jsonLd = [],
+  noindex = false,
+  preload = [],
+  prefetch = [],
+} = Astro.props;
+
+const canonical = absoluteUrl(canonicalPath);
+const fullTitle = title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`;
+const ogImage = absoluteUrl(siteConfig.defaultOgImage);
+const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    {!noindex && <meta name="robots" content="index,follow,max-image-preview:large" />}
+    <meta name="theme-color" content={siteConfig.themeColor} />
+    {siteConfig.gscVerification && <meta name="google-site-verification" content={siteConfig.gscVerification} />}
+    {siteConfig.bingVerification && <meta name="msvalidate.01" content={siteConfig.bingVerification} />}
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={siteConfig.locale} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {siteConfig.twitterHandle && <meta name="twitter:site" content={`@${siteConfig.twitterHandle}`} />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    {preload.map((p) => (
+      <link rel="preload" href={p.href} as={p.as} type={p.type} />
+    ))}
+    {prefetch.map((href) => (
+      <link rel="prefetch" href={href} />
+    ))}
+
+    {ld.filter(Boolean).map((obj) => (
+      <JsonLd data={obj} />
+    ))}
+
+    {
+      siteConfig.ga4MeasurementId && (
+        <script is:inline define:vars={{ id: siteConfig.ga4MeasurementId }}>
+          window.LF_GA4 = id;
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="/" aria-label={`${siteConfig.name} home`}>
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span>{siteConfig.name}</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" id="nav-toggle">
+          Menu
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/tools/">Tools</a></li>
+            <li><a href="/category/data/">Data</a></li>
+            <li><a href="/category/images/">Images</a></li>
+            <li><a href="/category/cad-3d/">CAD</a></li>
+            <li><a href="/guides/">Guides</a></li>
+            <li><a href="/about/">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner site-footer__grid">
+        <div>
+          <h2>{siteConfig.name}</h2>
+          <p>{siteConfig.tagline}</p>
+          <p><a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></p>
+        </div>
+        <div>
+          <h2>Converters</h2>
+          <ul>
+            {tools.slice(0, 6).map((t) => (
+              <li><a href={`/tools/${t.slug}/`}>{t.shortName}</a></li>
+            ))}
+            <li><a href="/tools/">All tools</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Categories</h2>
+          <ul>
+            {Object.values(categories).map((c) => (
+              <li><a href={`/category/${c.slug}/`}>{c.name}</a></li>
+            ))}
+            <li><a href="/guides/">Guides</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Trust</h2>
+          <ul>
+            <li><a href="/privacy/">Privacy</a></li>
+            <li><a href="/terms/">Terms</a></li>
+            <li><a href="/methodology/">Methodology</a></li>
+            <li><a href="/authors/">Authors</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/about/">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__inner" style="margin-top:1.5rem;font-size:0.9rem;opacity:0.85">
+        <p>© {new Date().getFullYear()} {siteConfig.organizationName}. Files never leave your device.</p>
+      </div>
+    </footer>
+
+    <CookieNotice />
+    <script>
+      const toggle = document.getElementById('nav-toggle');
+      const nav = document.getElementById('site-nav');
+      toggle?.addEventListener('click', () => {
+        const open = nav?.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    </script>
+  </body>
+</html>

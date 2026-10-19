@@ -1,0 +1,12 @@
+---
+description: SEO requirements for every indexable page
+globs: src/pages/**/*.astro,src/layouts/**/*.astro,src/data/tools.ts
+alwaysApply: false
+---
+
+- One H1, unique title (<60 chars) and meta description (<155).
+- Self-referencing canonical via `BaseLayout` / `ToolLayout`.
+- Tool pages: converter above the fold; 600+ words of real content in `tools.ts`.
+- JSON-LD must match visible content; no fake ratings.
+- Follow `docs/KEYWORD-MAP.md` — no duplicate primary intent.
+- Governing playbook: `docs/SEO-PLAYBOOK.md`.

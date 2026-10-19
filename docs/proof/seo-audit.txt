@@ -1,0 +1,44 @@
+2026-10-19T07:01:01.205Z
+
+
+> localfile-converters@1.0.0 audit
+> node scripts/audit/run-all.mjs
+
+
+=== seo-audit.mjs ===
+SEO audit: { pages: 39, errors: 0, warnings: 20 }
+SEO audit passed.
+
+=== adsense-audit.mjs ===
+AdSense readiness: { errors: 0 }
+AdSense readiness passed.
+
+=== bundle-audit.mjs ===
+Bundle audit: { maxGzip: 51200, failures: 0 }
+Bundle audit passed.
+
+=== ../link-check.mjs ===
+Link check passed (40 HTML files).
+
+All audits passed.
+
+WARN /guides/bank-statements-as-data/: title length 71 (>60)
+WARN /guides/csv-json-pipelines/: title length 77 (>60)
+WARN /guides/privacy-first-conversion/: title length 73 (>60)
+WARN /guides/psd-without-photoshop/: title length 63 (>60)
+WARN /guides/stl-formats-explained/: title length 73 (>60)
+WARN /guides/yaml-vs-json/: title length 67 (>60)
+WARN /: meta description 165 (>155)
+WARN /tools/csv-to-json/: title length 64 (>60)
+WARN /tools/heic-to-jpg/: title length 64 (>60)
+WARN /tools/json-to-csv/: title length 69 (>60)
+WARN /tools/json-to-yaml/: title length 64 (>60)
+WARN /tools/markdown-to-html/: title length 61 (>60)
+WARN /tools/pdf-bank-statement-to-csv/: title length 68 (>60)
+WARN /tools/psd-to-png/: title length 64 (>60)
+WARN /tools/stl-to-gcode/: title length 66 (>60)
+WARN /tools/stl-to-obj/: title length 69 (>60)
+WARN /tools/svg-to-png/: title length 67 (>60)
+WARN /tools/toml-to-json/: title length 63 (>60)
+WARN /tools/xml-to-json/: title length 64 (>60)
+WARN /tools/yaml-to-json/: title length 64 (>60)

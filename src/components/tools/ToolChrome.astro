@@ -1,0 +1,116 @@
+---
+interface Props {
+  accept: string;
+  inputLabel?: string;
+  showTextarea?: boolean;
+  textareaPlaceholder?: string;
+  extraControls?: boolean;
+}
+const {
+  accept,
+  inputLabel = 'Choose a file',
+  showTextarea = false,
+  textareaPlaceholder = '',
+} = Astro.props;
+---
+
+<div class="tool-panel" data-tool-root>
+  <p class="privacy-note"><strong>Your file never leaves your device.</strong> Libraries load on demand after you interact.</p>
+  <div class="dropzone" data-dropzone>
+    <p><strong>{inputLabel}</strong></p>
+    <p>Drag & drop or tap to browse</p>
+    <input type="file" accept={accept} data-file-input aria-label={inputLabel} />
+    <button type="button" class="btn btn-secondary" data-browse>Browse files</button>
+    <p class="status" data-file-label></p>
+  </div>
+
+  {showTextarea && (
+    <div class="field" style="margin-top:1rem">
+      <label for="tool-input-text">Or paste input</label>
+      <textarea id="tool-input-text" data-text-input placeholder={textareaPlaceholder} spellcheck="false"></textarea>
+    </div>
+  )}
+
+  <div class="field" data-controls>
+    <slot name="controls" />
+  </div>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary" data-convert>Convert</button>
+    <button type="button" class="btn btn-secondary" data-download disabled>Download</button>
+    <button type="button" class="btn btn-secondary" data-copy disabled>Copy</button>
+    <button type="button" class="btn btn-secondary" data-share>Share link</button>
+  </div>
+
+  <p class="status" data-status role="status" aria-live="polite"></p>
+
+  <div class="field">
+    <label for="tool-output">Output</label>
+    <textarea id="tool-output" data-output readonly spellcheck="false" placeholder="Result appears here"></textarea>
+  </div>
+
+  <div data-preview></div>
+</div>
+
+<script>
+  function wireChrome(root) {
+    const drop = root.querySelector('[data-dropzone]');
+    const input = root.querySelector('[data-file-input]');
+    const browse = root.querySelector('[data-browse]');
+    const label = root.querySelector('[data-file-label]');
+    browse?.addEventListener('click', () => input?.click());
+    drop?.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      drop.classList.add('is-active');
+    });
+    drop?.addEventListener('dragleave', () => drop.classList.remove('is-active'));
+    drop?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      drop.classList.remove('is-active');
+      const f = e.dataTransfer?.files?.[0];
+      if (f && input) {
+        const dt = new DataTransfer();
+        dt.items.add(f);
+        input.files = dt.files;
+        if (label) label.textContent = f.name;
+        root.dispatchEvent(new CustomEvent('tool:file', { detail: { file: f } }));
+      }
+    });
+    input?.addEventListener('change', () => {
+      const f = input.files?.[0];
+      if (label) label.textContent = f ? f.name : '';
+      if (f) root.dispatchEvent(new CustomEvent('tool:file', { detail: { file: f } }));
+    });
+
+    // Shareable query state: ?sample=1 reserved; text tools may use ?in=
+    const params = new URLSearchParams(location.search);
+    const textIn = root.querySelector('[data-text-input]');
+    if (params.get('in') && textIn) {
+      try {
+        textIn.value = decodeURIComponent(params.get('in'));
+      } catch {}
+    }
+    root.querySelector('[data-share]')?.addEventListener('click', async () => {
+      const status = root.querySelector('[data-status]');
+      const url = new URL(location.href);
+      url.hash = '';
+      if (textIn?.value && textIn.value.length < 1500) {
+        url.searchParams.set('in', textIn.value);
+      } else {
+        url.searchParams.delete('in');
+      }
+      history.replaceState({}, '', url.pathname + (url.searchParams.toString() ? `?${url.searchParams}` : ''));
+      try {
+        await navigator.clipboard.writeText(location.href);
+        if (status) {
+          status.dataset.tone = 'success';
+          status.textContent = 'Share link copied (canonical page; state in query when small).';
+        }
+      } catch {
+        if (status) status.textContent = location.href;
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-tool-root]').forEach(wireChrome);
+</script>

@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig, absoluteUrl } from '../config/site';
+import { tools, categories, toolPath } from '../data/tools';
+import { guides } from '../data/guides';
+
+const title = `${siteConfig.name} – Private In-Browser File Converters`;
+const description =
+  'Free niche file converters that run 100% in your browser: YAML/JSON, CSV, PSD to PNG, HEIC to JPG, STL, PDF statements, and more. Your files never leave your device.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteConfig.name,
+    url: absoluteUrl('/'),
+    description: siteConfig.tagline,
+    publisher: { '@type': 'Organization', name: siteConfig.organizationName, url: absoluteUrl('/') },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: siteConfig.organizationName,
+    url: absoluteUrl('/'),
+    email: siteConfig.contactEmail,
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/" jsonLd={jsonLd} prefetch={['/tools/', '/guides/']}>
+  <div class="container">
+    <section class="hero">
+      <p class="eyebrow">{siteConfig.name}</p>
+      <h1>Private file converters that never upload your files</h1>
+      <p class="lead">
+        Profession-specific format pairs — YAML, JSON, CSV, PSD, HEIC, STL, and bank-statement PDFs — converted entirely
+        in your browser. Free, fast, and built for privacy.
+      </p>
+      <div class="btn-group">
+        <a class="btn btn-primary" href="/tools/">Browse converters</a>
+        <a class="btn btn-secondary" href="/guides/privacy-first-conversion/">Why in-browser?</a>
+      </div>
+    </section>
+
+    <section aria-label="Popular tools">
+      <h2>Popular converters</h2>
+      <div class="card-grid">
+        {tools.slice(0, 9).map((t) => (
+          <a class="tool-card" href={toolPath(t.slug)}>
+            <h3>{t.name}</h3>
+            <p>{t.answerFirst.slice(0, 120)}…</p>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:1rem"><a href="/tools/">View all {tools.length} tools →</a></p>
+    </section>
+
+    <section class="related" aria-label="Categories">
+      <h2>Browse by category</h2>
+      <div class="card-grid">
+        {Object.values(categories).map((c) => (
+          <a class="tool-card" href={`/category/${c.slug}/`}>
+            <h3>{c.name}</h3>
+            <p>{c.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="related content-prose">
+      <h2>How it works</h2>
+      <p>
+        Each tool loads a minimal page shell first. Heavy libraries (WASM decoders, pdf.js, Three.js, ag-psd) download
+        only after you choose a file or click Convert. Processing happens on-device — check the Network tab to verify
+        your document is never posted to a server.
+      </p>
+      <div class="takeaways">
+        <h3>Key takeaways</h3>
+        <ul>
+          <li>No account and no upload queue.</li>
+          <li>Answer-first explainers on every tool page for search and AI citation.</li>
+          <li>AdSense-ready layout with reserved slots — ads stay disabled until you configure a publisher ID.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="related">
+      <h2>Guides</h2>
+      <div class="card-grid">
+        {guides.slice(0, 3).map((g) => (
+          <a class="tool-card" href={`/guides/${g.slug}/`}>
+            <h3>{g.title}</h3>
+            <p>{g.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

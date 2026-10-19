@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+---
+<BaseLayout title="Authors & Reviewers" description={`Author and reviewer bios for ${siteConfig.name}.`} canonicalPath="/authors/">
+  <div class="container content-prose">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Authors' }]} />
+    <h1>Authors & reviewers</h1>
+    <div class="author-box">
+      <p><strong>{siteConfig.defaultAuthor.name}</strong></p>
+      <p>{siteConfig.defaultAuthor.role}</p>
+      <p>
+        Builds and documents in-browser converters, verifies behavior against fixtures, and cites format specifications
+        (YAML, JSON, TOML, PDF, STL, and image formats). Replace this placeholder with a real bio before launch.
+      </p>
+    </div>
+    <p>Contact: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></p>
+  </div>
+</BaseLayout>

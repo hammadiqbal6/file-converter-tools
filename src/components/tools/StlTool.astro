@@ -1,0 +1,101 @@
+---
+import ToolChrome from './ToolChrome.astro';
+---
+<ToolChrome accept=".stl,model/stl" inputLabel="STL mesh">
+  <Fragment slot="controls">
+    <label for="out">Export</label>
+    <select id="out" data-export>
+      <option value="obj">OBJ</option>
+      <option value="ascii">ASCII STL</option>
+      <option value="binary">Binary STL</option>
+    </select>
+  </Fragment>
+</ToolChrome>
+<script>
+  import { downloadBlob, downloadText } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  let mesh = null;
+  let lastPayload = null;
+  let viewerBooted = false;
+
+  async function ensureViewer(triangles) {
+    const preview = root.querySelector('[data-preview]');
+    preview.innerHTML = `<canvas class="preview-frame" data-canvas width="640" height="360" aria-label="STL preview"></canvas>`;
+    const canvas = preview.querySelector('[data-canvas]');
+    const THREE = await import('three');
+    const { OrbitControls } = await import('three/examples/jsm/controls/OrbitControls.js');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(canvas.clientWidth || 640, 360, false);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x111111);
+    const camera = new THREE.PerspectiveCamera(45, (canvas.clientWidth || 640) / 360, 0.1, 5000);
+    camera.position.set(80, 60, 80);
+    const light = new THREE.DirectionalLight(0xffffff, 1.1);
+    light.position.set(1, 1, 1);
+    scene.add(light, new THREE.AmbientLight(0xffffff, 0.35));
+    const geo = new THREE.BufferGeometry();
+    const positions = new Float32Array(triangles.length * 9);
+    let i = 0;
+    for (const t of triangles) {
+      for (const v of t.vertices) {
+        positions[i++] = v[0];
+        positions[i++] = v[1];
+        positions[i++] = v[2];
+      }
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geo.computeVertexNormals();
+    geo.center();
+    scene.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0x4aa3a5, metalness: 0.1, roughness: 0.4 })));
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    const animate = () => {
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    };
+    animate();
+    viewerBooted = true;
+  }
+
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    const file = root.querySelector('[data-file-input]')?.files?.[0];
+    if (!file) {
+      status.dataset.tone = 'error';
+      status.textContent = 'Choose an STL file.';
+      return;
+    }
+    status.textContent = 'Parsing STL…';
+    try {
+      const lib = await import('../../lib/converters/stl');
+      const buf = await file.arrayBuffer();
+      mesh = lib.parseStl(buf);
+      status.textContent = `Loaded ${mesh.triangles.length} triangles. Building export + viewer…`;
+      const kind = root.querySelector('[data-export]')?.value || 'obj';
+      if (kind === 'obj') {
+        lastPayload = { type: 'text', name: 'converted.obj', mime: 'text/plain', data: lib.stlToObj(mesh) };
+        root.querySelector('[data-output]').value = lastPayload.data.slice(0, 4000);
+      } else if (kind === 'ascii') {
+        lastPayload = { type: 'text', name: 'converted.stl', mime: 'model/stl', data: lib.stlToAscii(mesh) };
+        root.querySelector('[data-output]').value = lastPayload.data.slice(0, 4000);
+      } else {
+        const bin = lib.stlToBinary(mesh);
+        lastPayload = { type: 'bin', name: 'converted.stl', data: bin };
+        root.querySelector('[data-output]').value = `Binary STL ${bin.byteLength} bytes`;
+      }
+      root.querySelector('[data-download]').disabled = false;
+      await ensureViewer(mesh.triangles);
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally. Drag to orbit the preview.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => {
+    if (!lastPayload) return;
+    if (lastPayload.type === 'text') downloadText(lastPayload.data, lastPayload.name, lastPayload.mime);
+    else downloadBlob(new Blob([lastPayload.data]), lastPayload.name);
+  });
+</script>

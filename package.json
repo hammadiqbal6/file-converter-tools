@@ -1,0 +1,50 @@
+{
+  "name": "localfile-converters",
+  "type": "module",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "node scripts/run-astro.mjs dev",
+    "build": "node scripts/run-astro.mjs build && node scripts/postbuild.mjs",
+    "preview": "node scripts/run-astro.mjs preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit": "node scripts/audit/run-all.mjs",
+    "audit:seo": "node scripts/audit/seo-audit.mjs",
+    "audit:adsense": "node scripts/audit/adsense-audit.mjs",
+    "audit:bundles": "node scripts/audit/bundle-audit.mjs",
+    "link-check": "node scripts/link-check.mjs",
+    "lighthouse": "npm run build && npx lhci autorun",
+    "screenshots": "node scripts/capture-screenshots.mjs",
+    "proof": "node scripts/proof/generate-proof.mjs",
+    "proof:verify": "node scripts/proof/verify-proof.mjs",
+    "ci": "npm run proof:verify"
+  },
+  "dependencies": {
+    "ag-psd": "^31.0.3",
+    "astro": "^7.4.0",
+    "fast-xml-parser": "^5.11.2",
+    "heic2any": "^0.0.4",
+    "js-yaml": "^5.5.0",
+    "marked": "^18.1.1",
+    "papaparse": "^5.7.0",
+    "pdfjs-dist": "^6.4.299",
+    "smol-toml": "^1.9.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@lhci/cli": "^0.15.1",
+    "@types/js-yaml": "^4.0.9",
+    "@types/papaparse": "^5.5.2",
+    "@types/three": "^0.186.0",
+    "cheerio": "^1.2.0",
+    "linkedom": "^0.18.13",
+    "playwright": "^1.64.1",
+    "serve": "^14.2.6",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

@@ -1,0 +1,42 @@
+---
+import ToolChrome from './ToolChrome.astro';
+interface Props { mode: 'csv-to-json' | 'json-to-csv' }
+const { mode } = Astro.props;
+const accept = mode === 'csv-to-json' ? '.csv,text/csv,text/plain' : '.json,application/json';
+---
+<ToolChrome accept={accept} showTextarea={true} inputLabel={mode === 'csv-to-json' ? 'CSV file' : 'JSON file'} textareaPlaceholder={mode === 'csv-to-json' ? 'name,score' : '[{"name":"Ada"}]'}>
+  <Fragment slot="controls">
+    <label for="delim">Delimiter (blank = auto for CSV)</label>
+    <input id="delim" data-delim inputmode="text" maxlength="1" placeholder="," />
+  </Fragment>
+</ToolChrome>
+<script>
+  import { downloadText } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  const mode = location.pathname.includes('json-to-csv') ? 'json-to-csv' : 'csv-to-json';
+  let lastOut = '';
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    status.textContent = 'Loading converter…';
+    try {
+      const file = root.querySelector('[data-file-input]')?.files?.[0];
+      const input = (file ? await file.text() : root.querySelector('[data-text-input]')?.value || '').trim();
+      if (!input) throw new Error('Provide input.');
+      const delim = root.querySelector('[data-delim]')?.value || undefined;
+      const lib = await import('../../lib/converters/csv-json');
+      lastOut = mode === 'csv-to-json' ? lib.csvToJson(input, { delimiter: delim }) : lib.jsonToCsv(input, { delimiter: delim || ',' });
+      root.querySelector('[data-output]').value = lastOut;
+      root.querySelector('[data-download]').disabled = false;
+      root.querySelector('[data-copy]').disabled = false;
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => {
+    downloadText(lastOut, mode === 'csv-to-json' ? 'converted.json' : 'converted.csv', mode === 'csv-to-json' ? 'application/json' : 'text/csv');
+  });
+  root.querySelector('[data-copy]')?.addEventListener('click', () => navigator.clipboard.writeText(lastOut));
+</script>

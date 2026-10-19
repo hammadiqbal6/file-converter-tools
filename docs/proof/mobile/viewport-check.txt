@@ -1,0 +1,13 @@
+Generated: 2026-10-19T07:01:01.205Z
+Viewport / horizontal scroll checks:
+
+PASS home @360px — scrollWidth 360 vs client 360
+PASS hub-data @360px — scrollWidth 360 vs client 360
+PASS tool-yaml-json @360px — scrollWidth 360 vs client 360
+PASS tool-psd-to-png @360px — scrollWidth 360 vs client 360
+PASS tool-stl-to-obj @360px — scrollWidth 360 vs client 360
+PASS home @768px — scrollWidth 768 vs client 768
+PASS hub-data @768px — scrollWidth 768 vs client 768
+PASS tool-yaml-json @768px — scrollWidth 768 vs client 768
+PASS tool-psd-to-png @768px — scrollWidth 768 vs client 768
+PASS tool-stl-to-obj @768px — scrollWidth 768 vs client 768

@@ -1,0 +1,39 @@
+---
+import { tools, getTool } from '../../data/tools';
+import { siteConfig } from '../../config/site';
+import YamlJsonTool from '../../components/tools/YamlJsonTool.astro';
+import CsvJsonTool from '../../components/tools/CsvJsonTool.astro';
+import MarkdownHtmlTool from '../../components/tools/MarkdownHtmlTool.astro';
+import ImageFormatTool from '../../components/tools/ImageFormatTool.astro';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return tools.filter((t) => t.embeddable).map((t) => ({ params: { slug: t.slug } }));
+}
+
+const tool = getTool(Astro.params.slug!);
+if (!tool || !tool.embeddable) throw new Error('Embed not available');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{tool.name} embed | {siteConfig.name}</title>
+  </head>
+  <body style="background:#f4f7f6;padding:1rem">
+    <p style="font:600 0.95rem system-ui;margin:0 0 0.75rem">
+      <a href={`/tools/${tool.slug}/`} target="_blank" rel="noopener">{tool.name}</a> · files stay on-device
+    </p>
+    {tool.slug === 'yaml-to-json' && <YamlJsonTool mode="yaml-to-json" />}
+    {tool.slug === 'json-to-yaml' && <YamlJsonTool mode="json-to-yaml" />}
+    {tool.slug === 'json-to-csv' && <CsvJsonTool mode="json-to-csv" />}
+    {tool.slug === 'csv-to-json' && <CsvJsonTool mode="csv-to-json" />}
+    {tool.slug === 'markdown-to-html' && <MarkdownHtmlTool />}
+    {tool.slug === 'image-format-converter' && <ImageFormatTool />}
+    <p style="font:0.85rem system-ui;margin-top:1rem">
+      Embed by <a href="/" target="_blank" rel="noopener">{siteConfig.name}</a>
+    </p>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+2026-10-19T07:01:01.205Z
+
+
+> localfile-converters@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /workspace
+
+
+ Test Files  5 passed (5)
+      Tests  11 passed (11)
+   Start at  07:01:05
+   Duration  239ms (import 52%, transform 21%, tests 17%, worker 9%)
+
+

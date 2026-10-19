@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { tools, toolPath } from '../data/tools';
+---
+<BaseLayout title="Page not found" description="The page you requested was not found." canonicalPath="/404/" noindex={true}>
+  <div class="container content-prose">
+    <h1>Page not found</h1>
+    <p>That URL is not in our sitemap. Try a converter below or go <a href="/">home</a>.</p>
+    <div class="card-grid">
+      {tools.slice(0, 6).map((t) => (
+        <a class="tool-card" href={toolPath(t.slug)}>
+          <h2>{t.shortName}</h2>
+          <p>{t.name}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

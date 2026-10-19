@@ -1,0 +1,29 @@
+---
+import { siteConfig } from '../../config/site';
+---
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie notice" hidden>
+  <p>
+    We use essential cookies for preferences. If you enable Google AdSense or Analytics later, advertising/measurement
+    cookies may be used. See our <a href="/privacy/">Privacy Policy</a>. EEA/UK/CH visitors need a Google-certified CMP
+    before personalized ads.
+  </p>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary" id="cookie-accept">OK</button>
+    <a class="btn btn-secondary" href="/privacy/">Privacy</a>
+  </div>
+</div>
+
+<script>
+  const key = 'lf_cookie_notice_v1';
+  const el = document.getElementById('cookie-banner');
+  if (el && !localStorage.getItem(key)) {
+    el.hidden = false;
+    el.classList.add('is-visible');
+  }
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    localStorage.setItem(key, '1');
+    el?.classList.remove('is-visible');
+    if (el) el.hidden = true;
+  });
+</script>

@@ -1,0 +1,40 @@
+# Allow search engines and AI-search / answer crawlers
+User-agent: *
+Allow: /
+Disallow: /embed/
+Disallow: /*?utm_
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# AI model training crawlers — ALLOW by default (owner choice).
+# To opt out of training while keeping search citations, change these to Disallow: /
+# GPTBot / Google-Extended / ClaudeBot / CCBot do not control Google Search ranking.
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://example.com/sitemap-index.xml

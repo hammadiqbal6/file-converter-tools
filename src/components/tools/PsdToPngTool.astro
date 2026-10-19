@@ -1,0 +1,42 @@
+---
+import ToolChrome from './ToolChrome.astro';
+---
+<ToolChrome accept=".psd,image/vnd.adobe.photoshop" inputLabel="PSD file" />
+<script>
+  import { downloadBlob } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  let lastBlob = null;
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    const file = root.querySelector('[data-file-input]')?.files?.[0];
+    if (!file) {
+      status.dataset.tone = 'error';
+      status.textContent = 'Choose a .psd file.';
+      return;
+    }
+    status.textContent = 'Loading ag-psd (on demand)…';
+    try {
+      const [{ readPsd }, { psdCanvasToPng }] = await Promise.all([
+        import('ag-psd'),
+        import('../../lib/converters/images'),
+      ]);
+      const buf = await file.arrayBuffer();
+      const psd = readPsd(buf, { useImageData: true });
+      if (!psd.canvas) throw new Error('PSD has no composite canvas. Try a flatter export from Photoshop.');
+      lastBlob = await psdCanvasToPng(psd.width, psd.height, psd.canvas);
+      const url = URL.createObjectURL(lastBlob);
+      root.querySelector('[data-preview]').innerHTML = `<img alt="PSD preview as PNG" width="${psd.width}" height="${psd.height}" src="${url}" style="max-height:320px;margin-top:1rem" />`;
+      root.querySelector('[data-output]').value = `PNG ${psd.width}×${psd.height}, ${(lastBlob.size / 1024).toFixed(1)} KB`;
+      root.querySelector('[data-download]').disabled = false;
+      root.querySelector('[data-copy]').disabled = true;
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally with ag-psd.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => {
+    if (lastBlob) downloadBlob(lastBlob, 'converted.png');
+  });
+</script>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+---
+<BaseLayout title="Terms of Use" description={`Terms of use for ${siteConfig.name} free browser converters.`} canonicalPath="/terms/">
+  <div class="container content-prose">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Terms' }]} />
+    <h1>Terms of Use</h1>
+    <p class="meta-row">Last updated: <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></p>
+    <p>Tools are provided free of charge, as-is, without warranty. You are responsible for verifying outputs before production, printing, or accounting use.</p>
+    <h2>Acceptable use</h2>
+    <p>Do not abuse the site infrastructure, attempt to disrupt service, or use embeds without the required attribution credit link.</p>
+    <h2>Educational STL → G-code</h2>
+    <p>Basic G-code export is educational. Simulate and adapt machine profiles before any print.</p>
+    <h2>Contact</h2>
+    <p><a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></p>
+  </div>
+</BaseLayout>

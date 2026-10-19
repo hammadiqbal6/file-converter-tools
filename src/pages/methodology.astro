@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+---
+<BaseLayout title="Methodology & Editorial Policy" description={`How ${siteConfig.name} builds converters, cites sources, and documents limits (E-E-A-T).`} canonicalPath="/methodology/">
+  <div class="container content-prose">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Methodology' }]} />
+    <h1>Methodology & editorial policy</h1>
+    <div class="answer-box">
+      <p>
+        We ship working client-side converters, document algorithms and limits in plain language, cite format authorities,
+        and never invent star ratings. Pages show published and last-updated dates.
+      </p>
+    </div>
+    <h2>How tools are built</h2>
+    <ul>
+      <li>Pure conversion functions live under <code>src/lib/converters/</code> with unit tests and fixtures.</li>
+      <li>Heavy dependencies load dynamically after user interaction.</li>
+      <li>Known hard problems (full DWG, production MIDI transcription, full FDM slicing) are skipped or scoped with explicit limits.</li>
+    </ul>
+    <h2>Content standards</h2>
+    <p>Tool pages include answer-first summaries, methods, worked examples, mistakes, FAQs, and sources. Guides expand topical clusters. Governing SEO guidance: repository <code>docs/SEO-PLAYBOOK.md</code>.</p>
+    <h2>Corrections</h2>
+    <p>Email <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> with page URL and suggested fix.</p>
+  </div>
+</BaseLayout>

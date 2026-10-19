@@ -1,0 +1,10 @@
+---
+description: Accessibility for tool UI
+globs: src/components/**,src/styles/**
+alwaysApply: false
+---
+
+- Tap targets >= 48px; body text >= 16px.
+- Labels on all inputs; `aria-live` on status messages.
+- Skip link, focus-visible styles, semantic landmarks (`main`, `nav`).
+- Test at 360px / 390px widths; no horizontal scroll.

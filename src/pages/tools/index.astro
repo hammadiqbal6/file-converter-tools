@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import { tools, categories, toolPath } from '../../data/tools';
+import { absoluteUrl, siteConfig } from '../../config/site';
+
+const title = 'All File Converters';
+const description = `Browse all ${tools.length} private in-browser converters on ${siteConfig.name}: data, documents, images, and CAD.`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/tools/"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    url: absoluteUrl('/tools/'),
+    isPartOf: { '@type': 'WebSite', name: siteConfig.name, url: absoluteUrl('/') },
+  }}
+>
+  <div class="container">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Tools' }]} />
+    <header class="hero" style="padding-block:0 1rem">
+      <h1>All converters</h1>
+      <p class="lead">Every tool runs client-side. Your file never leaves your device.</p>
+    </header>
+    {Object.entries(categories).map(([key, cat]) => (
+      <section class="related">
+        <h2><a href={`/category/${cat.slug}/`}>{cat.name}</a></h2>
+        <div class="card-grid">
+          {tools.filter((t) => t.category === key).map((t) => (
+            <a class="tool-card" href={toolPath(t.slug)}>
+              <h3>{t.name}</h3>
+              <p>{t.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

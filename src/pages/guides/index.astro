@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import { guides } from '../../data/guides';
+import { siteConfig } from '../../config/site';
+---
+<BaseLayout title="Guides" description={`Guides on private conversion, YAML vs JSON, PSD workflows, STL formats, and more from ${siteConfig.name}.`} canonicalPath="/guides/">
+  <div class="container">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Guides' }]} />
+    <header class="hero" style="padding-block:0 1rem">
+      <h1>Guides</h1>
+      <p class="lead">Practical explainers that support our converters — written for humans and AI search citation.</p>
+    </header>
+    <div class="card-grid">
+      {guides.map((g) => (
+        <a class="tool-card" href={`/guides/${g.slug}/`}>
+          <h2>{g.title}</h2>
+          <p>{g.description}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

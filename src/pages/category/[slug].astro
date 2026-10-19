@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import { categories, tools, toolPath, type ToolCategory } from '../../data/tools';
+import { guides } from '../../data/guides';
+import { absoluteUrl, siteConfig } from '../../config/site';
+
+export function getStaticPaths() {
+  return Object.values(categories).map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const entry = Object.entries(categories).find(([, c]) => c.slug === slug);
+if (!entry) throw new Error('Unknown category');
+const [key, cat] = entry;
+const list = tools.filter((t) => t.category === (key as ToolCategory));
+const relatedGuides = guides.filter((g) => g.relatedTools.some((rt) => list.some((t) => t.slug === rt)));
+---
+
+<BaseLayout
+  title={`${cat.name} | ${siteConfig.name}`}
+  description={cat.description}
+  canonicalPath={`/category/${cat.slug}/`}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: cat.name,
+    description: cat.description,
+    url: absoluteUrl(`/category/${cat.slug}/`),
+  }}
+>
+  <div class="container">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Tools', href: '/tools/' }, { name: cat.name }]} />
+    <header class="hero" style="padding-block:0 1rem">
+      <h1>{cat.name}</h1>
+      <p class="lead">{cat.description}</p>
+      <div class="answer-box"><p><strong>Hub:</strong> {cat.primaryKeyword} tools that run privately in your browser, interlinked with guides for topical depth.</p></div>
+    </header>
+    <div class="card-grid">
+      {list.map((t) => (
+        <a class="tool-card" href={toolPath(t.slug)}>
+          <h2>{t.name}</h2>
+          <p>{t.description}</p>
+        </a>
+      ))}
+    </div>
+    {relatedGuides.length > 0 && (
+      <section class="related">
+        <h2>Guides in this cluster</h2>
+        <div class="card-grid">
+          {relatedGuides.map((g) => (
+            <a class="tool-card" href={`/guides/${g.slug}/`}>
+              <h3>{g.title}</h3>
+              <p>{g.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

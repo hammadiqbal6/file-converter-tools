@@ -1,0 +1,78 @@
+---
+import ToolChrome from './ToolChrome.astro';
+interface Props { mode: 'yaml-to-json' | 'json-to-yaml' }
+const { mode } = Astro.props;
+const accept = mode === 'yaml-to-json' ? '.yaml,.yml,text/yaml,text/yml' : '.json,application/json';
+---
+
+<ToolChrome accept={accept} showTextarea={true} textareaPlaceholder={mode === 'yaml-to-json' ? 'paste: key: value' : '{"key":"value"}'} inputLabel={mode === 'yaml-to-json' ? 'YAML file' : 'JSON file'}>
+  <Fragment slot="controls">
+    {mode === 'yaml-to-json' && (
+      <label><input type="checkbox" data-pretty checked /> Pretty-print JSON</label>
+    )}
+  </Fragment>
+</ToolChrome>
+
+<script>
+  import { downloadText } from '../../lib/download';
+
+  const root = document.querySelector('[data-tool-root]');
+  if (!root) throw new Error('tool root missing');
+
+  const mode = location.pathname.includes('json-to-yaml') ? 'json-to-yaml' : 'yaml-to-json';
+  let lastOut = '';
+  let busy = false;
+
+  async function ensureLib() {
+    return import('../../lib/converters/yaml-json');
+  }
+
+  async function readInput() {
+    const file = root.querySelector('[data-file-input]')?.files?.[0];
+    if (file) return file.text();
+    return root.querySelector('[data-text-input]')?.value || '';
+  }
+
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    if (busy) return;
+    busy = true;
+    const status = root.querySelector('[data-status]');
+    status.dataset.tone = '';
+    status.textContent = 'Loading converter…';
+    try {
+      const input = (await readInput()).trim();
+      if (!input) throw new Error('Provide YAML/JSON text or a file.');
+      const lib = await ensureLib();
+      if (mode === 'yaml-to-json') {
+        const pretty = root.querySelector('[data-pretty]')?.checked !== false;
+        lastOut = lib.yamlToJson(input, pretty);
+        root.querySelector('[data-output]').value = lastOut;
+        downloadEnabled(true, 'application/json', 'converted.json');
+      } else {
+        lastOut = lib.jsonToYaml(input);
+        root.querySelector('[data-output]').value = lastOut;
+        downloadEnabled(true, 'text/yaml', 'converted.yaml');
+      }
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e instanceof Error ? e.message : String(e);
+    } finally {
+      busy = false;
+    }
+  });
+
+  let mime = 'text/plain';
+  let filename = 'download.txt';
+  function downloadEnabled(on, m, f) {
+    mime = m; filename = f;
+    root.querySelector('[data-download]').disabled = !on;
+    root.querySelector('[data-copy]').disabled = !on;
+  }
+  root.querySelector('[data-download]')?.addEventListener('click', () => downloadText(lastOut, filename, mime));
+  root.querySelector('[data-copy]')?.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(lastOut);
+    root.querySelector('[data-status]').textContent = 'Copied.';
+  });
+</script>
