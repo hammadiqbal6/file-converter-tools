@@ -158,19 +158,21 @@ Local check: `npm run build && npx wrangler deploy --dry-run`.
 
 ### 4.2 Environment variables (Production)
 
-Add as **build-time** env vars (Workers Builds / CI). They bake into HTML and into `robots.txt` / `llms.txt` via `scripts/postbuild.mjs`:
+Full list with comments: **[`.env.example`](../.env.example)** (copy to `.env` locally; do not commit secrets).
 
-```
-NODE_VERSION=22.22.0
-PUBLIC_SITE_URL=https://yourdomain.com
-PUBLIC_GSC_VERIFICATION=...
-PUBLIC_BING_VERIFICATION=...
-PUBLIC_GA4_MEASUREMENT_ID=...
-PUBLIC_ADSENSE_PUBLISHER_ID=...
-PUBLIC_INDEXNOW_KEY=...
-```
+Add as **build-time** env vars in **Cloudflare Workers Builds → Settings → Variables** (and CI). `PUBLIC_*` values bake into HTML; `PUBLIC_SITE_URL` also patches `robots.txt` / `llms.txt` via `scripts/postbuild.mjs`.
 
-If `PUBLIC_SITE_URL` is unset, postbuild logs `patched robots/llms for https://example.com` — set the real origin (HTTPS, no trailing slash) before production deploys. Redeploy after changing env vars.
+| Variable | Cloudflare Builds | Notes |
+|---|---|---|
+| `PUBLIC_SITE_URL` | **Required** (production) | HTTPS origin, no trailing slash. Unset → `https://example.com` placeholder |
+| `NODE_VERSION` | Recommended | `22.22.0` |
+| `PUBLIC_GSC_VERIFICATION` | Optional until GSC | Meta verification content |
+| `PUBLIC_BING_VERIFICATION` | Optional until Bing | Meta verification content |
+| `PUBLIC_GA4_MEASUREMENT_ID` | Optional | Empty = analytics off |
+| `PUBLIC_ADSENSE_PUBLISHER_ID` | Optional | Empty = ads off |
+| `PUBLIC_INDEXNOW_KEY` | Optional until IndexNow | Keep `public/indexnow/<key>.txt` in sync |
+
+Redeploy after changing env vars.
 
 ### 4.3 Headers & caching
 
