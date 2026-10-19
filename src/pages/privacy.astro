@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+---
+<BaseLayout title="Privacy Policy" description={`Privacy Policy for ${siteConfig.name}: client-side conversion, cookies, AdSense, and GA4 disclosures.`} canonicalPath="/privacy/">
+  <div class="container content-prose">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Privacy' }]} />
+    <h1>Privacy Policy</h1>
+    <p class="meta-row">Last updated: <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></p>
+    <div class="answer-box">
+      <p>
+        File conversion on {siteConfig.name} runs in your browser. Your uploaded-or-selected files are processed locally
+        and are not transmitted to our servers for conversion. Your file never leaves your device during conversion.
+      </p>
+    </div>
+    <h2>What we process</h2>
+    <ul>
+      <li><strong>Conversion files:</strong> read only in your browser memory; not uploaded for processing.</li>
+      <li><strong>Hosting logs:</strong> standard CDN/host request logs (IP, user agent) may exist on the static host.</li>
+      <li><strong>Preference cookies:</strong> e.g. dismissing the cookie notice (`lf_cookie_notice_v1`).</li>
+    </ul>
+    <h2>Google AdSense and advertising cookies</h2>
+    <p>
+      Ads are <strong>disabled until</strong> a publisher ID is configured in site config. When enabled, Google and
+      third-party vendors may use cookies to serve ads based on prior visits to this or other sites. Users can opt out of
+      personalized advertising via <a href="https://www.google.com/settings/ads">Google Ads Settings</a> and
+      <a href="https://www.aboutads.info/choices/">aboutads.info</a>. Google uses the DoubleClick cookie for AdSense; see
+      Google’s policies for details.
+    </p>
+    <h2>Google Analytics (GA4)</h2>
+    <p>
+      GA4 is inactive until `PUBLIC_GA4_MEASUREMENT_ID` is set. When enabled, Google Analytics collects usage metrics via
+      cookies or similar identifiers per Google’s documentation.
+    </p>
+    <h2>EEA, UK, and Switzerland</h2>
+    <p>
+      Personalized ads in these regions require a Google-certified CMP integrated with the IAB TCF. Do not enable
+      personalized AdSense for those visitors until a CMP is configured. Setup steps are documented in the repository file
+      <code>docs/ADSENSE.md</code>.
+    </p>
+    <h2>Contact</h2>
+    <p><a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></p>
+  </div>
+</BaseLayout>

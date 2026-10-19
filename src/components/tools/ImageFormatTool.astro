@@ -1,0 +1,48 @@
+---
+import ToolChrome from './ToolChrome.astro';
+---
+<ToolChrome accept=".webp,.png,.jpg,.jpeg,image/webp,image/png,image/jpeg" inputLabel="WebP, PNG, or JPG">
+  <Fragment slot="controls">
+    <label for="fmt">Output format</label>
+    <select id="fmt" data-format>
+      <option value="image/png">PNG</option>
+      <option value="image/jpeg">JPG</option>
+      <option value="image/webp">WebP</option>
+    </select>
+    <label for="iq">Quality (JPG/WebP)</label>
+    <input id="iq" data-quality type="number" inputmode="decimal" min="0.5" max="1" step="0.05" value="0.92" />
+  </Fragment>
+</ToolChrome>
+<script>
+  import { downloadBlob } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  let lastBlob = null;
+  let ext = 'png';
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    const file = root.querySelector('[data-file-input]')?.files?.[0];
+    if (!file) {
+      status.dataset.tone = 'error';
+      status.textContent = 'Choose an image.';
+      return;
+    }
+    status.textContent = 'Converting with canvas…';
+    try {
+      const { convertRasterBlob, extensionForMime } = await import('../../lib/converters/images');
+      const mime = root.querySelector('[data-format]')?.value || 'image/png';
+      const quality = Number(root.querySelector('[data-quality]')?.value || 0.92);
+      lastBlob = await convertRasterBlob(file, mime, quality);
+      ext = extensionForMime(mime);
+      const url = URL.createObjectURL(lastBlob);
+      root.querySelector('[data-preview]').innerHTML = `<img alt="Converted image preview" src="${url}" style="max-height:320px;margin-top:1rem" />`;
+      root.querySelector('[data-output]').value = `${mime} · ${(lastBlob.size / 1024).toFixed(1)} KB`;
+      root.querySelector('[data-download]').disabled = false;
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => lastBlob && downloadBlob(lastBlob, `converted.${ext}`));
+</script>

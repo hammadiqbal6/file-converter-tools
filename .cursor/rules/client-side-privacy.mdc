@@ -1,0 +1,10 @@
+---
+description: Client-side-only conversion and privacy
+globs: src/components/tools/**,src/lib/converters/**
+alwaysApply: true
+---
+
+- Never upload user files to a server for conversion.
+- State clearly: "Your file never leaves your device."
+- Load heavy libraries (pdf.js, ag-psd, heic2any, three) only via dynamic `import()` after user action.
+- Do not add server endpoints that accept file bodies.

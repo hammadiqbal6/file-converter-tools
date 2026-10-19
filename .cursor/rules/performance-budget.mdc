@@ -1,0 +1,11 @@
+---
+description: Performance and bundle budgets
+globs: src/**/*,scripts/audit/bundle-audit.mjs,lighthouserc.cjs
+alwaysApply: false
+---
+
+- Initial JS referenced from HTML: <= 50 KB gzip (`npm run audit:bundles`).
+- System font stack only (`src/styles/global.css`).
+- Reserve ad slot height (`--ad-slot-h`) to limit CLS.
+- Run `npm run lighthouse` before merging large UI changes.
+- LCP target < 2.0s mobile lab; tool pages may warn in LHCI when long SEO HTML is present.

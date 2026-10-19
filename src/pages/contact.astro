@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+---
+<BaseLayout title="Contact" description={`Contact ${siteConfig.name} — email support for tool questions (never send confidential files).`} canonicalPath="/contact/">
+  <div class="container content-prose">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Contact' }]} />
+    <h1>Contact</h1>
+    <div class="answer-box">
+      <p>
+        Reach us at <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>. Do not attach
+        confidential files — describe the error message instead. Conversions never require emailing us your documents.
+      </p>
+    </div>
+    <h2>What to include</h2>
+    <ul>
+      <li>Tool URL</li>
+      <li>Browser and OS</li>
+      <li>Exact error text (no file contents)</li>
+    </ul>
+    <p>This page is form-ready: replace the mailto with your preferred static form endpoint when deploying.</p>
+  </div>
+</BaseLayout>

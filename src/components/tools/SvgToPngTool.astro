@@ -1,0 +1,40 @@
+---
+import ToolChrome from './ToolChrome.astro';
+---
+<ToolChrome accept=".svg,image/svg+xml,text/plain" showTextarea={true} inputLabel="SVG file" textareaPlaceholder="<svg xmlns=...">
+  <Fragment slot="controls">
+    <label for="scale">Scale</label>
+    <select id="scale" data-scale>
+      <option value="1">1×</option>
+      <option value="2" selected>2×</option>
+      <option value="3">3×</option>
+    </select>
+  </Fragment>
+</ToolChrome>
+<script>
+  import { downloadBlob } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  let lastBlob = null;
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    status.textContent = 'Rasterizing…';
+    try {
+      const file = root.querySelector('[data-file-input]')?.files?.[0];
+      const text = file ? await file.text() : root.querySelector('[data-text-input]')?.value || '';
+      if (!text.trim()) throw new Error('Provide SVG markup or a file.');
+      const { svgTextToPngBlob } = await import('../../lib/converters/images');
+      const scale = Number(root.querySelector('[data-scale]')?.value || 2);
+      lastBlob = await svgTextToPngBlob(text, scale);
+      const url = URL.createObjectURL(lastBlob);
+      root.querySelector('[data-preview]').innerHTML = `<img alt="SVG rasterized to PNG" src="${url}" style="max-height:320px;margin-top:1rem" />`;
+      root.querySelector('[data-output]').value = `PNG @ ${scale}× · ${(lastBlob.size / 1024).toFixed(1)} KB`;
+      root.querySelector('[data-download]').disabled = false;
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => lastBlob && downloadBlob(lastBlob, 'converted.png'));
+</script>

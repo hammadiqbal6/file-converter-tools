@@ -1,0 +1,41 @@
+---
+import ToolChrome from './ToolChrome.astro';
+---
+<ToolChrome accept=".stl,model/stl" inputLabel="STL mesh (mm, Z-up preferred)">
+  <Fragment slot="controls">
+    <label for="lh">Layer height (mm)</label>
+    <input id="lh" data-layer type="number" inputmode="decimal" min="0.05" max="1" step="0.05" value="0.2" />
+  </Fragment>
+</ToolChrome>
+<script>
+  import { downloadText } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  let lastOut = '';
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    const file = root.querySelector('[data-file-input]')?.files?.[0];
+    if (!file) {
+      status.dataset.tone = 'error';
+      status.textContent = 'Choose an STL file.';
+      return;
+    }
+    status.textContent = 'Parsing + basic slice (educational)…';
+    try {
+      const lib = await import('../../lib/converters/stl');
+      const mesh = lib.parseStl(await file.arrayBuffer());
+      const layerHeight = Number(root.querySelector('[data-layer]')?.value || 0.2);
+      lastOut = lib.stlToBasicGcode(mesh, { layerHeight });
+      root.querySelector('[data-output]').value = lastOut.slice(0, 8000);
+      root.querySelector('[data-download]').disabled = false;
+      root.querySelector('[data-copy]').disabled = false;
+      root.querySelector('[data-preview]').innerHTML = `<ul>${lib.BASIC_SLICER_LIMITS.map((l) => `<li>${l}</li>`).join('')}</ul>`;
+      status.dataset.tone = 'success';
+      status.textContent = 'G-code generated locally. Simulate before printing.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => downloadText(lastOut, 'basic.gcode', 'text/plain'));
+  root.querySelector('[data-copy]')?.addEventListener('click', () => navigator.clipboard.writeText(lastOut));
+</script>

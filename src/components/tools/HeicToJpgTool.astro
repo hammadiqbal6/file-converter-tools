@@ -1,0 +1,40 @@
+---
+import ToolChrome from './ToolChrome.astro';
+---
+<ToolChrome accept=".heic,.heif,image/heic,image/heif" inputLabel="HEIC / HEIF photo">
+  <Fragment slot="controls">
+    <label for="q">JPEG quality (0.5–1)</label>
+    <input id="q" data-quality type="number" inputmode="decimal" min="0.5" max="1" step="0.05" value="0.92" />
+  </Fragment>
+</ToolChrome>
+<script>
+  import { downloadBlob } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  let lastBlob = null;
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    const file = root.querySelector('[data-file-input]')?.files?.[0];
+    if (!file) {
+      status.dataset.tone = 'error';
+      status.textContent = 'Choose a HEIC file.';
+      return;
+    }
+    status.textContent = 'Loading heic2any WASM…';
+    try {
+      const heic2any = (await import('heic2any')).default;
+      const quality = Number(root.querySelector('[data-quality]')?.value || 0.92);
+      const result = await heic2any({ blob: file, toType: 'image/jpeg', quality });
+      lastBlob = Array.isArray(result) ? result[0] : result;
+      const url = URL.createObjectURL(lastBlob);
+      root.querySelector('[data-preview]').innerHTML = `<img alt="Converted JPEG preview" src="${url}" style="max-height:320px;margin-top:1rem" />`;
+      root.querySelector('[data-output]').value = `JPEG ${(lastBlob.size / 1024).toFixed(1)} KB`;
+      root.querySelector('[data-download]').disabled = false;
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => lastBlob && downloadBlob(lastBlob, 'converted.jpg'));
+</script>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+---
+<BaseLayout title="About" description={`About ${siteConfig.name}: privacy-first, in-browser niche file converters.`} canonicalPath="/about/">
+  <div class="container content-prose">
+    <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'About' }]} />
+    <h1>About {siteConfig.name}</h1>
+    <div class="answer-box">
+      <p>
+        {siteConfig.name} is a free collection of profession-specific file converters that run entirely in your browser.
+        We focus on low-competition format pairs (YAML↔JSON, PSD→PNG, STL utilities, bank-statement PDF text extraction)
+        where privacy and accuracy beat generic upload farms.
+      </p>
+    </div>
+    <h2>Why we built this</h2>
+    <p>
+      Sensitive configs, unpublished design comps, and financial PDFs should not be uploaded to unknown servers just to
+      change formats. Client-side conversion (JS/WASM) keeps bytes on-device after the tool code loads.
+    </p>
+    <h2>Editorial standards</h2>
+    <p>
+      Every tool page includes method notes, limits, worked examples, FAQs, and links to authoritative format specs. See
+      <a href="/methodology/">Methodology</a> and <a href="/authors/">Authors</a>.
+    </p>
+    <h2>Contact</h2>
+    <p>Email <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> or visit <a href="/contact/">Contact</a>.</p>
+    <p class="meta-row">Last updated: <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></p>
+  </div>
+</BaseLayout>

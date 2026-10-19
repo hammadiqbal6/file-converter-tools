@@ -1,0 +1,32 @@
+---
+import { siteConfig } from '../../config/site';
+
+interface Props {
+  placement?: 'below-tool' | 'in-article' | 'footer';
+  label?: string;
+}
+const { placement = 'below-tool', label = 'Advertisement' } = Astro.props;
+const enabled = Boolean(siteConfig.adsensePublisherId);
+---
+
+<aside
+  class="ad-slot"
+  data-placement={placement}
+  data-ad-enabled={enabled ? 'true' : 'false'}
+  aria-label={label}
+>
+  {
+    enabled ? (
+      <ins
+        class="adsbygoogle"
+        style="display:block;width:100%;min-height:90px;max-height:100px"
+        data-ad-client={siteConfig.adsensePublisherId}
+        data-ad-slot="0000000000"
+        data-ad-format="horizontal"
+        data-full-width-responsive="false"
+      />
+    ) : (
+      <span>Ad slot reserved ({placement}) — configure PUBLIC_ADSENSE_PUBLISHER_ID</span>
+    )
+  }
+</aside>

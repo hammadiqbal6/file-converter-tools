@@ -1,0 +1,24 @@
+# Optional llms.txt — Google Search ignores this file (see docs/SEO-PLAYBOOK.md).
+# Plain link list only; no instruction-shaped prompts.
+
+# LocalFile Convert — https://example.com/
+# Privacy-first in-browser file converters
+
+## Tools
+- https://example.com/tools/yaml-to-json/
+- https://example.com/tools/json-to-yaml/
+- https://example.com/tools/json-to-csv/
+- https://example.com/tools/csv-to-json/
+- https://example.com/tools/xml-to-json/
+- https://example.com/tools/toml-to-json/
+- https://example.com/tools/markdown-to-html/
+- https://example.com/tools/psd-to-png/
+- https://example.com/tools/heic-to-jpg/
+- https://example.com/tools/image-format-converter/
+- https://example.com/tools/svg-to-png/
+- https://example.com/tools/stl-to-obj/
+- https://example.com/tools/stl-to-gcode/
+- https://example.com/tools/pdf-bank-statement-to-csv/
+
+## Guides
+- https://example.com/guides/

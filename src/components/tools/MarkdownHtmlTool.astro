@@ -1,0 +1,38 @@
+---
+import ToolChrome from './ToolChrome.astro';
+---
+<ToolChrome accept=".md,.markdown,text/markdown,text/plain" showTextarea={true} inputLabel="Markdown file" textareaPlaceholder="# Hello">
+  <Fragment slot="controls">
+    <label><input type="checkbox" data-full-doc checked /> Wrap full HTML document</label>
+  </Fragment>
+</ToolChrome>
+<script>
+  import { downloadText } from '../../lib/download';
+  const root = document.querySelector('[data-tool-root]');
+  let lastOut = '';
+  root.querySelector('[data-convert]')?.addEventListener('click', async () => {
+    const status = root.querySelector('[data-status]');
+    status.textContent = 'Loading converter…';
+    try {
+      const file = root.querySelector('[data-file-input]')?.files?.[0];
+      const input = (file ? await file.text() : root.querySelector('[data-text-input]')?.value || '').trim();
+      if (!input) throw new Error('Provide Markdown.');
+      const { markdownToHtml, wrapHtmlDocument } = await import('../../lib/converters/markdown-html');
+      let html = await markdownToHtml(input);
+      if (root.querySelector('[data-full-doc]')?.checked) html = wrapHtmlDocument(html);
+      lastOut = html;
+      root.querySelector('[data-output]').value = lastOut;
+      const preview = root.querySelector('[data-preview]');
+      preview.innerHTML = `<div class="tool-panel" style="margin-top:1rem"><strong>Preview</strong><div>${await markdownToHtml(input)}</div></div>`;
+      root.querySelector('[data-download]').disabled = false;
+      root.querySelector('[data-copy]').disabled = false;
+      status.dataset.tone = 'success';
+      status.textContent = 'Converted locally.';
+    } catch (e) {
+      status.dataset.tone = 'error';
+      status.textContent = e.message || String(e);
+    }
+  });
+  root.querySelector('[data-download]')?.addEventListener('click', () => downloadText(lastOut, 'converted.html', 'text/html'));
+  root.querySelector('[data-copy]')?.addEventListener('click', () => navigator.clipboard.writeText(lastOut));
+</script>
