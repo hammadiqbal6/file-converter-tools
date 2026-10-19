@@ -77,9 +77,21 @@ const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
 
     {
       siteConfig.ga4MeasurementId && (
-        <script is:inline define:vars={{ id: siteConfig.ga4MeasurementId }}>
-          window.LF_GA4 = id;
-        </script>
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.ga4MeasurementId}`}
+          ></script>
+          <script is:inline define:vars={{ measurementId: siteConfig.ga4MeasurementId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', measurementId);
+          </script>
+        </>
       )
     }
   </head>
