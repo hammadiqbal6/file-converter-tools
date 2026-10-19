@@ -1,0 +1,14 @@
+{
+  // Pure static-assets Worker — no Cloudflare Astro adapter, no Worker script,
+  // no SESSION/IMAGES bindings. Deploy with: npm run build && npx wrangler deploy
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "file-converter-tools",
+  // Current compatibility date for Workers static assets
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    // Astro SSG output (no adapter → dist/, not dist/client/)
+    "directory": "./dist",
+    // Serve nearest 404.html for unknown paths (src/pages/404.astro)
+    "not_found_handling": "404-page"
+  }
+}

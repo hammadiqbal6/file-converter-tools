@@ -2,7 +2,7 @@
 
 This guide walks you from a local checkout to a live **LocalFile Convert** site on your own domain, with HTTPS, Search Console, optional AdSense/GA4, and a safe redeploy/rollback workflow.
 
-**Stack:** static Astro build → `dist/` folder. No server runtime required.
+**Stack:** static Astro build → `dist/` folder. No server runtime required. Production host is a Cloudflare Worker (`file-converter-tools`) serving static assets via `wrangler.jsonc` (Workers Builds: `npm run build` → `npx wrangler deploy`).
 
 **Related docs:** [SEO-GUIDE.md](./SEO-GUIDE.md) (indexing), [ADSENSE.md](./ADSENSE.md) (ads), [docs/proof/README.md](./proof/README.md) (evidence bundle).
 
@@ -16,7 +16,7 @@ This guide walks you from a local checkout to a live **LocalFile Convert** site 
 |---|---|
 | **GitHub** | Source repo + CI (`.github/workflows/ci.yml`) |
 | **Domain registrar** | Your brand domain (Namecheap, Cloudflare Registrar, Google Domains successor, etc.) |
-| **Cloudflare** (recommended host) | Pages hosting + DNS + HTTPS |
+| **Cloudflare** (recommended host) | Workers static assets + DNS + HTTPS |
 | *or* Vercel / Netlify | Alternative static hosts |
 | **Google Search Console** | Indexing & CWV reports |
 | **Bing Webmaster Tools** | Bing + IndexNow |
@@ -117,13 +117,13 @@ Choose a brandable name (not required to be exact-match for converters). Point D
 
 This repo assumes **apex** in docs; either works if redirects are consistent.
 
-### 3.3 Cloudflare DNS (recommended with Pages)
+### 3.3 Cloudflare DNS (recommended with Workers)
 
 1. Add site to Cloudflare → import DNS.
 2. At registrar, set nameservers to Cloudflare.
 3. In **DNS → Records**:
-   - **Apex** `@` → Cloudflare Pages (auto when you attach custom domain) or CNAME flattening
-   - **www** → CNAME to your `*.pages.dev` target (Pages wizard creates these)
+   - **Apex** `@` → Worker custom domain (auto when you attach the domain) or CNAME flattening
+   - **www** → CNAME / custom domain on the same Worker
 4. **SSL/TLS → Overview:** **Full (strict)**
 5. **SSL/TLS → Edge Certificates:** enable **Always Use HTTPS**
 6. **Rules → Redirect Rules:**  
@@ -138,58 +138,61 @@ curl -I https://yourdomain.com/
 
 ---
 
-## 4. Deploy: Cloudflare Pages (primary)
+## 4. Deploy: Cloudflare Workers (primary)
 
-### 4.1 Connect repository
+Committed config: **`wrangler.jsonc`** — assets-only Worker named `file-converter-tools`, `assets.directory` = `./dist`, `not_found_handling` = `404-page`. No Astro Cloudflare adapter (static SSG does not need one).
 
-1. [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
-2. Select `file-converter-tools` repo.
-3. **Production branch:** `main` (or your release branch).
+### 4.1 Workers Builds (Git)
 
-### 4.2 Build settings
+1. [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → Worker **`file-converter-tools`** (or Create → Workers).
+2. Connect the Git repo; **production branch:** `main`.
+3. Build settings:
 
 | Setting | Value |
 |---|---|
-| Framework preset | None / Astro |
-| Build command | `npm run build` |
-| Build output directory | `dist` |
 | Root directory | `/` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
 
-### 4.3 Environment variables (Production)
+Local check: `npm run build && npx wrangler deploy --dry-run`.
 
-Add at **Settings → Environment variables**:
+### 4.2 Environment variables (Production)
 
-```
-NODE_VERSION=22.22.0
-PUBLIC_SITE_URL=https://yourdomain.com
-PUBLIC_GSC_VERIFICATION=...
-PUBLIC_BING_VERIFICATION=...
-PUBLIC_GA4_MEASUREMENT_ID=...
-PUBLIC_ADSENSE_PUBLISHER_ID=...
-PUBLIC_INDEXNOW_KEY=...
-```
+Full list with comments: **[`.env.example`](../.env.example)** (copy to `.env` locally; do not commit secrets).
 
-Redeploy after changing env vars (build-time values bake into HTML).
+Add as **build-time** env vars in **Cloudflare Workers Builds → Settings → Variables** (and CI). `PUBLIC_*` values bake into HTML; `PUBLIC_SITE_URL` also patches `robots.txt` / `llms.txt` via `scripts/postbuild.mjs`.
 
-### 4.4 Headers & caching
+| Variable | Cloudflare Builds | Notes |
+|---|---|---|
+| `PUBLIC_SITE_URL` | **Required** (production) | HTTPS origin, no trailing slash. Unset → `https://example.com` placeholder |
+| `NODE_VERSION` | Recommended | `22.22.0` |
+| `PUBLIC_GSC_VERIFICATION` | Optional until GSC | Meta verification content |
+| `PUBLIC_BING_VERIFICATION` | Optional until Bing | Meta verification content |
+| `PUBLIC_GA4_MEASUREMENT_ID` | Optional | Empty = analytics off |
+| `PUBLIC_ADSENSE_PUBLISHER_ID` | Optional | Empty = ads off |
+| `PUBLIC_INDEXNOW_KEY` | Optional until IndexNow | Keep `public/indexnow/<key>.txt` in sync |
 
-`public/_headers` is copied to `dist/_headers` and applied by Cloudflare Pages:
+Redeploy after changing env vars.
 
-- Security headers on `/*`
-- Long cache on `/_astro/*` (immutable hashed assets)
+### 4.3 Headers & caching
+
+`public/_headers` is copied to `dist/_headers` and applied by Workers static assets:
+
+- Security headers on `/*` (including `X-Frame-Options: SAMEORIGIN`)
+- `/embed/*` detaches `X-Frame-Options` (`! X-Frame-Options`) and sets `Content-Security-Policy: frame-ancestors *` so embeds can be iframed
+- Long cache on hashed asset paths
 
 Do not block JS/CSS needed by tools in Cloudflare **Bot Fight** for real users.
 
-### 4.5 Custom domain on Pages
+### 4.4 Custom domain
 
-1. **Pages project → Custom domains → Set up a domain**
-2. Add `yourdomain.com` and `www.yourdomain.com`
-3. Complete DNS records Cloudflare suggests
-4. Wait for **Active** SSL
+1. Worker → **Settings → Domains & Routes** (or Custom domains) → add apex + `www`
+2. Complete DNS records Cloudflare suggests
+3. Wait for **Active** SSL
 
-### 4.6 Preview deployments
+### 4.5 Preview / version URLs
 
-Every PR branch gets a `*.pages.dev` URL. Use previews to QA tools; set `PUBLIC_SITE_URL` to the preview URL **only** for preview builds if you need accurate canonicals (optional).
+Workers version URLs are useful for QA; set `PUBLIC_SITE_URL` to the preview origin **only** for preview builds if you need accurate canonicals (optional).
 
 ---
 
@@ -336,7 +339,7 @@ Cloudflare/Vercel/Netlify auto-build on push to production branch.
 
 | Host | Action |
 |---|---|
-| **Cloudflare Pages** | Deployments → select previous successful deployment → **Rollback to this deployment** |
+| **Cloudflare Workers** | Deployments → select previous successful deployment → **Rollback** |
 | **Vercel** | Deployments → … → **Promote to Production** on an older build |
 | **Netlify** | Deploys → **Publish deploy** on a previous build |
 
@@ -344,7 +347,7 @@ Also revert the Git commit on `main` if the failure is in source.
 
 ### Invalidate caches
 
-Hashed assets under `/_astro/` are immutable. HTML updates propagate on new deploy. If using Cloudflare CDN cache for HTML (unusual on Pages), purge cache after deploy.
+Hashed assets under `/_astro/` are immutable. HTML updates propagate on new deploy. If using Cloudflare CDN cache for HTML, purge cache after deploy.
 
 ---
 
@@ -376,7 +379,7 @@ Copy this into your issue tracker and check off on launch day.
 
 ### Hosting
 
-- [ ] Production deploy green on Cloudflare Pages (or chosen host)
+- [ ] Production deploy green on Cloudflare Worker `file-converter-tools` (or chosen host)
 - [ ] Apex + www DNS correct; one canonical host 301 redirect
 - [ ] HTTPS valid; `curl -I` shows 200
 

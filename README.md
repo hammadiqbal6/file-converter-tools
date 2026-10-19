@@ -113,7 +113,7 @@ npm run dev
 
 ## Configuration
 
-All owner-specific values live in **`src/config/site.ts`** (overridable via env at build time):
+All owner-specific values live in **`src/config/site.ts`** (overridable via env at build time). Copy **[`.env.example`](.env.example)** to `.env` for local builds; set the same vars in Cloudflare Workers Builds for production (`PUBLIC_SITE_URL` is required there).
 
 | Field / env | Description |
 |---|---|
