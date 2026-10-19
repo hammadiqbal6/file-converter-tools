@@ -18,7 +18,9 @@
     "link-check": "node scripts/link-check.mjs",
     "lighthouse": "npm run build && npx lhci autorun",
     "screenshots": "node scripts/capture-screenshots.mjs",
-    "ci": "npm run test && npm run build && npm run audit && npm run lighthouse"
+    "proof": "node scripts/proof/generate-proof.mjs",
+    "proof:verify": "node scripts/proof/verify-proof.mjs",
+    "ci": "npm run proof:verify"
   },
   "dependencies": {
     "ag-psd": "^31.0.3",

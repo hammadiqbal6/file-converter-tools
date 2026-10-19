@@ -151,7 +151,19 @@ Fixtures in `tests/fixtures/`. Covers YAML/JSON, CSV, XML/TOML, STL, PDF bank he
 npm run build && npm run audit
 ```
 
-GitHub Actions (`.github/workflows/ci.yml`): test → build → audit → Lighthouse on PRs.
+GitHub Actions (`.github/workflows/ci.yml`): `npm run proof` on PRs (uploads `docs/proof/` artifact).
+
+## Proof
+
+Committed, reproducible SEO/performance/AdSense evidence lives in **[docs/proof/](docs/proof/README.md)**.
+
+Regenerate locally (never hand-edit scores):
+
+```bash
+npm run proof
+```
+
+This runs tests, audits, Lighthouse (mobile + desktop samples), JSON-LD extraction/validation, sitemap/robots checks, bundle budgets, mobile screenshots, and writes `docs/proof/README.md` with pass/fail vs budgets.
 
 **Performance approach:** heavy libraries (`pdfjs-dist`, `ag-psd`, `heic2any`, `three`) are **not** in the initial HTML bundle; tool scripts `import()` them on convert. `scripts/audit/bundle-audit.mjs` enforces ≤50 KB gzip for script tags referenced in each page’s HTML.
 
@@ -169,7 +181,7 @@ Placeholder slots, `ads.txt` template, privacy disclosures — ads off until `PU
 
 ## Deployment
 
-Quick start: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (Cloudflare Pages primary).
+**Full beginner guide:** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — DNS, Cloudflare Pages (primary), Vercel/Netlify, GSC/Bing/IndexNow, AdSense, GA4, rollback, and launch checklist.
 
 ## Docs index
 

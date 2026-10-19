@@ -1,0 +1,1152 @@
+{
+  "home": [
+    {
+      "urlPath": "/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "LocalFile Convert",
+          "url": "https://example.com/",
+          "description": "Private, in-browser file converters. Your files never leave your device.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "LocalFile Convert",
+          "url": "https://example.com/",
+          "email": "hello@example.com"
+        }
+      ]
+    }
+  ],
+  "tool": [
+    {
+      "urlPath": "/tools/csv-to-json/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Data format converters",
+                  "item": "https://example.com/category/data/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "CSV to JSON Converter",
+                  "item": "https://example.com/tools/csv-to-json/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "CSV to JSON Converter",
+              "url": "https://example.com/tools/csv-to-json/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Parse CSV into a JSON array of objects in your browser. Auto-detects delimiters. Files stay on your device.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/heic-to-jpg/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Image converters",
+                  "item": "https://example.com/category/images/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "HEIC to JPG Converter",
+                  "item": "https://example.com/tools/heic-to-jpg/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "HEIC to JPG Converter",
+              "url": "https://example.com/tools/heic-to-jpg/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert iPhone HEIC/HEIF photos to JPG in your browser. No uploads. Ideal for sharing and older apps.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/image-format-converter/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Image converters",
+                  "item": "https://example.com/category/images/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "WebP PNG JPG Converter",
+                  "item": "https://example.com/tools/image-format-converter/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "WebP PNG JPG Converter",
+              "url": "https://example.com/tools/image-format-converter/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert between WebP, PNG, and JPG in your browser with canvas export. No uploads. Pick target format and quality.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/json-to-csv/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Data format converters",
+                  "item": "https://example.com/category/data/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "JSON to CSV Converter",
+                  "item": "https://example.com/tools/json-to-csv/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "JSON to CSV Converter",
+              "url": "https://example.com/tools/json-to-csv/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert a JSON array of objects to CSV in your browser. No upload. Great for exports, sheets, and pipelines.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/json-to-yaml/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Data format converters",
+                  "item": "https://example.com/category/data/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "JSON to YAML Converter",
+                  "item": "https://example.com/tools/json-to-yaml/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "JSON to YAML Converter",
+              "url": "https://example.com/tools/json-to-yaml/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert JSON to readable YAML in your browser. No uploads. Ideal for Kubernetes manifests, CI configs, and docs.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/markdown-to-html/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Document converters",
+                  "item": "https://example.com/category/documents/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "Markdown to HTML Converter",
+                  "item": "https://example.com/tools/markdown-to-html/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "Markdown to HTML Converter",
+              "url": "https://example.com/tools/markdown-to-html/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert Markdown (GFM) to HTML in your browser. Preview and download a full HTML document. No uploads.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/pdf-bank-statement-to-csv/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Document converters",
+                  "item": "https://example.com/category/documents/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "PDF Bank Statement to CSV",
+                  "item": "https://example.com/tools/pdf-bank-statement-to-csv/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "PDF Bank Statement to CSV",
+              "url": "https://example.com/tools/pdf-bank-statement-to-csv/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Extract text from PDF bank statements to CSV in your browser with pdf.js and column detection. Clear limits; no uploads.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/psd-to-png/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Image converters",
+                  "item": "https://example.com/category/images/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "PSD to PNG Converter",
+                  "item": "https://example.com/tools/psd-to-png/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "PSD to PNG Converter",
+              "url": "https://example.com/tools/psd-to-png/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert Photoshop PSD files to PNG in your browser with ag-psd. Your design files never leave your device.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/stl-to-gcode/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "CAD & 3D converters",
+                  "item": "https://example.com/category/cad-3d/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "STL to G-code (Basic)",
+                  "item": "https://example.com/tools/stl-to-gcode/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "STL to G-code (Basic)",
+              "url": "https://example.com/tools/stl-to-gcode/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Generate basic educational G-code contours from STL in your browser. Documented limits — not a full production slicer.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/stl-to-obj/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "CAD & 3D converters",
+                  "item": "https://example.com/category/cad-3d/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "STL to OBJ Converter & Viewer",
+                  "item": "https://example.com/tools/stl-to-obj/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "STL to OBJ Converter & Viewer",
+              "url": "https://example.com/tools/stl-to-obj/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "View STL files, convert STL to OBJ, and switch ASCII/binary STL — all in-browser. No uploads. Three.js viewer loads on demand.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/svg-to-png/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Image converters",
+                  "item": "https://example.com/category/images/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "SVG to PNG Converter",
+                  "item": "https://example.com/tools/svg-to-png/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "SVG to PNG Converter",
+              "url": "https://example.com/tools/svg-to-png/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Rasterize SVG to PNG in your browser at a chosen scale. No uploads. Perfect for icons and simple illustrations.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/toml-to-json/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Data format converters",
+                  "item": "https://example.com/category/data/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "TOML to JSON Converter",
+                  "item": "https://example.com/tools/toml-to-json/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "TOML to JSON Converter",
+              "url": "https://example.com/tools/toml-to-json/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert TOML (Cargo, pyproject, config) to JSON in your browser. No uploads.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/xml-to-json/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Data format converters",
+                  "item": "https://example.com/category/data/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "XML to JSON Converter",
+                  "item": "https://example.com/tools/xml-to-json/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "XML to JSON Converter",
+              "url": "https://example.com/tools/xml-to-json/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert XML documents to JSON in your browser. Attributes preserved with @_ prefixes. No uploads.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/tools/yaml-to-json/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://example.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Tools",
+                  "item": "https://example.com/tools/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Data format converters",
+                  "item": "https://example.com/category/data/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "YAML to JSON Converter",
+                  "item": "https://example.com/tools/yaml-to-json/"
+                }
+              ]
+            },
+            {
+              "@type": "WebApplication",
+              "name": "YAML to JSON Converter",
+              "url": "https://example.com/tools/yaml-to-json/",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any (modern web browser)",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Convert YAML to JSON instantly in your browser. Files never leave your device. Free, no signup, works offline after load.",
+              "datePublished": "2026-10-19",
+              "dateModified": "2026-10-19",
+              "isAccessibleForFree": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "guide": [
+    {
+      "urlPath": "/guides/bank-statements-as-data/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Reading Bank Statements as Data (PDF to CSV Limits)",
+          "description": "How text extraction turns PDF bank statements into CSV, what goes wrong with scans, and how to verify transactions.",
+          "datePublished": "2026-10-19",
+          "dateModified": "2026-10-19",
+          "author": {
+            "@type": "Organization",
+            "name": "LocalFile Convert"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          },
+          "mainEntityOfPage": "https://example.com/guides/bank-statements-as-data/"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://example.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://example.com/guides/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Reading Bank Statements as Data (PDF to CSV Limits)",
+              "item": "https://example.com/guides/bank-statements-as-data/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/guides/csv-json-pipelines/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "CSV and JSON in Data Pipelines: Practical Conversion Tips",
+          "description": "How CSV to JSON and JSON to CSV fit ETL and spreadsheet workflows, with typing pitfalls and delimiter gotchas.",
+          "datePublished": "2026-10-19",
+          "dateModified": "2026-10-19",
+          "author": {
+            "@type": "Organization",
+            "name": "LocalFile Convert"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          },
+          "mainEntityOfPage": "https://example.com/guides/csv-json-pipelines/"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://example.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://example.com/guides/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "CSV and JSON in Data Pipelines: Practical Conversion Tips",
+              "item": "https://example.com/guides/csv-json-pipelines/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/guides/privacy-first-conversion/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "Privacy-First File Conversion: Why In-Browser Matters",
+          "description": "Learn why client-side converters protect sensitive configs, photos, and bank PDFs — and how to verify a tool never uploads.",
+          "datePublished": "2026-10-19",
+          "dateModified": "2026-10-19",
+          "author": {
+            "@type": "Organization",
+            "name": "LocalFile Convert"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          },
+          "mainEntityOfPage": "https://example.com/guides/privacy-first-conversion/"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://example.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://example.com/guides/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Privacy-First File Conversion: Why In-Browser Matters",
+              "item": "https://example.com/guides/privacy-first-conversion/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/guides/psd-without-photoshop/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "How to Convert PSD to PNG Without Photoshop",
+          "description": "Export Photoshop PSD files to PNG for previews without installing Photoshop — including a private in-browser option.",
+          "datePublished": "2026-10-19",
+          "dateModified": "2026-10-19",
+          "author": {
+            "@type": "Organization",
+            "name": "LocalFile Convert"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          },
+          "mainEntityOfPage": "https://example.com/guides/psd-without-photoshop/"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://example.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://example.com/guides/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "How to Convert PSD to PNG Without Photoshop",
+              "item": "https://example.com/guides/psd-without-photoshop/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/guides/stl-formats-explained/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "STL Formats Explained: ASCII, Binary, OBJ, and G-code",
+          "description": "Understand STL ASCII vs binary, when to convert to OBJ, and why browser “slicers” have limits compared to Cura.",
+          "datePublished": "2026-10-19",
+          "dateModified": "2026-10-19",
+          "author": {
+            "@type": "Organization",
+            "name": "LocalFile Convert"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          },
+          "mainEntityOfPage": "https://example.com/guides/stl-formats-explained/"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://example.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://example.com/guides/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "STL Formats Explained: ASCII, Binary, OBJ, and G-code",
+              "item": "https://example.com/guides/stl-formats-explained/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "urlPath": "/guides/yaml-vs-json/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "YAML vs JSON: When to Convert (and When Not To)",
+          "description": "Compare YAML and JSON for configs and APIs: readability, types, comments, and when yaml to json or json to yaml conversion helps.",
+          "datePublished": "2026-10-19",
+          "dateModified": "2026-10-19",
+          "author": {
+            "@type": "Organization",
+            "name": "LocalFile Convert"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          },
+          "mainEntityOfPage": "https://example.com/guides/yaml-vs-json/"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://example.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Guides",
+              "item": "https://example.com/guides/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "YAML vs JSON: When to Convert (and When Not To)",
+              "item": "https://example.com/guides/yaml-vs-json/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "hub": [
+    {
+      "urlPath": "/category/cad-3d/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "CAD & 3D converters",
+          "description": "STL viewer, STL to OBJ, ASCII/binary STL, and a basic educational STL to G-code path with documented limits.",
+          "url": "https://example.com/category/cad-3d/"
+        }
+      ]
+    },
+    {
+      "urlPath": "/category/data/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Data format converters",
+          "description": "Convert YAML, JSON, CSV, XML, and TOML entirely in your browser for configs, APIs, and data pipelines.",
+          "url": "https://example.com/category/data/"
+        }
+      ]
+    },
+    {
+      "urlPath": "/category/documents/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Document converters",
+          "description": "Markdown to HTML and PDF bank-statement text extraction to CSV — private and client-side.",
+          "url": "https://example.com/category/documents/"
+        }
+      ]
+    },
+    {
+      "urlPath": "/category/images/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Image converters",
+          "description": "PSD to PNG, HEIC to JPG, SVG to PNG, and WebP/PNG/JPG interconversion without uploading files.",
+          "url": "https://example.com/category/images/"
+        }
+      ]
+    }
+  ],
+  "other": [
+    {
+      "urlPath": "/tools/",
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "All File Converters",
+          "url": "https://example.com/tools/",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "LocalFile Convert",
+            "url": "https://example.com/"
+          }
+        }
+      ]
+    }
+  ]
+}

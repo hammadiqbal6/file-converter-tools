@@ -212,6 +212,20 @@ main {
   padding-block: var(--space-5) var(--space-7);
 }
 
+@media (max-width: 768px) {
+  main {
+    padding-block: var(--space-4) var(--space-6);
+  }
+
+  .tool-panel {
+    padding: var(--space-3);
+  }
+
+  .hero {
+    padding-block: 0 0.5rem;
+  }
+}
+
 .hero {
   display: grid;
   gap: var(--space-4);
@@ -220,10 +234,11 @@ main {
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
   line-height: 1.15;
   color: var(--color-brand);
   letter-spacing: -0.02em;
+  contain: layout style;
 }
 
 .hero p.lead {
@@ -298,10 +313,10 @@ a.btn {
 .dropzone {
   border: 2px dashed var(--color-border);
   border-radius: var(--radius);
-  padding: var(--space-5);
+  padding: var(--space-4);
   text-align: center;
   background: color-mix(in srgb, var(--color-brand) 3%, white);
-  min-height: 140px;
+  min-height: 112px;
   display: grid;
   place-content: center;
   gap: var(--space-2);

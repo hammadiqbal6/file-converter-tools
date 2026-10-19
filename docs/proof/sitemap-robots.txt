@@ -1,0 +1,58 @@
+Generated: 2026-10-19T07:01:01.205Z
+
+=== robots.txt (from dist) ===
+# Allow search engines and AI-search / answer crawlers
+User-agent: *
+Allow: /
+Disallow: /embed/
+Disallow: /*?utm_
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# AI model training crawlers — ALLOW by default (owner choice).
+# To opt out of training while keeping search citations, change these to Disallow: /
+# GPTBot / Google-Extended / ClaudeBot / CCBot do not control Google Search ranking.
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://example.com/sitemap-index.xml
+
+
+Googlebot: ALLOW (inferred)
+Bingbot: ALLOW (inferred)
+OAI-SearchBot: ALLOW (inferred)
+PerplexityBot: ALLOW (inferred)
+Claude-SearchBot: ALLOW (inferred)
+
+llms.txt present: true
+ads.txt present: true
+HTML index pages (excl. embed): 33
+Sitemap index entries: 1
+  /sitemap-0.xml: 39 URLs
+Total sitemap URLs: 39
+Sitemap URL count vs pages: PASS (approx)

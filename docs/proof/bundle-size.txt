@@ -1,0 +1,44 @@
+Generated: 2026-10-19T07:01:01.205Z
+Budget: initial script src gzip <= 51200 bytes per HTML page
+
+PASS about/index.html: 0 bytes gzip
+PASS authors/index.html: 0 bytes gzip
+PASS category/cad-3d/index.html: 0 bytes gzip
+PASS category/data/index.html: 0 bytes gzip
+PASS category/documents/index.html: 0 bytes gzip
+PASS category/images/index.html: 0 bytes gzip
+PASS contact/index.html: 0 bytes gzip
+PASS embed/csv-to-json/index.html: 697 bytes gzip
+PASS embed/image-format-converter/index.html: 647 bytes gzip
+PASS embed/json-to-csv/index.html: 697 bytes gzip
+PASS embed/json-to-yaml/index.html: 805 bytes gzip
+PASS embed/markdown-to-html/index.html: 710 bytes gzip
+PASS embed/yaml-to-json/index.html: 805 bytes gzip
+PASS guides/bank-statements-as-data/index.html: 0 bytes gzip
+PASS guides/csv-json-pipelines/index.html: 0 bytes gzip
+PASS guides/index.html: 0 bytes gzip
+PASS guides/privacy-first-conversion/index.html: 0 bytes gzip
+PASS guides/psd-without-photoshop/index.html: 0 bytes gzip
+PASS guides/stl-formats-explained/index.html: 0 bytes gzip
+PASS guides/yaml-vs-json/index.html: 0 bytes gzip
+PASS index.html: 0 bytes gzip
+PASS methodology/index.html: 0 bytes gzip
+PASS privacy/index.html: 0 bytes gzip
+PASS terms/index.html: 0 bytes gzip
+PASS tools/csv-to-json/index.html: 697 bytes gzip
+PASS tools/heic-to-jpg/index.html: 747 bytes gzip
+PASS tools/image-format-converter/index.html: 647 bytes gzip
+PASS tools/index.html: 0 bytes gzip
+PASS tools/json-to-csv/index.html: 697 bytes gzip
+PASS tools/json-to-yaml/index.html: 805 bytes gzip
+PASS tools/markdown-to-html/index.html: 710 bytes gzip
+PASS tools/pdf-bank-statement-to-csv/index.html: 978 bytes gzip
+PASS tools/psd-to-png/index.html: 859 bytes gzip
+PASS tools/stl-to-gcode/index.html: 640 bytes gzip
+PASS tools/stl-to-obj/index.html: 1361 bytes gzip
+PASS tools/svg-to-png/index.html: 655 bytes gzip
+PASS tools/toml-to-json/index.html: 599 bytes gzip
+PASS tools/xml-to-json/index.html: 598 bytes gzip
+PASS tools/yaml-to-json/index.html: 805 bytes gzip
+
+Failures: 0
