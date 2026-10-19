@@ -66,7 +66,7 @@ Edit defaults **or** override at build time with env vars (recommended for produ
 |---|---|---|
 | `name`, `tagline`, `organizationName` | — | Your brand strings |
 | `url` | `PUBLIC_SITE_URL` | `https://yourdomain.com` (no trailing slash) |
-| `contactEmail` | — | Real support email |
+| `contactEmail` | `PUBLIC_CONTACT_EMAIL` | Public support email (default: `hammadiqbal117@gmail.com`) |
 | `adsensePublisherId` | `PUBLIC_ADSENSE_PUBLISHER_ID` | `ca-pub-XXXXXXXX` or leave empty |
 | `adsenseAutoAds` | — | `true` only if you intentionally enable Auto ads |
 | `ga4MeasurementId` | `PUBLIC_GA4_MEASUREMENT_ID` | `G-XXXXXXXX` or empty |
@@ -80,6 +80,7 @@ Edit defaults **or** override at build time with env vars (recommended for produ
 
 ```bash
 export PUBLIC_SITE_URL=https://yourdomain.com
+export PUBLIC_CONTACT_EMAIL=hammadiqbal117@gmail.com
 export PUBLIC_GSC_VERIFICATION=your-gsc-token
 npm run build
 ```
@@ -165,6 +166,7 @@ Add as **build-time** env vars in **Cloudflare Workers Builds → Settings → V
 | Variable | Cloudflare Builds | Notes |
 |---|---|---|
 | `PUBLIC_SITE_URL` | **Required** (production) | HTTPS origin, no trailing slash. Unset → `https://example.com` placeholder |
+| `PUBLIC_CONTACT_EMAIL` | Optional | Defaults to `hammadiqbal117@gmail.com` in `site.ts` |
 | `NODE_VERSION` | Recommended | `22.22.0` |
 | `PUBLIC_GSC_VERIFICATION` | Optional until GSC | Meta verification content |
 | `PUBLIC_BING_VERIFICATION` | Optional until Bing | Meta verification content |

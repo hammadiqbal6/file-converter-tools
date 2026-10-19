@@ -14,8 +14,13 @@ export const siteConfig = {
   url: (typeof import.meta !== 'undefined' && import.meta.env?.PUBLIC_SITE_URL) || 'https://example.com',
   /** Primary locale */
   locale: 'en_US',
-  /** Contact email shown on Contact page */
-  contactEmail: 'hello@example.com',
+  /**
+   * Public contact email (Contact, Privacy, Terms, footer, Organization schema).
+   * Override with PUBLIC_CONTACT_EMAIL.
+   */
+  contactEmail:
+    (typeof import.meta !== 'undefined' && import.meta.env?.PUBLIC_CONTACT_EMAIL) ||
+    'hammadiqbal117@gmail.com',
   /** Twitter/X handle without @ (optional) */
   twitterHandle: '',
   /** Organization legal / display name */
