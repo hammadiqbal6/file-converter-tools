@@ -1,0 +1,3 @@
+# Workers static assets / Pages / Netlify style redirects
+# Sitemap alias (tools and docs that request /sitemap.xml)
+/sitemap.xml /sitemap-index.xml 301

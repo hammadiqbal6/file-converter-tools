@@ -1,6 +1,4 @@
-Generated: 2026-10-19T07:01:01.205Z
-
-=== robots.txt (from dist) ===
+=== robots.txt ===
 # Allow search engines and AI-search / answer crawlers
 User-agent: *
 Allow: /
@@ -40,19 +38,28 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://example.com/sitemap-index.xml
+Sitemap: https://file-converter-tools.hammadiqbal117.workers.dev/sitemap-index.xml
 
-
-Googlebot: ALLOW (inferred)
-Bingbot: ALLOW (inferred)
-OAI-SearchBot: ALLOW (inferred)
-PerplexityBot: ALLOW (inferred)
-Claude-SearchBot: ALLOW (inferred)
-
-llms.txt present: true
-ads.txt present: true
-HTML index pages (excl. embed): 33
-Sitemap index entries: 1
-  /sitemap-0.xml: 39 URLs
-Total sitemap URLs: 39
-Sitemap URL count vs pages: PASS (approx)
+=== sitemap-index.xml ===
+<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>https://file-converter-tools.hammadiqbal117.workers.dev/sitemap-0.xml</loc><lastmod>2026-10-19T00:00:00.000Z</lastmod></sitemap></sitemapindex>
+=== sitemap-0.xml (first 20 locs) ===
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/about/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/authors/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/category/cad-3d/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/category/data/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/category/documents/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/category/images/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/contact/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/guides/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/guides/bank-statements-as-data/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/guides/csv-json-pipelines/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/guides/privacy-first-conversion/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/guides/psd-without-photoshop/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/guides/stl-formats-explained/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/guides/yaml-vs-json/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/methodology/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/privacy/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/terms/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/tools/</loc>
+<loc>https://file-converter-tools.hammadiqbal117.workers.dev/tools/csv-to-json/</loc>

@@ -7,11 +7,21 @@ Privacy-first **niche file converters** (Astro 7 static site). All conversion ru
 | Doc | Purpose |
 |---|---|
 | [docs/SEO-PLAYBOOK.md](docs/SEO-PLAYBOOK.md) | SEO, technical, GEO, AdSense synthesis |
+| [docs/SEO-GUARDRAILS.md](docs/SEO-GUARDRAILS.md) | Hard do/don’t: site URL, og:image, sitemap alias, IndexNow, wrangler preview |
 | [docs/MARKET-RESEARCH.md](docs/MARKET-RESEARCH.md) | Niche selection evidence |
 | [docs/KEYWORD-MAP.md](docs/KEYWORD-MAP.md) | One primary keyword per URL |
 | [docs/ideas/README.md](docs/ideas/README.md) | 23 ranked ideas + backlog |
 
 **Live progress:** [PROGRESS.md](PROGRESS.md) on the working branch.
+
+### SEO / Workers hard rules (never regress)
+
+- Default `PUBLIC_SITE_URL` / `site` → live workers.dev — **never** `example.com`.
+- `absoluteUrl()` must not append `/` to file assets (`og:image`, etc.).
+- Ship `public/_redirects`: `/sitemap.xml` → `/sitemap-index.xml` 301.
+- IndexNow: real `public/<32-hex>.txt` at site root (no `000…0` placeholder).
+- `wrangler.jsonc`: `html_handling: "force-trailing-slash"` + empty `"previews": {}`; no top-level `vars` for `PUBLIC_*`.
+- After build: `npm run audit` (includes `seo-guardrails.mjs`) must pass.
 
 ## Architecture
 
@@ -32,7 +42,7 @@ flowchart TB
   Dist --> Page
 ```
 
-- **Config:** `src/config/site.ts` — brand, domain, AdSense, GA4, verification placeholders.
+- **Config:** `src/config/site.ts` — brand, domain (workers.dev default), AdSense, GA4, GSC, IndexNow.
 - **Tools metadata + long-form SEO:** `src/data/tools.ts`
 - **Guides:** `src/data/guides.ts`
 - **Converters:** `src/lib/converters/*` (tested with Vitest)
@@ -47,7 +57,9 @@ flowchart TB
 | `npm run dev` | Dev server (Node 22.22 via `scripts/run-astro.mjs`) |
 | `npm run build` | Production build + `postbuild` robots/llms patch |
 | `npm test` | Vitest converter tests |
-| `npm run audit` | SEO + AdSense + bundles + link check |
+| `npm run audit` | SEO + SEO guardrails + AdSense + bundles + link check |
+| `npm run deploy:indexnow` | `wrangler deploy` then IndexNow ping |
+| `npm run preview:worker` | `wrangler preview` (needs `"previews": {}`) |
 | `npm run lighthouse` | LHCI mobile budgets |
 | `npm run screenshots` | 360px Playwright captures → `artifacts/screenshots/` |
 

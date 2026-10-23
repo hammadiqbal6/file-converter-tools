@@ -1,6 +1,6 @@
 # SEO & launch guide
 
-**Governing docs:** [SEO-PLAYBOOK.md](./SEO-PLAYBOOK.md) (full playbook), [KEYWORD-MAP.md](./KEYWORD-MAP.md) (page intents), [MARKET-RESEARCH.md](./MARKET-RESEARCH.md).
+**Governing docs:** [SEO-PLAYBOOK.md](./SEO-PLAYBOOK.md) (full playbook), [SEO-GUARDRAILS.md](./SEO-GUARDRAILS.md) (hard indexing rules + CI), [KEYWORD-MAP.md](./KEYWORD-MAP.md) (page intents), [MARKET-RESEARCH.md](./MARKET-RESEARCH.md).
 
 ## Pre-launch checklist
 
@@ -24,13 +24,12 @@
 ## Bing & IndexNow
 
 1. Import from GSC in **Bing Webmaster Tools**.
-2. Place IndexNow key file at `https://yourdomain.com/<key>.txt` (see `public/indexnow/`).
-3. On meaningful updates, notify IndexNow (Bing/Yandex — not Google). Example:
+2. Place IndexNow key file at `https://yourdomain.com/<key>.txt` (committed as `public/<key>.txt` at site root; see `.env.example`).
+3. After each production deploy, ping IndexNow (Bing/Yandex — not Google):
 
 ```bash
-KEY=your-indexnow-key
-URL=https://yourdomain.com/tools/yaml-to-json/
-curl -s "https://api.indexnow.org/indexnow?url=${URL}&key=${KEY}"
+npx wrangler deploy && node scripts/indexnow.mjs
+# or: npm run deploy:indexnow
 ```
 
 ## GA4

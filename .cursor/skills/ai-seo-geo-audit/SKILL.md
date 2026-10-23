@@ -14,8 +14,8 @@ Apply this skill for tasks involving **ai-seo-geo-audit** on the LocalFile Conve
 - Converter logic: `src/lib/converters/`
 - Tool UI: `src/components/tools/` + `src/pages/tools/[slug].astro`
 - SEO layout: `src/layouts/ToolLayout.astro`
-- Audits: `npm run audit` after `npm run build`
-- Governing docs: `docs/SEO-PLAYBOOK.md`, `docs/KEYWORD-MAP.md`
+- Audits: `npm run audit` after `npm run build` (includes SEO guardrails)
+- Governing docs: `docs/SEO-PLAYBOOK.md`, `docs/SEO-GUARDRAILS.md`, `docs/KEYWORD-MAP.md`
 
 ## Steps (generic)
 1. Read existing patterns in the closest tool/page.

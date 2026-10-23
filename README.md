@@ -74,7 +74,7 @@ src/lib/converters/      # Pure conversion functions
 src/components/tools/    # Tool UIs (islands)
 src/layouts/             # BaseLayout, ToolLayout
 src/pages/               # Routes (tools, guides, category, embed)
-public/                  # robots, ads.txt, _headers, llms.txt, indexnow
+public/                  # robots, ads.txt, _headers, llms.txt, IndexNow key, _redirects
 scripts/audit/           # npm run audit
 tests/converters/        # Vitest + fixtures
 docs/                    # DEPLOYMENT, SEO-GUIDE, ADSENSE, research
@@ -113,7 +113,7 @@ npm run dev
 
 ## Configuration
 
-All owner-specific values live in **`src/config/site.ts`** (overridable via env at build time). Copy **[`.env.example`](.env.example)** to `.env` for local builds; set the same vars in Cloudflare Workers Builds for production (`PUBLIC_SITE_URL` is required there).
+All owner-specific values live in **`src/config/site.ts`** (overridable via env at build time). Copy **[`.env.example`](.env.example)** to `.env` for local builds; set the same vars in Cloudflare Workers Builds for production. `PUBLIC_SITE_URL` defaults to the live workers.dev origin when unset (never `example.com`).
 
 | Field / env | Description |
 |---|---|
@@ -125,7 +125,7 @@ All owner-specific values live in **`src/config/site.ts`** (overridable via env 
 | `PUBLIC_GA4_MEASUREMENT_ID` | Analytics |
 | `PUBLIC_GSC_VERIFICATION` | Search Console meta |
 | `PUBLIC_BING_VERIFICATION` | Bing meta |
-| `PUBLIC_INDEXNOW_KEY` | IndexNow key file name/content |
+| `PUBLIC_INDEXNOW_KEY` / `INDEXNOW_KEY` | IndexNow key; must match `public/<key>.txt` |
 | `defaultOgImage` | OG image path |
 | `lastUpdated` | Sitemap/content stamp |
 
