@@ -19,5 +19,8 @@
     "not_found_handling": "404-page",
     // Match Astro trailingSlash: 'always' (folder index.html → trailing slash)
     "html_handling": "force-trailing-slash"
-  }
+  },
+  // Required by `npx wrangler preview` (Workers Builds PR/preview deploy command).
+  // Empty is fine for this assets-only Worker; keep PUBLIC_* in Builds dashboard env.
+  "previews": {}
 }
