@@ -17,6 +17,12 @@ const DEFAULT_CONTACT_EMAIL = 'hammadiqbal117@gmail.com';
  */
 const DEFAULT_GSC_VERIFICATION = '0-q_NxhBgfgCm4WOLfbe9VrHrjbLzaxh8SXsbo2Q-UU';
 
+/**
+ * Bing Webmaster Tools HTML-tag verification.
+ * Prefer PUBLIC_BING_VERIFICATION; also place public/BingSiteAuth.xml.
+ */
+const DEFAULT_BING_VERIFICATION = '4C21C9C1D577551E07F4764801DB37B6';
+
 /** GA4 measurement ID already live on this Worker. Empty env keeps this default. */
 const DEFAULT_GA4_MEASUREMENT_ID = 'G-L73MEN86ZY';
 
@@ -131,7 +137,9 @@ export const siteConfig = {
     DEFAULT_GSC_VERIFICATION,
   /** Bing Webmaster verification */
   bingVerification:
-    readEnv('PUBLIC_BING_VERIFICATION') || readEnv('PUBLIC_BING_SITE_VERIFICATION') || '',
+    readEnv('PUBLIC_BING_VERIFICATION') ||
+    readEnv('PUBLIC_BING_SITE_VERIFICATION') ||
+    DEFAULT_BING_VERIFICATION,
   /** IndexNow key (also place public/<key>.txt) */
   indexNowKey:
     readEnv('PUBLIC_INDEXNOW_KEY') || readEnv('INDEXNOW_KEY') || DEFAULT_INDEXNOW_KEY,
