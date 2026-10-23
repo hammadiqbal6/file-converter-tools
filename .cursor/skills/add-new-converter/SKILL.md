@@ -11,7 +11,7 @@ description: Add a new client-side converter tool page to this Astro repo (regis
 4. **Tests** — Add fixture(s) under `tests/fixtures/` and `tests/converters/<name>.test.ts`.
 5. **UI** — Create `src/components/tools/<Name>Tool.astro` using `ToolChrome.astro`; `import()` heavy libs inside the convert handler only.
 6. **Route** — Wire in `src/pages/tools/[slug].astro` and optional `src/pages/embed/[slug].astro` if `embeddable: true`.
-7. **Verify** — `npm test && npm run build && npm run audit`.
+7. **Verify** — `npm test && npm run build && npm run audit` (includes SEO guardrails — `docs/SEO-GUARDRAILS.md`).
 8. **PROGRESS.md** — Update checkbox counts and push.
 
 Template for lazy import:

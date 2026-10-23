@@ -1,6 +1,6 @@
 # SEO & launch guide
 
-**Governing docs:** [SEO-PLAYBOOK.md](./SEO-PLAYBOOK.md) (full playbook), [KEYWORD-MAP.md](./KEYWORD-MAP.md) (page intents), [MARKET-RESEARCH.md](./MARKET-RESEARCH.md).
+**Governing docs:** [SEO-PLAYBOOK.md](./SEO-PLAYBOOK.md) (full playbook), [SEO-GUARDRAILS.md](./SEO-GUARDRAILS.md) (hard indexing rules + CI), [KEYWORD-MAP.md](./KEYWORD-MAP.md) (page intents), [MARKET-RESEARCH.md](./MARKET-RESEARCH.md).
 
 ## Pre-launch checklist
 

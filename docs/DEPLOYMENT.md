@@ -4,7 +4,7 @@ This guide walks you from a local checkout to a live **LocalFile Convert** site 
 
 **Stack:** static Astro build → `dist/` folder. No server runtime required. Production host is a Cloudflare Worker (`file-converter-tools`) serving static assets via `wrangler.jsonc` (Workers Builds: `npm run build` → `npx wrangler deploy`).
 
-**Related docs:** [SEO-GUIDE.md](./SEO-GUIDE.md) (indexing), [ADSENSE.md](./ADSENSE.md) (ads), [docs/proof/README.md](./proof/README.md) (evidence bundle).
+**Related docs:** [SEO-GUIDE.md](./SEO-GUIDE.md) (indexing), [SEO-GUARDRAILS.md](./SEO-GUARDRAILS.md) (hard rules / CI), [ADSENSE.md](./ADSENSE.md) (ads), [docs/proof/README.md](./proof/README.md) (evidence bundle).
 
 ---
 

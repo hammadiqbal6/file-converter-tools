@@ -1,26 +1,30 @@
 {
-  // Pure static-assets Worker — no Cloudflare Astro adapter, no Worker script,
-  // no SESSION/IMAGES bindings. Deploy with: npm run build && npx wrangler deploy
+  // Pure static-assets Worker — no Cloudflare Astro adapter, no Worker script.
+  // Match sibling calculators (fiber-arts / pet): assets + html_handling only.
   //
-  // Build-time PUBLIC_* (Astro inlines during `npm run build`) belong in
-  // Cloudflare Workers Builds → Variables — same keys as `.env.example`
-  // (PUBLIC_SITE_URL, PUBLIC_GSC_VERIFICATION, PUBLIC_GA4_MEASUREMENT_ID,
-  // PUBLIC_INDEXNOW_KEY, etc.). Do not put them in wrangler `vars` for this
-  // assets-only Worker: preview deploys use `npx wrangler preview`, which
-  // then requires a `previews.vars` block.
+  // Workers Builds:
+  //   Production:  npm run build → npx wrangler deploy (&& node scripts/indexnow.mjs)
+  //   Other branches (this Worker): npm run build → npx wrangler preview
+  //     → requires empty "previews": {} below (Wrangler ≥4.152).
+  //
+  // Build-time PUBLIC_* belong in Cloudflare Workers Builds → Variables
+  // (.env.example). Do NOT put PUBLIC_* in top-level wrangler "vars" — that
+  // forces previews.vars and does not bake Astro HTML anyway.
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "file-converter-tools",
-  // Current compatibility date for Workers static assets
   "compatibility_date": "2026-10-19",
   "assets": {
-    // Astro SSG output (no adapter → dist/, not dist/client/)
     "directory": "./dist",
-    // Serve nearest 404.html for unknown paths (src/pages/404.astro)
     "not_found_handling": "404-page",
-    // Match Astro trailingSlash: 'always' (folder index.html → trailing slash)
+    // Match Astro trailingSlash: 'always'
     "html_handling": "force-trailing-slash"
   },
-  // Required by `npx wrangler preview` (Workers Builds PR/preview deploy command).
-  // Empty is fine for this assets-only Worker; keep PUBLIC_* in Builds dashboard env.
-  "previews": {}
+  // Required by `npx wrangler preview` (non-production Workers Builds command).
+  "previews": {},
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": true
+    }
+  }
 }

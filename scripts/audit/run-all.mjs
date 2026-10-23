@@ -4,7 +4,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
-const steps = ['seo-audit.mjs', 'adsense-audit.mjs', 'bundle-audit.mjs', '../link-check.mjs'];
+const steps = [
+  'seo-audit.mjs',
+  'seo-guardrails.mjs',
+  'adsense-audit.mjs',
+  'bundle-audit.mjs',
+  '../link-check.mjs',
+];
 
 for (const step of steps) {
   console.log(`\n=== ${step} ===`);

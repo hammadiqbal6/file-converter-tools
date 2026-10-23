@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "audit": "node scripts/audit/run-all.mjs",
     "audit:seo": "node scripts/audit/seo-audit.mjs",
+    "audit:seo-guardrails": "node scripts/audit/seo-guardrails.mjs",
     "audit:adsense": "node scripts/audit/adsense-audit.mjs",
     "audit:bundles": "node scripts/audit/bundle-audit.mjs",
     "link-check": "node scripts/link-check.mjs",
@@ -22,6 +23,8 @@
     "proof:verify": "node scripts/proof/verify-proof.mjs",
     "ci": "npm run proof:verify",
     "deploy": "npx wrangler deploy",
+    "preview:worker": "npx wrangler preview",
+    "versions:upload": "npx wrangler versions upload",
     "indexnow": "node scripts/indexnow.mjs",
     "deploy:indexnow": "npm run deploy && node scripts/indexnow.mjs"
   },

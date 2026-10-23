@@ -95,6 +95,11 @@ if (!/Sitemap:/i.test(robots)) errors.push('robots.txt missing Sitemap directive
 const sitemapIndex = path.join(dist, 'sitemap-index.xml');
 if (!fs.existsSync(sitemapIndex)) errors.push('missing sitemap-index.xml');
 
+// Soft cross-check; hard failures live in seo-guardrails.mjs
+if (/example\.com/i.test(robots)) {
+  errors.push('robots.txt still references example.com (see docs/SEO-GUARDRAILS.md)');
+}
+
 // broken internal links (html pages only)
 const existing = new Set(pages.map((f) => {
   const rel = '/' + path.relative(dist, f).replace(/index\.html$/, '').replace(/\\/g, '/');
