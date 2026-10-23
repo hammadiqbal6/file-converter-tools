@@ -9,6 +9,8 @@ Privacy-first **niche file converters** (Astro 7 static site). All conversion ru
 | [docs/SEO-PLAYBOOK.md](docs/SEO-PLAYBOOK.md) | SEO, technical, GEO, AdSense synthesis |
 | [docs/SEO-GUARDRAILS.md](docs/SEO-GUARDRAILS.md) | Hard do/don’t: site URL, og:image, sitemap alias, IndexNow, wrangler preview |
 | [docs/CUSTOM-DOMAIN.md](docs/CUSTOM-DOMAIN.md) | Cutover: single `PUBLIC_SITE_URL`, Cloudflare domain, 301, GSC |
+| [docs/CONTACT-EMAILJS.md](docs/CONTACT-EMAILJS.md) | Optional `/contact/` EmailJS form (public key only) |
+| [docs/SEO-GUARDRAILS.md](docs/SEO-GUARDRAILS.md) | Title/desc length + llms.txt guide coverage CI |
 | [docs/MARKET-RESEARCH.md](docs/MARKET-RESEARCH.md) | Niche selection evidence |
 | [docs/KEYWORD-MAP.md](docs/KEYWORD-MAP.md) | One primary keyword per URL |
 | [docs/ideas/README.md](docs/ideas/README.md) | 23 ranked ideas + backlog |

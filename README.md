@@ -126,6 +126,7 @@ All owner-specific values live in **`src/config/site.ts`** (overridable via env 
 | `PUBLIC_GSC_VERIFICATION` | Search Console meta |
 | `PUBLIC_BING_VERIFICATION` | Bing meta |
 | `PUBLIC_INDEXNOW_KEY` / `INDEXNOW_KEY` | IndexNow key; must match `public/<key>.txt` |
+| `PUBLIC_EMAILJS_*` | Optional contact form ([docs/CONTACT-EMAILJS.md](docs/CONTACT-EMAILJS.md)) |
 | `defaultOgImage` | OG image path |
 | `lastUpdated` | Sitemap/content stamp |
 

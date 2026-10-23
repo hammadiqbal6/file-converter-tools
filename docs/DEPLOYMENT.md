@@ -177,6 +177,9 @@ Add as **build-time** env vars in **Cloudflare Workers Builds → Settings → V
 | `PUBLIC_ADSENSE_PUBLISHER_ID` | Optional | Empty = ads off |
 | `PUBLIC_INDEXNOW_KEY` / `INDEXNOW_KEY` | Recommended | Keep `public/<key>.txt` in sync |
 | `INDEXNOW_DISABLE` | Preview only | Set `1` to skip post-deploy IndexNow ping |
+| `PUBLIC_EMAILJS_SERVICE_ID` | Optional | With template + public key, enables `/contact/` form ([CONTACT-EMAILJS.md](./CONTACT-EMAILJS.md)) |
+| `PUBLIC_EMAILJS_TEMPLATE_ID` | Optional | EmailJS template ID |
+| `PUBLIC_EMAILJS_PUBLIC_KEY` | Optional | EmailJS **public** key only (never the private key) |
 
 **Deploy command** (Workers Builds → Deploy command; do **not** ping from `build` — the key file must be live first):
 

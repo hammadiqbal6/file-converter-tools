@@ -197,10 +197,20 @@ for (const file of htmlFiles) {
 
   if (!isEmbed && !is404) {
     if (!title) fail(`${rel}: missing <title>`);
-    if (title.length > 60) fail(`${rel}: title length ${title.length} > 60 ("${title}")`);
+    if (title.length < 25 || title.length > 65) {
+      fail(`${rel}: title length ${title.length} outside 25–65 ("${title}")`);
+    }
     if (!desc) fail(`${rel}: missing meta description`);
-    if (desc.length < 50 || desc.length > 165) {
-      fail(`${rel}: meta description length ${desc.length} outside 50–165`);
+    if (desc.length < 70 || desc.length > 160) {
+      fail(`${rel}: meta description length ${desc.length} outside 70–160`);
+    }
+    const ogDesc = $('meta[property="og:description"]').attr('content') || '';
+    const twDesc = $('meta[name="twitter:description"]').attr('content') || '';
+    if (ogDesc && ogDesc !== desc) {
+      fail(`${rel}: og:description does not match meta description`);
+    }
+    if (twDesc && twDesc !== desc) {
+      fail(`${rel}: twitter:description does not match meta description`);
     }
     if (!canonical) fail(`${rel}: missing canonical`);
     if (h1s.length !== 1) fail(`${rel}: expected 1 H1, got ${h1s.length}`);
@@ -335,6 +345,45 @@ if (!fs.existsSync(workerPath)) {
 
 if (!fs.existsSync(path.join(root, 'docs/CUSTOM-DOMAIN.md'))) {
   fail('missing docs/CUSTOM-DOMAIN.md');
+}
+
+// --- llms.txt must list every guide page (URL + one-line summary) ---
+const llmsText = readIfExists('llms.txt') || '';
+if (!llmsText) {
+  fail('missing dist/llms.txt');
+} else {
+  const guidePages = htmlFiles
+    .map((f) => pagePathFromFile(f))
+    .filter((p) => p && p.startsWith('/guides/') && p !== '/guides/');
+
+  let origin = '';
+  try {
+    const guidesIndex = path.join(dist, 'guides/index.html');
+    if (fs.existsSync(guidesIndex)) {
+      const $g = cheerio.load(fs.readFileSync(guidesIndex, 'utf8'));
+      const canonSample = $g('link[rel="canonical"]').attr('href') || '';
+      origin = new URL(canonSample).origin;
+    }
+  } catch {
+    origin = '';
+  }
+
+  for (const guidePath of guidePages) {
+    const full = origin ? `${origin}${guidePath}` : guidePath;
+    const line = llmsText.split(/\r?\n/).find((l) => l.includes(guidePath));
+    if (!line) {
+      fail(`llms.txt missing guide page ${full || guidePath}`);
+      continue;
+    }
+    if (origin && !line.includes(full)) {
+      fail(`llms.txt guide entry must use full URL (${full})`);
+    }
+    // Expect "URL — summary" (em dash or hyphen separator with trailing text)
+    const afterUrl = line.replace(/^-\s*/, '').replace(full, '').replace(guidePath, '').trim();
+    if (!afterUrl || afterUrl.length < 20) {
+      fail(`llms.txt guide ${guidePath} needs a one-line summary after the URL`);
+    }
+  }
 }
 
 console.log('SEO guardrails:', { pages: htmlFiles.length, sitemapUrls: sitemapUrls.size, errors: errors.length });

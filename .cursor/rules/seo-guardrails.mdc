@@ -11,5 +11,5 @@ Follow [docs/SEO-GUARDRAILS.md](docs/SEO-GUARDRAILS.md) and [docs/CUSTOM-DOMAIN.
 - **Sitemap alias:** keep `/sitemap.xml` → `/sitemap-index.xml` 301 in `public/_redirects`.
 - **IndexNow:** real 32-hex key at `public/<key>.txt` (site root); no `000…0` placeholder.
 - **wrangler:** worker 308 (`src/worker.ts`, `run_worker_first`) + `html_handling: "force-trailing-slash"` + `"previews": {}`; no top-level `vars` for `PUBLIC_*`.
-- **AEO:** Hammad byline, Person `@id` `github.com/hammadiqbal6#person`, FAQPage on tools/guides; titles ≤60; meta 50–165.
+- **AEO:** Hammad byline, Person `@id` `github.com/hammadiqbal6#person`, FAQPage on tools/guides; titles 25–65; meta 70–160 (og/twitter match); every guide listed in `llms.txt` with URL + summary.
 - After changes: `npm run build && npm run audit` (guardrails must pass).

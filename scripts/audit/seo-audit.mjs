@@ -55,9 +55,13 @@ for (const file of pages) {
   const robots = $('meta[name="robots"]').attr('content') || '';
 
   if (!title) errors.push(`${urlPath}: missing <title>`);
-  if (title.length > 60) warnings.push(`${urlPath}: title length ${title.length} (>60)`);
+  if (title.length < 25 || title.length > 65) {
+    errors.push(`${urlPath}: title length ${title.length} outside 25–65`);
+  }
   if (!desc) errors.push(`${urlPath}: missing meta description`);
-  if (desc.length > 155) warnings.push(`${urlPath}: meta description ${desc.length} (>155)`);
+  if (desc.length < 70 || desc.length > 160) {
+    errors.push(`${urlPath}: meta description ${desc.length} outside 70–160`);
+  }
   if (h1s.length !== 1) errors.push(`${urlPath}: expected 1 H1, got ${h1s.length}`);
   if (!canonical) errors.push(`${urlPath}: missing canonical`);
   if (!robots.includes('noindex') && !canonical.includes(urlPath.replace(/^\//, '').replace(/\/$/, '') && urlPath !== '/')) {
