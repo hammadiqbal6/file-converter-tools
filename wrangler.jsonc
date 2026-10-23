@@ -1,22 +1,28 @@
+/**
+ * Static Astro output + a tiny Worker for 308 trailing-slash redirects.
+ *
+ * Workers Builds:
+ *   Production:  npm run build → npx wrangler deploy (&& node scripts/indexnow.mjs)
+ *   Other branches (this Worker): npm run build → npx wrangler preview
+ *     → requires empty "previews": {} below (Wrangler ≥4.152).
+ *
+ * Build-time PUBLIC_* belong in Cloudflare Workers Builds → Variables
+ * (.env.example). Do NOT put PUBLIC_* in top-level wrangler "vars" — that
+ * forces previews.vars and does not bake Astro HTML anyway.
+ */
 {
-  // Pure static-assets Worker — no Cloudflare Astro adapter, no Worker script.
-  // Match sibling calculators (fiber-arts / pet): assets + html_handling only.
-  //
-  // Workers Builds:
-  //   Production:  npm run build → npx wrangler deploy (&& node scripts/indexnow.mjs)
-  //   Other branches (this Worker): npm run build → npx wrangler preview
-  //     → requires empty "previews": {} below (Wrangler ≥4.152).
-  //
-  // Build-time PUBLIC_* belong in Cloudflare Workers Builds → Variables
-  // (.env.example). Do NOT put PUBLIC_* in top-level wrangler "vars" — that
-  // forces previews.vars and does not bake Astro HTML anyway.
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "file-converter-tools",
   "compatibility_date": "2026-10-19",
+  // Worker issues 308 trailing-slash redirects before assets (html_handling alone uses 307)
+  "main": "src/worker.ts",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    // Astro SSG with src/pages/404.astro → dist/404.html
     "not_found_handling": "404-page",
-    // Match Astro trailingSlash: 'always'
+    // Match Astro trailingSlash: 'always' (slash redirects handled in worker as 308)
     "html_handling": "force-trailing-slash"
   },
   // Required by `npx wrangler preview` (non-production Workers Builds command).

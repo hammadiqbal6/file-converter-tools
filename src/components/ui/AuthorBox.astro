@@ -9,7 +9,11 @@ const { reviewed = true, dateModified, datePublished } = Astro.props;
 ---
 <aside class="author-box" aria-label="Authorship">
   <p>
-    <strong>{siteConfig.defaultAuthor.name}</strong> — {siteConfig.defaultAuthor.role}
+    <strong>{siteConfig.defaultAuthor.name}</strong>
+    {siteConfig.defaultAuthor.fullName !== siteConfig.defaultAuthor.name
+      ? ` (${siteConfig.defaultAuthor.fullName})`
+      : ''}{' '}
+    — {siteConfig.defaultAuthor.role}
   </p>
   <p class="meta-row">
     {datePublished && <span>Published: <time datetime={datePublished}>{datePublished}</time></span>}

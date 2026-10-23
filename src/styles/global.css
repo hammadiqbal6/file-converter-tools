@@ -254,8 +254,21 @@ main {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  /* Brand ink for WCAG AA on --color-bg (accent failed contrast on small caps) */
+  color: var(--color-brand);
 }
+
+.answer-first {
+  margin: 0.75rem 0 0;
+  font-size: 1.05rem;
+  color: var(--color-ink);
+  max-width: 42rem;
+}
+
+.author-meta {
+  margin-top: 0.75rem;
+}
+
 
 .btn,
 button.btn,
@@ -607,9 +620,16 @@ a.btn {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: var(--space-4);
+  padding: var(--space-3);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   display: none;
+  font-size: 0.875rem;
+  max-width: 22rem;
+}
+
+.cookie-banner p {
+  margin: 0;
+  color: var(--color-ink-muted);
 }
 
 .cookie-banner.is-visible {

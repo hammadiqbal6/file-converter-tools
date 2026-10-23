@@ -37,4 +37,5 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://file-converter-tools.hammadiqbal117.workers.dev/sitemap-index.xml
+# Sitemap origin patched at build from PUBLIC_SITE_URL / DEFAULT_SITE_URL
+Sitemap: __SITE_ORIGIN__/sitemap-index.xml

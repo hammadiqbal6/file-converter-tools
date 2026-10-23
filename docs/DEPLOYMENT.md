@@ -4,7 +4,9 @@ This guide walks you from a local checkout to a live **LocalFile Convert** site 
 
 **Stack:** static Astro build → `dist/` folder. No server runtime required. Production host is a Cloudflare Worker (`file-converter-tools`) serving static assets via `wrangler.jsonc` (Workers Builds: `npm run build` → `npx wrangler deploy`).
 
-**Related docs:** [SEO-GUIDE.md](./SEO-GUIDE.md) (indexing), [SEO-GUARDRAILS.md](./SEO-GUARDRAILS.md) (hard rules / CI), [ADSENSE.md](./ADSENSE.md) (ads), [docs/proof/README.md](./proof/README.md) (evidence bundle).
+**Related docs:** [SEO-GUIDE.md](./SEO-GUIDE.md) (indexing), [SEO-GUARDRAILS.md](./SEO-GUARDRAILS.md) (hard rules / CI), [CUSTOM-DOMAIN.md](./CUSTOM-DOMAIN.md) (origin cutover — single `PUBLIC_SITE_URL`), [ADSENSE.md](./ADSENSE.md) (ads), [docs/proof/README.md](./proof/README.md) (evidence bundle).
+
+> **Do not hardcode** `*.workers.dev` (or a future custom host) in pages/components/`public/`. Set `PUBLIC_SITE_URL` at build time; see [CUSTOM-DOMAIN.md](./CUSTOM-DOMAIN.md). Keep wrangler `"previews": {}` and avoid top-level `vars` for `PUBLIC_*`.
 
 ---
 

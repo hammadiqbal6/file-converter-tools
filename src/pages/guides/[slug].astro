@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import AuthorBox from '../../components/ui/AuthorBox.astro';
+import AuthorMeta from '../../components/ui/AuthorMeta.astro';
 import AdSlot from '../../components/ads/AdSlot.astro';
 import { guides, getGuide } from '../../data/guides';
 import { getTool, toolPath } from '../../data/tools';
@@ -14,6 +15,15 @@ export function getStaticPaths() {
 const guide = getGuide(Astro.params.slug!);
 if (!guide) throw new Error('Unknown guide');
 
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+}
+
+const pageUrl = absoluteUrl(`/guides/${guide.slug}/`);
+const relatedGuideList = (guide.relatedGuides || [])
+  .map((slug) => getGuide(slug))
+  .filter(Boolean);
+
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -21,9 +31,14 @@ const articleLd = {
   description: guide.description,
   datePublished: guide.datePublished,
   dateModified: guide.dateModified,
-  author: { '@type': 'Organization', name: siteConfig.organizationName },
-  publisher: { '@type': 'Organization', name: siteConfig.organizationName, url: absoluteUrl('/') },
-  mainEntityOfPage: absoluteUrl(`/guides/${guide.slug}/`),
+  author: {
+    '@type': 'Person',
+    '@id': siteConfig.personId,
+    name: siteConfig.defaultAuthor.name,
+    url: absoluteUrl('/authors/'),
+  },
+  publisher: { '@id': absoluteUrl('/#organization') },
+  mainEntityOfPage: pageUrl,
 };
 
 const breadcrumbLd = {
@@ -32,8 +47,18 @@ const breadcrumbLd = {
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
     { '@type': 'ListItem', position: 2, name: 'Guides', item: absoluteUrl('/guides/') },
-    { '@type': 'ListItem', position: 3, name: guide.title, item: absoluteUrl(`/guides/${guide.slug}/`) },
+    { '@type': 'ListItem', position: 3, name: guide.title, item: pageUrl },
   ],
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: guide.faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: stripHtml(f.answer) },
+  })),
 };
 ---
 
@@ -42,15 +67,15 @@ const breadcrumbLd = {
   description={guide.description}
   canonicalPath={`/guides/${guide.slug}/`}
   ogType="article"
-  jsonLd={[articleLd, breadcrumbLd]}
+  ogImage={`/og/guides/${guide.slug}.svg`}
+  jsonLd={[articleLd, breadcrumbLd, faqLd]}
+  lastUpdated={guide.dateModified}
 >
   <div class="container">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: guide.title }]} />
     <article class="content-prose">
       <h1>{guide.title}</h1>
-      <p class="meta-row">
-        <span>Updated <time datetime={guide.dateModified}>{guide.dateModified}</time></span>
-      </p>
+      <AuthorMeta lastUpdated={guide.dateModified} lastReviewed={guide.dateModified} />
       <div class="answer-box"><p>{guide.answerFirst}</p></div>
       <div class="takeaways">
         <h2>Key takeaways</h2>
@@ -94,5 +119,23 @@ const breadcrumbLd = {
         })}
       </div>
     </section>
+    {
+      relatedGuideList.length > 0 && (
+        <section class="related">
+          <h2>Related guides</h2>
+          <div class="card-grid">
+            {relatedGuideList.map(
+              (g) =>
+                g && (
+                  <a class="tool-card" href={`/guides/${g.slug}/`}>
+                    <h3>{g.title}</h3>
+                    <p>{g.description}</p>
+                  </a>
+                ),
+            )}
+          </div>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>

@@ -15,26 +15,48 @@ if (!entry) throw new Error('Unknown category');
 const [key, cat] = entry;
 const list = tools.filter((t) => t.category === (key as ToolCategory));
 const relatedGuides = guides.filter((g) => g.relatedTools.some((rt) => list.some((t) => t.slug === rt)));
+const pageUrl = absoluteUrl(`/category/${cat.slug}/`);
+
+const desc =
+  cat.description.length >= 50 && cat.description.length <= 165
+    ? cat.description
+    : `${cat.description} Private in-browser converters — your file never leaves your device.`.slice(0, 160);
+
+const title = cat.name.length + 21 <= 60 ? cat.name : cat.name.slice(0, 40);
 ---
 
 <BaseLayout
-  title={`${cat.name} | ${siteConfig.name}`}
-  description={cat.description}
+  title={title}
+  description={desc}
   canonicalPath={`/category/${cat.slug}/`}
-  jsonLd={{
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: cat.name,
-    description: cat.description,
-    url: absoluteUrl(`/category/${cat.slug}/`),
-  }}
+  jsonLd={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: cat.name,
+      description: cat.description,
+      url: pageUrl,
+      isPartOf: { '@id': absoluteUrl('/#website') },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/') },
+        { '@type': 'ListItem', position: 2, name: 'Tools', item: absoluteUrl('/tools/') },
+        { '@type': 'ListItem', position: 3, name: cat.name, item: pageUrl },
+      ],
+    },
+  ]}
 >
   <div class="container">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Tools', href: '/tools/' }, { name: cat.name }]} />
     <header class="hero" style="padding-block:0 1rem">
       <h1>{cat.name}</h1>
-      <p class="lead">{cat.description}</p>
-      <div class="answer-box"><p><strong>Hub:</strong> {cat.primaryKeyword} tools that run privately in your browser, interlinked with guides for topical depth.</p></div>
+      <p class="lead answer-first">
+        {cat.description} Each converter on this hub runs in your browser after you choose a file — your file never
+        leaves your device. Browse the tools below or read the related guides for format trade-offs and limits.
+      </p>
     </header>
     <div class="card-grid">
       {list.map((t) => (

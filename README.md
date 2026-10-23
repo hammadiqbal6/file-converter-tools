@@ -113,7 +113,7 @@ npm run dev
 
 ## Configuration
 
-All owner-specific values live in **`src/config/site.ts`** (overridable via env at build time). Copy **[`.env.example`](.env.example)** to `.env` for local builds; set the same vars in Cloudflare Workers Builds for production. `PUBLIC_SITE_URL` defaults to the live workers.dev origin when unset (never `example.com`).
+All owner-specific values live in **`src/config/site.ts`** (overridable via env at build time). Copy **[`.env.example`](.env.example)** to `.env` for local builds; set the same vars in Cloudflare Workers Builds for production. `PUBLIC_SITE_URL` / `DEFAULT_SITE_URL` is the single canonical origin (never `example.com`; do not hardcode hosts in pages). Custom domain cutover: [`docs/CUSTOM-DOMAIN.md`](docs/CUSTOM-DOMAIN.md).
 
 | Field / env | Description |
 |---|---|

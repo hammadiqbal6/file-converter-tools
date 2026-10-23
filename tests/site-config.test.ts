@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CANONICAL_PERSON_ID,
   DEFAULT_INDEXNOW_KEY,
   DEFAULT_SITE_URL,
   absoluteUrl,
@@ -14,6 +15,12 @@ describe('site SEO defaults', () => {
     expect(DEFAULT_SITE_URL).not.toContain('example.com');
     expect(siteConfig.url).not.toContain('example.com');
     expect(siteConfig.url.replace(/\/$/, '')).toBe(DEFAULT_SITE_URL);
+  });
+
+  it('exposes a stable Person @id and named Hammad author', () => {
+    expect(CANONICAL_PERSON_ID).toBe('https://github.com/hammadiqbal6#person');
+    expect(siteConfig.personId).toBe(CANONICAL_PERSON_ID);
+    expect(siteConfig.defaultAuthor.name).toMatch(/Hammad/i);
   });
 
   it('uses a non-placeholder IndexNow key', () => {
