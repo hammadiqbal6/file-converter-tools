@@ -1,18 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
-import { siteConfig } from '../config/site';
+import { siteConfig, absoluteUrl } from '../config/site';
+
+const description =
+  'Meet Hammad, maintainer of LocalFile Convert — private in-browser file converters with cited format specs and honest limits.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: 'Authors & reviewers',
+  url: absoluteUrl('/authors/'),
+  mainEntity: { '@id': siteConfig.personId },
+};
 ---
-<BaseLayout title="Authors & Reviewers" description={`Author and reviewer bios for ${siteConfig.name}.`} canonicalPath="/authors/">
+<BaseLayout title="Authors & Reviewers" description={description} canonicalPath="/authors/" jsonLd={jsonLd}>
   <div class="container content-prose">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Authors' }]} />
     <h1>Authors & reviewers</h1>
     <div class="author-box">
-      <p><strong>{siteConfig.defaultAuthor.name}</strong></p>
+      <p><strong>{siteConfig.defaultAuthor.name}</strong> ({siteConfig.defaultAuthor.fullName})</p>
       <p>{siteConfig.defaultAuthor.role}</p>
+      <p>{siteConfig.defaultAuthor.bio}</p>
       <p>
-        Builds and documents in-browser converters, verifies behavior against fixtures, and cites format specifications
-        (YAML, JSON, TOML, PDF, STL, and image formats). Replace this placeholder with a real bio before launch.
+        Profiles:{' '}
+        {siteConfig.authorSameAs.map((href, i) => (
+          <>
+            {i > 0 && ' · '}
+            <a href={href} rel="noopener noreferrer">{href.replace('https://', '')}</a>
+          </>
+        ))}
       </p>
     </div>
     <p>Contact: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></p>

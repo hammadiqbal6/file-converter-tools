@@ -8,6 +8,7 @@ Privacy-first **niche file converters** (Astro 7 static site). All conversion ru
 |---|---|
 | [docs/SEO-PLAYBOOK.md](docs/SEO-PLAYBOOK.md) | SEO, technical, GEO, AdSense synthesis |
 | [docs/SEO-GUARDRAILS.md](docs/SEO-GUARDRAILS.md) | Hard do/don’t: site URL, og:image, sitemap alias, IndexNow, wrangler preview |
+| [docs/CUSTOM-DOMAIN.md](docs/CUSTOM-DOMAIN.md) | Cutover: single `PUBLIC_SITE_URL`, Cloudflare domain, 301, GSC |
 | [docs/MARKET-RESEARCH.md](docs/MARKET-RESEARCH.md) | Niche selection evidence |
 | [docs/KEYWORD-MAP.md](docs/KEYWORD-MAP.md) | One primary keyword per URL |
 | [docs/ideas/README.md](docs/ideas/README.md) | 23 ranked ideas + backlog |
@@ -16,11 +17,14 @@ Privacy-first **niche file converters** (Astro 7 static site). All conversion ru
 
 ### SEO / Workers hard rules (never regress)
 
-- Default `PUBLIC_SITE_URL` / `site` → live workers.dev — **never** `example.com`.
+- **Single origin:** `PUBLIC_SITE_URL` or `DEFAULT_SITE_URL` in `src/config/site.ts` — used for canonicals, sitemap, robots, llms.txt, JSON-LD, OG, IndexNow. **Never** hardcode `*.workers.dev` elsewhere (audit fails). Custom domain cutover: [docs/CUSTOM-DOMAIN.md](docs/CUSTOM-DOMAIN.md).
+- Default origin today is live workers.dev — **never** `example.com`.
 - `absoluteUrl()` must not append `/` to file assets (`og:image`, etc.).
 - Ship `public/_redirects`: `/sitemap.xml` → `/sitemap-index.xml` 301.
 - IndexNow: real `public/<32-hex>.txt` at site root (no `000…0` placeholder).
-- `wrangler.jsonc`: `html_handling: "force-trailing-slash"` + empty `"previews": {}`; no top-level `vars` for `PUBLIC_*`.
+- `wrangler.jsonc`: worker `main` + `run_worker_first` (308 slash redirects, FILE_EXT `{1,16}`) + `html_handling: "force-trailing-slash"` + empty `"previews": {}`; no top-level `vars` for `PUBLIC_*`.
+- Titles ≤60; meta descriptions 50–165; tool pages need Hammad byline + FAQPage + topical guide link; guides ≥800 words.
+- `/_astro/*` immutable `Cache-Control` in `public/_headers`.
 - After build: `npm run audit` (includes `seo-guardrails.mjs`) must pass.
 
 ## Architecture

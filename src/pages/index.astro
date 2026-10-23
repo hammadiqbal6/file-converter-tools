@@ -4,37 +4,38 @@ import { siteConfig, absoluteUrl } from '../config/site';
 import { tools, categories, toolPath } from '../data/tools';
 import { guides } from '../data/guides';
 
-const title = `${siteConfig.name} – Private In-Browser File Converters`;
+const title = 'Private In-Browser File Converters';
 const description =
-  'Free niche file converters that run 100% in your browser: YAML/JSON, CSV, PSD to PNG, HEIC to JPG, STL, PDF statements, and more. Your files never leave your device.';
+  'Convert YAML, JSON, CSV, HEIC, PSD, SVG, STL, and bank-statement PDFs in your browser. Free niche converters — your file never leaves your device.';
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': absoluteUrl('/#website'),
     name: siteConfig.name,
     url: absoluteUrl('/'),
     description: siteConfig.tagline,
-    publisher: { '@type': 'Organization', name: siteConfig.organizationName, url: absoluteUrl('/') },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: siteConfig.organizationName,
-    url: absoluteUrl('/'),
-    email: siteConfig.contactEmail,
+    inLanguage: 'en-US',
+    publisher: { '@id': absoluteUrl('/#organization') },
+    author: { '@id': siteConfig.personId },
   },
 ];
 ---
 
-<BaseLayout title={title} description={description} canonicalPath="/" jsonLd={jsonLd} prefetch={['/tools/', '/guides/']}>
+<BaseLayout title={title} description={description} canonicalPath="/" jsonLd={jsonLd} prefetch={['/tools/', '/guides/']} ogImage="/og/home.svg">
   <div class="container">
     <section class="hero">
       <p class="eyebrow">{siteConfig.name}</p>
       <h1>Private file converters that never upload your files</h1>
-      <p class="lead">
-        Profession-specific format pairs — YAML, JSON, CSV, PSD, HEIC, STL, and bank-statement PDFs — converted entirely
-        in your browser. Free, fast, and built for privacy.
+      <p class="lead answer-first">
+        LocalFile Convert runs niche format pairs — YAML↔JSON, CSV, Markdown, PSD, HEIC, SVG, STL, and text-based bank
+        PDFs — entirely in your browser with on-demand libraries. Choose a tool, convert on-device, and download the
+        result. Your file never leaves your device; check the Network tab during conversion to verify.
+      </p>
+      <p class="meta-row author-meta">
+        <span><strong>Author:</strong> <a href="/authors/" rel="author">{siteConfig.defaultAuthor.name}</a></span>
+        <span><strong>Updated:</strong> <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></span>
       </p>
       <div class="btn-group">
         <a class="btn btn-primary" href="/tools/">Browse converters</a>
@@ -87,13 +88,14 @@ const jsonLd = [
     <section class="related">
       <h2>Guides</h2>
       <div class="card-grid">
-        {guides.slice(0, 3).map((g) => (
+        {guides.slice(0, 6).map((g) => (
           <a class="tool-card" href={`/guides/${g.slug}/`}>
             <h3>{g.title}</h3>
             <p>{g.description}</p>
           </a>
         ))}
       </div>
+      <p style="margin-top:1rem"><a href="/guides/">All guides →</a></p>
     </section>
   </div>
 </BaseLayout>

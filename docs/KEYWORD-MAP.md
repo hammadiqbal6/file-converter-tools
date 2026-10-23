@@ -32,6 +32,13 @@ Each page has **one primary keyword** and a **secondary cluster**. Do not create
 | `/guides/csv-json-pipelines/` | csv to json pipeline | json to csv for excel | Informational |
 | `/guides/stl-formats-explained/` | stl ascii vs binary | stl to obj; stl to gcode limits | Informational |
 | `/guides/bank-statements-as-data/` | pdf bank statement to csv | statement to spreadsheet limits | Informational |
+| `/guides/heic-vs-jpg/` | heic vs jpg | open heic on windows; heic to jpeg | Informational |
+| `/guides/svg-to-high-res-png/` | svg to high resolution png | rasterize svg; svg export png | Informational |
+| `/guides/markdown-html-for-blogs/` | markdown to html for blogs | md to html; gfm email html | Informational |
+| `/guides/xml-json-attributes/` | xml to json attributes | xml to json arrays; attribute mapping | Informational |
+| `/guides/toml-vs-yaml-vs-json/` | toml vs yaml vs json | toml vs yaml; cargo toml to json | Informational |
+| `/guides/stl-gcode-slicer-basics/` | stl to gcode slicer basics | how slicers work; gcode from stl | Informational |
+| `/guides/webp-vs-png-vs-jpg/` | webp vs png vs jpg | webp to png; png to jpg | Informational |
 
 **Skipped (documented):** `mp3 to midi` (no reliable client-side approach), `dwg to pdf` (no reliable client-side library meeting privacy bar).
 

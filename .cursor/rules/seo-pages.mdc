@@ -1,13 +1,14 @@
 ---
-description: SEO requirements for every indexable page
-globs: src/pages/**/*.astro,src/layouts/**/*.astro,src/data/tools.ts
+description: SEO requirements for tool, guide, and hub pages
+globs: src/pages/**/*.astro,src/layouts/**/*.astro,src/data/**/*.ts
 alwaysApply: false
 ---
 
-- One H1, unique title (<60 chars) and meta description (<155).
-- Self-referencing canonical via `BaseLayout` / `ToolLayout` (workers.dev or custom domain — never `example.com`).
+- One H1, unique title (≤60 chars final `<title>`) and meta description (50–165).
+- Self-referencing canonical via `BaseLayout` / `ToolLayout` using `absoluteUrl()` / `PUBLIC_SITE_URL` (never hardcode hosts; never `example.com`).
 - `og:image` absolute URL must not end with `/`.
-- Tool pages: converter above the fold; 600+ words of real content in `tools.ts`.
-- JSON-LD must match visible content; no fake ratings.
+- Tool pages: answer-first intro (40–60 words), visible Hammad author byline, FAQPage (3–6), topical guide links, converter above the fold; 600+ words in `tools.ts`.
+- Guides: ~1000+ words (audit ≥800), FAQPage, author/dateModified, topical tools only + guide↔guide links.
+- JSON-LD must match visible content; Person `@id` `https://github.com/hammadiqbal6#person`; no fake ratings.
 - Follow `docs/KEYWORD-MAP.md` — no duplicate primary intent.
-- Governing playbook: `docs/SEO-PLAYBOOK.md`. Hard indexing rules: `docs/SEO-GUARDRAILS.md`.
+- Governing playbook: `docs/SEO-PLAYBOOK.md`. Hard indexing rules: `docs/SEO-GUARDRAILS.md`. Domain cutover: `docs/CUSTOM-DOMAIN.md`.

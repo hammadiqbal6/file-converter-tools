@@ -27,6 +27,31 @@ const DEFAULT_GA4_MEASUREMENT_ID = 'G-L73MEN86ZY';
 export const DEFAULT_INDEXNOW_KEY = 'e0d80dcb289204f10564144f215e4a8e';
 
 /**
+ * Stable Person @id shared across sister tool sites so Google can tie authorship
+ * to one entity. GitHub profile is the canonical cross-site id.
+ */
+export const CANONICAL_PERSON_ID = 'https://github.com/hammadiqbal6#person';
+
+/** Public profiles for Person.sameAs (real profiles only). */
+export const AUTHOR_SAME_AS = ['https://github.com/hammadiqbal6'] as const;
+
+/** Bylines when PUBLIC_AUTHOR_NAME is unset — named maintainer. */
+export const DEFAULT_AUTHOR_NAME = 'Hammad';
+
+/** Full display name for authors page / schema name. */
+export const DEFAULT_AUTHOR_FULL_NAME = 'Hammad Iqbal';
+
+/** Role label when PUBLIC_AUTHOR_ROLE is unset. */
+export const DEFAULT_AUTHOR_ROLE = 'Site maintainer';
+
+/**
+ * Honest default bio when PUBLIC_AUTHOR_BIO is unset.
+ * No invented credentials.
+ */
+export const DEFAULT_AUTHOR_BIO =
+  'I build and maintain LocalFile Convert as an independent developer. Converters run entirely in the browser; I document real format limits, cite specs (YAML, JSON, TOML, PDF, STL, image formats), and keep fixtures honest. I do not claim to replace vendor software for production CAD, print, or finance workflows.';
+
+/**
  * Read a PUBLIC_* / build env var from Vite/Astro (`import.meta.env`) or Node
  * (`process.env`). Empty/whitespace → ''.
  */
@@ -79,11 +104,17 @@ export const siteConfig = {
   twitterHandle: '',
   /** Organization legal / display name */
   organizationName: 'LocalFile Convert',
-  /** Placeholder author for E-E-A-T bylines */
+  /** Named author for E-E-A-T bylines (visible “Hammad” on tool pages) */
   defaultAuthor: {
-    name: 'Editorial Team',
-    role: 'Tools & Documentation',
+    name: readEnv('PUBLIC_AUTHOR_NAME') || DEFAULT_AUTHOR_NAME,
+    fullName: readEnv('PUBLIC_AUTHOR_FULL_NAME') || DEFAULT_AUTHOR_FULL_NAME,
+    role: readEnv('PUBLIC_AUTHOR_ROLE') || DEFAULT_AUTHOR_ROLE,
+    bio: readEnv('PUBLIC_AUTHOR_BIO') || DEFAULT_AUTHOR_BIO,
   },
+  /** Stable Person @id (cross-site) */
+  personId: CANONICAL_PERSON_ID,
+  /** Person.sameAs profiles */
+  authorSameAs: AUTHOR_SAME_AS,
   /** Google AdSense publisher ID — leave empty to disable ads */
   adsensePublisherId: readEnv('PUBLIC_ADSENSE_PUBLISHER_ID') || '',
   /** Enable Auto ads when publisher ID is set */
@@ -109,7 +140,9 @@ export const siteConfig = {
   /** Theme color for manifest / browser chrome */
   themeColor: '#0f3d3e',
   /** Last content refresh stamp for homepage */
-  lastUpdated: '2026-10-19',
+  lastUpdated: '2026-10-23',
+  /** ISO build/content date used in bylines when a page omits its own */
+  buildDate: '2026-10-23',
 } as const;
 
 export type SiteConfig = typeof siteConfig;

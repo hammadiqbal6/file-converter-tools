@@ -18,11 +18,19 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DEFAULT_KEY = 'e0d80dcb289204f10564144f215e4a8e';
-const DEFAULT_SITE = 'https://file-converter-tools.hammadiqbal117.workers.dev';
 const BATCH_SIZE = 10_000;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
+
+/** Single origin setting — same as src/config/site.ts DEFAULT_SITE_URL */
+function readDefaultSiteUrl() {
+  const siteTs = readFileSync(join(ROOT, 'src/config/site.ts'), 'utf8');
+  const m = siteTs.match(/export const DEFAULT_SITE_URL\s*=\s*\n?\s*['"]([^'"]+)['"]/);
+  if (!m) throw new Error('indexnow: could not parse DEFAULT_SITE_URL from src/config/site.ts');
+  return m[1];
+}
+const DEFAULT_SITE = readDefaultSiteUrl();
 
 function log(...args) {
   console.log('[indexnow]', ...args);

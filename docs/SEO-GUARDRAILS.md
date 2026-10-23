@@ -1,22 +1,28 @@
 # SEO guardrails (file-converter-tools)
 
-Hard requirements so builds never ship the indexing bugs that left this site at PR #4 while siblings moved on. Enforced by `npm run audit` (`scripts/audit/seo-guardrails.mjs`) after `npm run build`.
+Hard requirements so builds never ship indexing bugs. Enforced by `npm run audit` (`scripts/audit/seo-guardrails.mjs`) after `npm run build`.
 
-**Canonical origin:** `https://file-converter-tools.hammadiqbal117.workers.dev`  
-**Governing docs:** [SEO-PLAYBOOK.md](./SEO-PLAYBOOK.md), [SEO-GUIDE.md](./SEO-GUIDE.md), [DEPLOYMENT.md](./DEPLOYMENT.md)
+**Canonical origin (single setting):** `PUBLIC_SITE_URL` or fallback `DEFAULT_SITE_URL` in `src/config/site.ts` (currently the live workers.dev URL). Do not hardcode hosts elsewhere — see [CUSTOM-DOMAIN.md](./CUSTOM-DOMAIN.md).
+
+**Governing docs:** [SEO-PLAYBOOK.md](./SEO-PLAYBOOK.md), [SEO-GUIDE.md](./SEO-GUIDE.md), [DEPLOYMENT.md](./DEPLOYMENT.md), [CUSTOM-DOMAIN.md](./CUSTOM-DOMAIN.md)
 
 ---
 
-## Issues fixed (this parity pass)
+## Issues fixed (parity + AEO remediation)
 
 | Bug | Cause | Fix |
 |---|---|---|
-| GSC 0 pages / sitemap on `example.com` | `site.ts` + `astro.config` fell back to `https://example.com` when `PUBLIC_SITE_URL` unset; Astro `site` baked that into `@astrojs/sitemap` | Default to live workers.dev; `astro.config.mjs` reads `process.env.PUBLIC_SITE_URL \|\| DEFAULT_SITE_URL` |
-| `og:image` → `…/og-default.png/` 404 | `absoluteUrl()` always appended `/` | Preserve path as-given; never force trailing slash on file assets |
-| `/sitemap.xml` 404 | No alias to Astro’s `sitemap-index.xml` | `public/_redirects` (+ Vercel/Netlify) 301 → `/sitemap-index.xml` |
-| IndexNow placeholder `000…0` | Dummy key under `public/indexnow/` | Real 32-hex key at `public/<key>.txt` + `scripts/indexnow.mjs` |
-| Trailing-slash mismatch | Missing Workers `html_handling` | `wrangler.jsonc` → `"html_handling": "force-trailing-slash"` |
-| PR Workers Builds fail on `wrangler preview` | Top-level `vars` without `previews`, then missing `previews` block entirely | Assets-only: **no** runtime `vars` for `PUBLIC_*`; require empty `"previews": {}` for preview deploys |
+| GSC 0 pages / sitemap on `example.com` | fallback `example.com` | Default to live workers.dev; `astro.config` reads `PUBLIC_SITE_URL \|\| DEFAULT_SITE_URL` |
+| `og:image` → `…/og-default.png/` 404 | `absoluteUrl()` appended `/` | Preserve path as-given |
+| `/sitemap.xml` 404 | No alias | `public/_redirects` 301 → `/sitemap-index.xml` |
+| IndexNow placeholder | Dummy key | Real `public/<key>.txt` + `scripts/indexnow.mjs` |
+| Trailing slash 307 | assets `html_handling` alone | `src/worker.ts` 308 + `run_worker_first` (FILE_EXT `{1,16}`) |
+| PR `wrangler preview` fails | top-level `vars` / missing `previews` | Assets + worker: **no** top-level `PUBLIC_*` vars; require `"previews": {}` |
+| `/_astro/*` max-age=0 | missing header | `public/_headers` immutable for `/_astro/*` |
+| Thin E-E-A-T | no Person/FAQ/byline | Visible Hammad byline, Person `@id` `github.com/hammadiqbal6#person`, FAQPage, dateModified |
+| Tool→guide gaps | only privacy guide | Topical `relatedGuides` + Learn more blocks |
+| Thin guides | &lt;500 words | ~1000+ words, FAQPage, tables, worked examples |
+| Hardcoded workers.dev | scattered URLs | Single origin setting + CI fail on stray `workers.dev` |
 
 ---
 
@@ -24,26 +30,28 @@ Hard requirements so builds never ship the indexing bugs that left this site at 
 
 ### Do
 
-- [ ] Keep `DEFAULT_SITE_URL` in `src/config/site.ts` equal to the live workers.dev origin (never `example.com`).
+- [ ] Keep `DEFAULT_SITE_URL` as the only code default origin; override with `PUBLIC_SITE_URL` for custom domains.
 - [ ] Set `site:` in `astro.config.mjs` from `process.env.PUBLIC_SITE_URL || DEFAULT_SITE_URL`.
 - [ ] Pass page paths to `absoluteUrl()` **with** trailing slash; pass asset paths **without**.
-- [ ] Keep `public/_redirects` line: `/sitemap.xml /sitemap-index.xml 301`.
-- [ ] Keep IndexNow key file at **site root** `public/<32-hex>.txt` matching `DEFAULT_INDEXNOW_KEY` / env.
-- [ ] Keep `assets.html_handling: "force-trailing-slash"` and `"previews": {}` in `wrangler.jsonc`.
-- [ ] Put `PUBLIC_*` in Cloudflare Workers Builds **dashboard** env (build-time), not wrangler `vars`.
-- [ ] Production deploy: `npx wrangler deploy && node scripts/indexnow.mjs` (ping only after the key file is live).
-- [ ] Run `npm run build && npm run audit` before merge; CI must stay green.
+- [ ] Keep `public/_redirects`: `/sitemap.xml /sitemap-index.xml 301`.
+- [ ] Keep IndexNow key at **site root** `public/<32-hex>.txt`.
+- [ ] Keep worker `main` + `run_worker_first` + `html_handling: force-trailing-slash` + `"previews": {}`.
+- [ ] Put `PUBLIC_*` in Workers Builds **dashboard** env, not wrangler `vars`.
+- [ ] Titles ≤60 characters (final `<title>`); meta descriptions 50–165.
+- [ ] Tool pages: 1 H1, answer-first intro (not tagline-first), Hammad byline, FAQPage 3–6 Qs, ≥1 topical guide link.
+- [ ] Guides: ≥800 words (target ~1000+), FAQPage, author/dateModified, topical tool links only.
+- [ ] `/_astro/*` immutable cache; image/favicon caching in `public/_headers`.
+- [ ] Run `npm run build && npm run audit` before merge.
 
 ### Don’t
 
-- [ ] Don’t use `https://example.com` (or other placeholders) as a site URL fallback.
+- [ ] Don’t hardcode `*.workers.dev` (or the future custom domain) outside the allowlist — use the single origin setting.
+- [ ] Don’t use `https://example.com` as a site URL fallback.
 - [ ] Don’t append trailing slashes to file URLs (`og:image`, favicons, IndexNow `.txt`).
-- [ ] Don’t put IndexNow keys under `public/indexnow/` only — IndexNow expects `https://host/<key>.txt`.
-- [ ] Don’t commit `00000000000000000000000000000000.txt` as the live key.
-- [ ] Don’t add wrangler top-level `vars` for `PUBLIC_*` on this assets-only Worker (preview builds need `previews.vars` and still won’t bake Astro HTML).
-- [ ] Don’t remove `"previews": {}` — Workers Builds PR command is `npx wrangler preview` and requires it.
-- [ ] Don’t noindex production HTML via a host-wide `_headers` rule that matches `*.workers.dev`.
-- [ ] Don’t change routes / custom domain in SEO parity PRs unless explicitly asked.
+- [ ] Don’t add wrangler top-level `vars` for `PUBLIC_*` without `previews.vars`.
+- [ ] Don’t remove `"previews": {}`.
+- [ ] Don’t noindex production HTML via a host-wide `_headers` rule for `*.workers.dev`.
+- [ ] Don’t change custom domain / routes unless explicitly cutting over ([CUSTOM-DOMAIN.md](./CUSTOM-DOMAIN.md)).
 
 ---
 
@@ -51,10 +59,16 @@ Hard requirements so builds never ship the indexing bugs that left this site at 
 
 | Check | Where |
 |---|---|
-| No `example.com` in dist sitemaps, robots, llms, canonicals, `og:url` | `scripts/audit/seo-guardrails.mjs` |
-| No `og:image` URL ending in `/` | same |
-| No placeholder IndexNow key; real `public/<key>.txt` present in dist | same |
-| `/sitemap.xml` → `/sitemap-index.xml` in `dist/_redirects` | same |
+| No `example.com` in dist SEO surfaces | `seo-guardrails.mjs` |
+| No stray `workers.dev` in repo (allowlist) | same |
+| No `og:image` ending in `/` | same |
+| Titles ≤60; meta 50–165; canonical present; H1 count = 1 | same |
+| Tool pages: guide link, FAQPage, Person/Hammad byline | same |
+| Guides ≥800 words + FAQPage | same |
+| Pages present in sitemap | same |
+| Invalid JSON-LD / inline `import` without `type=module` | same |
+| `/_astro/*` immutable header; worker 308 + FILE_EXT | same |
+| IndexNow key; sitemap alias; wrangler previews | same |
 | Unit: `absoluteUrl` + default site URL | `tests/site-config.test.ts` |
 
 ```bash
@@ -69,11 +83,6 @@ npm test
 | Branch | Typical command |
 |---|---|
 | Production (`main`) | `npm run build` then `npx wrangler deploy` (optionally `&& node scripts/indexnow.mjs`) |
-| Non-production (this Worker) | `npm run build` then `npx wrangler preview` — requires `"previews": {}` |
+| Non-production | `npm run build` then `npx wrangler preview` — requires `"previews": {}` |
 
-Siblings that still use the older preview model may run `npx wrangler versions upload` instead. Local dry-runs:
-
-```bash
-npx wrangler deploy --dry-run
-npx wrangler versions upload --dry-run
-```
+Custom domain cutover steps: [CUSTOM-DOMAIN.md](./CUSTOM-DOMAIN.md).

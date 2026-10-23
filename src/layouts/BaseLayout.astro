@@ -3,7 +3,6 @@ import '../styles/global.css';
 import { siteConfig, absoluteUrl } from '../config/site';
 import { tools, categories } from '../data/tools';
 import JsonLd from '../components/seo/JsonLd.astro';
-import AdSlot from '../components/ads/AdSlot.astro';
 import CookieNotice from '../components/ads/CookieNotice.astro';
 
 interface Props {
@@ -11,10 +10,16 @@ interface Props {
   description: string;
   canonicalPath: string;
   ogType?: 'website' | 'article';
+  ogImage?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
   preload?: { href: string; as: string; type?: string }[];
   prefetch?: string[];
+  /** When true, do not append " | LocalFile Convert" (title already branded / length-limited) */
+  skipBrandSuffix?: boolean;
+  /** Defer cookie banner until idle so it is not LCP */
+  deferCookieBanner?: boolean;
+  lastUpdated?: string;
 }
 
 const {
@@ -22,16 +27,48 @@ const {
   description,
   canonicalPath,
   ogType = 'website',
+  ogImage: ogImageProp,
   jsonLd = [],
   noindex = false,
   preload = [],
   prefetch = [],
+  skipBrandSuffix = false,
+  deferCookieBanner = true,
+  lastUpdated = siteConfig.buildDate,
 } = Astro.props;
 
 const canonical = absoluteUrl(canonicalPath);
-const fullTitle = title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`;
-const ogImage = absoluteUrl(siteConfig.defaultOgImage);
+let fullTitle =
+  skipBrandSuffix || title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`;
+if (fullTitle.length > 60) {
+  fullTitle = title.length <= 60 ? title : `${title.slice(0, 57).trim()}…`;
+}
+const ogImage = absoluteUrl(ogImageProp || siteConfig.defaultOgImage);
 const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': siteConfig.personId,
+  name: siteConfig.defaultAuthor.fullName,
+  alternateName: siteConfig.defaultAuthor.name,
+  url: absoluteUrl('/authors/'),
+  description: siteConfig.defaultAuthor.bio,
+  sameAs: [...siteConfig.authorSameAs],
+};
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': absoluteUrl('/#organization'),
+  name: siteConfig.organizationName,
+  url: absoluteUrl('/'),
+  email: siteConfig.contactEmail,
+  founder: { '@id': siteConfig.personId },
+  publishingPrinciples: absoluteUrl('/methodology/'),
+};
+
+const defaultGraph = [personLd, orgLd];
 ---
 
 <!doctype html>
@@ -41,6 +78,7 @@ const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.defaultAuthor.name} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex,follow" />}
     {!noindex && <meta name="robots" content="index,follow,max-image-preview:large" />}
@@ -75,6 +113,9 @@ const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
       <link rel="prefetch" href={href} />
     ))}
 
+    {defaultGraph.map((obj) => (
+      <JsonLd data={obj} />
+    ))}
     {ld.filter(Boolean).map((obj) => (
       <JsonLd data={obj} />
     ))}
@@ -99,7 +140,7 @@ const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
       )
     }
   </head>
-  <body>
+  <body data-last-updated={lastUpdated}>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="site-header__inner">
@@ -137,7 +178,7 @@ const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
         <div>
           <h2>Converters</h2>
           <ul>
-            {tools.slice(0, 6).map((t) => (
+            {tools.map((t) => (
               <li><a href={`/tools/${t.slug}/`}>{t.shortName}</a></li>
             ))}
             <li><a href="/tools/">All tools</a></li>
@@ -169,7 +210,7 @@ const ld = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
       </div>
     </footer>
 
-    <CookieNotice />
+    <CookieNotice defer={deferCookieBanner} />
     <script>
       const toggle = document.getElementById('nav-toggle');
       const nav = document.getElementById('site-nav');

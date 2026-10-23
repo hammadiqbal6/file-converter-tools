@@ -3,15 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import { siteConfig } from '../config/site';
 ---
-<BaseLayout title="About" description={`About ${siteConfig.name}: privacy-first, in-browser niche file converters.`} canonicalPath="/about/">
+<BaseLayout
+  title="About"
+  description={`${siteConfig.name} is maintained by ${siteConfig.defaultAuthor.name}: privacy-first niche file converters that run in your browser—your file never leaves your device.`}
+  canonicalPath="/about/"
+>
   <div class="container content-prose">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'About' }]} />
     <h1>About {siteConfig.name}</h1>
     <div class="answer-box">
       <p>
         {siteConfig.name} is a free collection of profession-specific file converters that run entirely in your browser.
-        We focus on low-competition format pairs (YAML↔JSON, PSD→PNG, STL utilities, bank-statement PDF text extraction)
-        where privacy and accuracy beat generic upload farms.
+        Maintained by {siteConfig.defaultAuthor.name}, it focuses on format pairs (YAML↔JSON, PSD→PNG, STL utilities,
+        bank-statement PDF text extraction) where privacy and accuracy beat generic upload farms.
       </p>
     </div>
     <h2>Why we built this</h2>

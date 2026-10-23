@@ -2,14 +2,29 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
 import { guides } from '../../data/guides';
-import { siteConfig } from '../../config/site';
+import { absoluteUrl, siteConfig } from '../../config/site';
+
+const description =
+  'Guides on YAML vs JSON, HEIC vs JPG, STL and G-code, Markdown to HTML, privacy-first conversion, and more from LocalFile Convert.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Guides',
+  description,
+  url: absoluteUrl('/guides/'),
+  isPartOf: { '@id': absoluteUrl('/#website') },
+};
 ---
-<BaseLayout title="Guides" description={`Guides on private conversion, YAML vs JSON, PSD workflows, STL formats, and more from ${siteConfig.name}.`} canonicalPath="/guides/">
+<BaseLayout title="Guides" description={description} canonicalPath="/guides/" jsonLd={jsonLd}>
   <div class="container">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Guides' }]} />
     <header class="hero" style="padding-block:0 1rem">
       <h1>Guides</h1>
-      <p class="lead">Practical explainers that support our converters — written for humans and AI search citation.</p>
+      <p class="lead answer-first">
+        Practical explainers that support our converters—format trade-offs, worked examples, and privacy notes written
+        for humans and answer engines. Each guide links only its topical tools.
+      </p>
     </header>
     <div class="card-grid">
       {guides.map((g) => (

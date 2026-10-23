@@ -4,11 +4,12 @@ globs: src/config/site.ts,astro.config.mjs,wrangler.jsonc,public/_redirects,publ
 alwaysApply: true
 ---
 
-Follow [docs/SEO-GUARDRAILS.md](docs/SEO-GUARDRAILS.md).
+Follow [docs/SEO-GUARDRAILS.md](docs/SEO-GUARDRAILS.md) and [docs/CUSTOM-DOMAIN.md](docs/CUSTOM-DOMAIN.md).
 
-- **Site URL:** default / fallback is the live `*.workers.dev` origin — never `https://example.com`.
+- **Site URL:** single setting `PUBLIC_SITE_URL` / `DEFAULT_SITE_URL` — never hardcode `workers.dev` outside the allowlist; never `https://example.com`.
 - **absoluteUrl:** do not force trailing slashes on file paths (`/og-default.png`).
 - **Sitemap alias:** keep `/sitemap.xml` → `/sitemap-index.xml` 301 in `public/_redirects`.
 - **IndexNow:** real 32-hex key at `public/<key>.txt` (site root); no `000…0` placeholder.
-- **wrangler:** `html_handling: "force-trailing-slash"` + `"previews": {}`; no top-level `vars` for `PUBLIC_*`.
+- **wrangler:** worker 308 (`src/worker.ts`, `run_worker_first`) + `html_handling: "force-trailing-slash"` + `"previews": {}`; no top-level `vars` for `PUBLIC_*`.
+- **AEO:** Hammad byline, Person `@id` `github.com/hammadiqbal6#person`, FAQPage on tools/guides; titles ≤60; meta 50–165.
 - After changes: `npm run build && npm run audit` (guardrails must pass).
