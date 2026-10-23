@@ -4,7 +4,7 @@ globs: src/pages/**/*.astro,src/layouts/**/*.astro,src/data/**/*.ts
 alwaysApply: false
 ---
 
-- One H1, unique title (≤60 chars final `<title>`) and meta description (50–165).
+- One H1, unique title (25–65 chars final `<title>`) and meta description (70–160); keep og/twitter description identical.
 - Self-referencing canonical via `BaseLayout` / `ToolLayout` using `absoluteUrl()` / `PUBLIC_SITE_URL` (never hardcode hosts; never `example.com`).
 - `og:image` absolute URL must not end with `/`.
 - Tool pages: answer-first intro (40–60 words), visible Hammad author byline, FAQPage (3–6), topical guide links, converter above the fold; 600+ words in `tools.ts`.

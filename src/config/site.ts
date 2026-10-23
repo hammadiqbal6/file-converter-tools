@@ -143,7 +143,23 @@ export const siteConfig = {
   lastUpdated: '2026-10-23',
   /** ISO build/content date used in bylines when a page omits its own */
   buildDate: '2026-10-23',
+  /**
+   * EmailJS (contact form). All three must be non-empty to enable the form.
+   * Public key only — never put the EmailJS private key in the repo or PUBLIC_*.
+   * See docs/CONTACT-EMAILJS.md.
+   */
+  emailjs: {
+    serviceId: readEnv('PUBLIC_EMAILJS_SERVICE_ID'),
+    templateId: readEnv('PUBLIC_EMAILJS_TEMPLATE_ID'),
+    publicKey: readEnv('PUBLIC_EMAILJS_PUBLIC_KEY'),
+  },
 } as const;
+
+/** True when EmailJS public config is complete enough to render the contact form. */
+export function isEmailjsConfigured(): boolean {
+  const { serviceId, templateId, publicKey } = siteConfig.emailjs;
+  return Boolean(serviceId && templateId && publicKey);
+}
 
 export type SiteConfig = typeof siteConfig;
 

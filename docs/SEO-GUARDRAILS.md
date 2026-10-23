@@ -23,6 +23,8 @@ Hard requirements so builds never ship indexing bugs. Enforced by `npm run audit
 | Tool→guide gaps | only privacy guide | Topical `relatedGuides` + Learn more blocks |
 | Thin guides | &lt;500 words | ~1000+ words, FAQPage, tables, worked examples |
 | Hardcoded workers.dev | scattered URLs | Single origin setting + CI fail on stray `workers.dev` |
+| `/terms/` meta too short | thin description | ~120–160 char description (og/twitter same) |
+| `llms.txt` Guides only `/guides/` | postbuild regex missed `guide-articles/*` | Regenerate from article sources with URL + summary; CI fails if a guide is missing |
 
 ---
 
@@ -37,7 +39,8 @@ Hard requirements so builds never ship indexing bugs. Enforced by `npm run audit
 - [ ] Keep IndexNow key at **site root** `public/<32-hex>.txt`.
 - [ ] Keep worker `main` + `run_worker_first` + `html_handling: force-trailing-slash` + `"previews": {}`.
 - [ ] Put `PUBLIC_*` in Workers Builds **dashboard** env, not wrangler `vars`.
-- [ ] Titles ≤60 characters (final `<title>`); meta descriptions 50–165.
+- [ ] Titles **25–65** characters (final `<title>`); meta descriptions **70–160** (keep `og:description` / `twitter:description` identical).
+- [ ] `dist/llms.txt` lists every `/guides/<slug>/` page with a **full absolute URL** and a one-line summary (generated from `src/data/guide-articles/` in `scripts/postbuild.mjs`).
 - [ ] Tool pages: 1 H1, answer-first intro (not tagline-first), Hammad byline, FAQPage 3–6 Qs, ≥1 topical guide link.
 - [ ] Guides: ≥800 words (target ~1000+), FAQPage, author/dateModified, topical tool links only.
 - [ ] `/_astro/*` immutable cache; image/favicon caching in `public/_headers`.
@@ -62,7 +65,8 @@ Hard requirements so builds never ship indexing bugs. Enforced by `npm run audit
 | No `example.com` in dist SEO surfaces | `seo-guardrails.mjs` |
 | No stray `workers.dev` in repo (allowlist) | same |
 | No `og:image` ending in `/` | same |
-| Titles ≤60; meta 50–165; canonical present; H1 count = 1 | same |
+| Titles **25–65**; meta descriptions **70–160**; og/twitter description match; canonical; H1 = 1 | same |
+| Every guide page URL + summary present in `llms.txt` | same |
 | Tool pages: guide link, FAQPage, Person/Hammad byline | same |
 | Guides ≥800 words + FAQPage | same |
 | Pages present in sitemap | same |

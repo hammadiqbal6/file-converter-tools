@@ -4,6 +4,7 @@ import {
   DEFAULT_INDEXNOW_KEY,
   DEFAULT_SITE_URL,
   absoluteUrl,
+  isEmailjsConfigured,
   siteConfig,
 } from '../src/config/site';
 
@@ -36,5 +37,12 @@ describe('site SEO defaults', () => {
     );
     expect(absoluteUrl('/og-default.png')).toBe(`${DEFAULT_SITE_URL}/og-default.png`);
     expect(absoluteUrl(siteConfig.defaultOgImage)).not.toMatch(/\/$/);
+  });
+
+  it('EmailJS form stays off until all three PUBLIC_EMAILJS_* values are set', () => {
+    expect(siteConfig.emailjs.serviceId).toBe('');
+    expect(siteConfig.emailjs.templateId).toBe('');
+    expect(siteConfig.emailjs.publicKey).toBe('');
+    expect(isEmailjsConfigured()).toBe(false);
   });
 });

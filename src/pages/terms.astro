@@ -3,7 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import { siteConfig } from '../config/site';
 ---
-<BaseLayout title="Terms of Use" description={`Terms of use for ${siteConfig.name} free browser converters.`} canonicalPath="/terms/">
+<BaseLayout
+  title="Terms of Use"
+  description={`Terms of use for ${siteConfig.name}: free in-browser converters as-is without warranty, acceptable use, embed attribution, and educational STL to G-code limits.`}
+  canonicalPath="/terms/"
+>
   <div class="container content-prose">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Terms' }]} />
     <h1>Terms of Use</h1>

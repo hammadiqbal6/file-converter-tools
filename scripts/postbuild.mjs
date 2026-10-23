@@ -1,19 +1,11 @@
 #!/usr/bin/env node
 /**
- * Post-build: patch robots.txt / llms.txt origins from the single site URL setting.
+ * Post-build: patch robots.txt / regenerate llms.txt from tools + guide sources.
  * Canonical origin = process.env.PUBLIC_SITE_URL || DEFAULT_SITE_URL (src/config/site.ts).
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { createRequire } from 'node:module';
 
-const require = createRequire(import.meta.url);
-
-// Load DEFAULT_SITE_URL without pulling Vite-only import.meta.env quirks:
-// site.ts is ESM TypeScript — use the same fallback string via dynamic import after build,
-// or read from a tiny shared constant. Prefer importing the built-free export via tsx-less path:
-// duplicate read of the constant by evaluating the exported default through vitest-free regex
-// from site.ts so this script stays dependency-free.
 const siteTs = fs.readFileSync(path.join(process.cwd(), 'src/config/site.ts'), 'utf8');
 const defaultMatch = siteTs.match(
   /export const DEFAULT_SITE_URL\s*=\s*\n?\s*['"]([^'"]+)['"]/,
@@ -41,38 +33,55 @@ function patch(file, replacers) {
   fs.writeFileSync(p, text);
 }
 
-// robots.txt: replace placeholder (and any legacy baked hosts)
+function firstStringField(src, field) {
+  const re = new RegExp(`${field}\\s*:\\s*["'\`]([^"'\`]+)["'\`]`);
+  const m = src.match(re);
+  return m ? m[1].trim() : '';
+}
+
+/** Tool slugs from src/data/tools.ts (export const tools array only). */
+function loadToolSlugs() {
+  const toolsSrc = fs.readFileSync(path.join(process.cwd(), 'src/data/tools.ts'), 'utf8');
+  const toolsBlock = toolsSrc.split('export const tools')[1] || '';
+  return [...toolsBlock.matchAll(/^\s*slug:\s*'([a-z0-9-]+)'/gm)].map((m) => m[1]);
+}
+
+/**
+ * Guides from src/data/guide-articles/*.ts (source of truth).
+ * guides.ts only re-exports modules, so regex on that file finds no slugs.
+ */
+function loadGuides() {
+  const dir = path.join(process.cwd(), 'src/data/guide-articles');
+  if (!fs.existsSync(dir)) return [];
+  const guides = [];
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith('.ts'))) {
+    const src = fs.readFileSync(path.join(dir, name), 'utf8');
+    const slug = firstStringField(src, 'slug');
+    if (!slug) continue;
+    const description = firstStringField(src, 'description') || firstStringField(src, 'title') || slug;
+    guides.push({ slug, description });
+  }
+  guides.sort((a, b) => a.slug.localeCompare(b.slug));
+  return guides;
+}
+
 patch('robots.txt', [
   ['__SITE_ORIGIN__', siteUrl],
   ['https://example.com', siteUrl],
 ]);
 
-// llms.txt is generated fully below when tools/guides are known; still patch placeholders
 patch('llms.txt', [
   ['__SITE_ORIGIN__', siteUrl],
   ['https://example.com', siteUrl],
 ]);
 
-// Prefer regenerating llms.txt from source data so every tool + guide is listed
 try {
-  // Lightweight parse: read tools.ts / guides.ts slugs without a TS loader
-  const toolsSrc = fs.readFileSync(path.join(process.cwd(), 'src/data/tools.ts'), 'utf8');
-  const guidesSrc = fs.readFileSync(path.join(process.cwd(), 'src/data/guides.ts'), 'utf8');
-  const toolSlugs = [...toolsSrc.matchAll(/slug:\s*'([^']+)'/g)]
-    .map((m) => m[1])
-    .filter((s, i, arr) => arr.indexOf(s) === i && !s.includes('/'));
-  // tools.ts also has category slugs — keep only those that appear as tool entries by
-  // requiring nearby "name:" tool pattern: use lines after "export const tools"
-  const toolsBlock = toolsSrc.split('export const tools')[1] || toolsSrc;
-  const guideBlock = guidesSrc.split('export const guides')[1] || guidesSrc;
-  const onlyTools = [...toolsBlock.matchAll(/^\s*slug:\s*'([a-z0-9-]+)'/gm)].map((m) => m[1]);
-  const onlyGuides = [...guideBlock.matchAll(/^\s*slug:\s*'([a-z0-9-]+)'/gm)].map((m) => m[1]);
+  const onlyTools = loadToolSlugs();
+  const guides = loadGuides();
 
-  const toolLines = onlyTools.map(
-    (slug) => `- ${siteUrl}/tools/${slug}/`,
-  );
-  const guideLines = onlyGuides.map(
-    (slug) => `- ${siteUrl}/guides/${slug}/`,
+  const toolLines = onlyTools.map((slug) => `- ${siteUrl}/tools/${slug}/`);
+  const guideLines = guides.map(
+    (g) => `- ${siteUrl}/guides/${g.slug}/ — ${g.description}`,
   );
 
   const llms = `# LocalFile Convert — ${siteUrl}/
@@ -85,7 +94,7 @@ Niche professional format converters (YAML/JSON, CSV, images, STL, bank-statemen
 ${toolLines.join('\n')}
 
 ## Guides
-- ${siteUrl}/guides/
+- ${siteUrl}/guides/ — Guide index (format explainers and privacy-first conversion)
 ${guideLines.join('\n')}
 
 ## Trust
@@ -95,12 +104,11 @@ ${guideLines.join('\n')}
 - ${siteUrl}/authors/
 `;
   write('llms.txt', llms);
-  // Keep public/llms.txt as a placeholder template for the repo; dist is authoritative after build
+  console.log(
+    `postbuild: llms.txt → ${onlyTools.length} tools, ${guides.length} guides for ${siteUrl}`,
+  );
 } catch (e) {
   console.warn('postbuild: llms regenerate skipped:', e.message);
 }
 
 console.log(`postbuild: patched robots/llms for ${siteUrl}`);
-
-// silence unused
-void require;

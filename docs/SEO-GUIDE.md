@@ -5,13 +5,13 @@
 ## Pre-launch checklist
 
 - [ ] `PUBLIC_SITE_URL` set; canonical host (apex vs www) chosen and redirected
-- [ ] Unique title (&lt;60 chars) and meta description (&lt;155) per page
+- [ ] Unique title (25–65 chars) and meta description (70–160) per page; og/twitter match
 - [ ] One H1 per page; tool above the fold
 - [ ] `robots.txt`, `sitemap-index.xml`, self-referencing canonicals
 - [ ] JSON-LD: `WebSite`, `Organization` (home), `BreadcrumbList` + `WebApplication` (tools), `Article` (guides)
 - [ ] About, Contact, Privacy (AdSense cookie text), Terms, Methodology, Authors
 - [ ] `npm run build && npm run audit && npm run lighthouse` pass
-- [ ] Optional: `public/llms.txt` (plain links only)
+- [ ] `llms.txt` lists every tool and every guide (URL + summary); regenerated in postbuild
 
 ## Google Search Console
 
