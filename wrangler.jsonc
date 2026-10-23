@@ -1,6 +1,13 @@
 {
   // Pure static-assets Worker — no Cloudflare Astro adapter, no Worker script,
   // no SESSION/IMAGES bindings. Deploy with: npm run build && npx wrangler deploy
+  //
+  // Build-time PUBLIC_* (Astro inlines during `npm run build`) belong in
+  // Cloudflare Workers Builds → Variables — same keys as `.env.example`
+  // (PUBLIC_SITE_URL, PUBLIC_GSC_VERIFICATION, PUBLIC_GA4_MEASUREMENT_ID,
+  // PUBLIC_INDEXNOW_KEY, etc.). Do not put them in wrangler `vars` for this
+  // assets-only Worker: preview deploys use `npx wrangler preview`, which
+  // then requires a `previews.vars` block.
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "file-converter-tools",
   // Current compatibility date for Workers static assets
@@ -12,12 +19,5 @@
     "not_found_handling": "404-page",
     // Match Astro trailingSlash: 'always' (folder index.html → trailing slash)
     "html_handling": "force-trailing-slash"
-  },
-  // Build-time only: Astro inlines PUBLIC_* during `npm run build`.
-  // Set the same keys in Cloudflare Workers Builds → Variables (Production / Preview)
-  // as in `.env.example`. Listed here so deploy config documents the contract;
-  // static assets do not read vars at request time.
-  "vars": {
-    "PUBLIC_SITE_URL": "https://file-converter-tools.hammadiqbal117.workers.dev"
   }
 }
