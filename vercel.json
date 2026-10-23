@@ -14,6 +14,6 @@
     }
   ],
   "redirects": [
-    { "source": "/:path((?!.*\\.).*)", "has": [{ "type": "host", "value": "www.example.com" }], "destination": "https://example.com/:path/", "permanent": true }
+    { "source": "/sitemap.xml", "destination": "/sitemap-index.xml", "permanent": true }
   ]
 }

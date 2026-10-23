@@ -65,37 +65,38 @@ Edit defaults **or** override at build time with env vars (recommended for produ
 | Field | Env override | What to set |
 |---|---|---|
 | `name`, `tagline`, `organizationName` | — | Your brand strings |
-| `url` | `PUBLIC_SITE_URL` | `https://yourdomain.com` (no trailing slash) |
+| `url` | `PUBLIC_SITE_URL` | HTTPS origin, no trailing slash. Default: live workers.dev URL |
 | `contactEmail` | `PUBLIC_CONTACT_EMAIL` | Public support email (default: `hammadiqbal117@gmail.com`) |
 | `adsensePublisherId` | `PUBLIC_ADSENSE_PUBLISHER_ID` | `ca-pub-XXXXXXXX` or leave empty |
 | `adsenseAutoAds` | — | `true` only if you intentionally enable Auto ads |
-| `ga4MeasurementId` | `PUBLIC_GA4_MEASUREMENT_ID` | `G-XXXXXXXX` or empty |
-| `gscVerification` | `PUBLIC_GSC_VERIFICATION` | HTML tag verification string from GSC |
+| `ga4MeasurementId` | `PUBLIC_GA4_MEASUREMENT_ID` | Default matches live GA4; empty override disables |
+| `gscVerification` | `PUBLIC_GSC_VERIFICATION` | HTML tag verification (default already verified in GSC) |
 | `bingVerification` | `PUBLIC_BING_VERIFICATION` | Bing meta verification content |
-| `indexNowKey` | `PUBLIC_INDEXNOW_KEY` | Random 32-char hex key |
+| `indexNowKey` | `PUBLIC_INDEXNOW_KEY` / `INDEXNOW_KEY` | 32-char hex; must match `public/<key>.txt` |
 | `defaultOgImage` | — | `/og-default.png` (replace image in `public/` if needed) |
 | `lastUpdated` | — | Bump on meaningful content refreshes |
 
 **Example production build:**
 
 ```bash
-export PUBLIC_SITE_URL=https://yourdomain.com
+export PUBLIC_SITE_URL=https://file-converter-tools.hammadiqbal117.workers.dev
 export PUBLIC_CONTACT_EMAIL=hammadiqbal117@gmail.com
-export PUBLIC_GSC_VERIFICATION=your-gsc-token
+export PUBLIC_GSC_VERIFICATION=0-q_NxhBgfgCm4WOLfbe9VrHrjbLzaxh8SXsbo2Q-UU
 npm run build
 ```
 
-`scripts/postbuild.mjs` patches **`dist/robots.txt`** and **`dist/llms.txt`** to replace `https://example.com` with `PUBLIC_SITE_URL`.
+`scripts/postbuild.mjs` patches **`dist/robots.txt`** and **`dist/llms.txt`** so Sitemap / llms links use `PUBLIC_SITE_URL` (falls back to the workers.dev default — never `example.com`).
 
-### 2.2 Files with placeholders (commit updates before launch)
+### 2.2 Files to keep in sync
 
-| File | Replace |
+| File | Notes |
 |---|---|
-| `public/robots.txt` | `Sitemap: https://example.com/...` → your domain (postbuild also patches **dist**) |
-| `public/llms.txt` | All `https://example.com` URLs → your domain |
+| `public/robots.txt` | Sitemap line uses workers.dev by default; postbuild rewrites for custom domains |
+| `public/llms.txt` | Same origin rewrite as robots |
 | `public/ads.txt` | Uncomment/add `google.com, pub-XXXXXXXX, DIRECT, f08c47fec0942fa0` after AdSense approval |
-| `public/indexnow/<KEY>.txt` | File content must equal `PUBLIC_INDEXNOW_KEY` (default folder uses `0000…` until you rotate) |
-| `vercel.json` | Redirect host `www.example.com` → your domain if using Vercel |
+| `public/<KEY>.txt` | IndexNow key file at **site root** (content must equal the key; see `.env.example`) |
+| `public/_redirects` | `/sitemap.xml` → `/sitemap-index.xml` 301 |
+| `wrangler.jsonc` | `html_handling: force-trailing-slash` matches Astro `trailingSlash: 'always'` |
 
 ### 2.3 Consent / CMP (EEA, UK, Switzerland)
 
@@ -165,14 +166,23 @@ Add as **build-time** env vars in **Cloudflare Workers Builds → Settings → V
 
 | Variable | Cloudflare Builds | Notes |
 |---|---|---|
-| `PUBLIC_SITE_URL` | **Required** (production) | HTTPS origin, no trailing slash. Unset → `https://example.com` placeholder |
+| `PUBLIC_SITE_URL` | **Required** (production) | HTTPS origin, no trailing slash. Unset → workers.dev default (not example.com) |
 | `PUBLIC_CONTACT_EMAIL` | Optional | Defaults to `hammadiqbal117@gmail.com` in `site.ts` |
 | `NODE_VERSION` | Recommended | `22.22.0` |
-| `PUBLIC_GSC_VERIFICATION` | Optional until GSC | Meta verification content |
+| `PUBLIC_GSC_VERIFICATION` | Recommended | Meta verification; default already verified for this property |
 | `PUBLIC_BING_VERIFICATION` | Optional until Bing | Meta verification content |
-| `PUBLIC_GA4_MEASUREMENT_ID` | Optional | Empty = analytics off |
+| `PUBLIC_GA4_MEASUREMENT_ID` | Optional | Default matches live GA4; set empty only to disable |
 | `PUBLIC_ADSENSE_PUBLISHER_ID` | Optional | Empty = ads off |
-| `PUBLIC_INDEXNOW_KEY` | Optional until IndexNow | Keep `public/indexnow/<key>.txt` in sync |
+| `PUBLIC_INDEXNOW_KEY` / `INDEXNOW_KEY` | Recommended | Keep `public/<key>.txt` in sync |
+| `INDEXNOW_DISABLE` | Preview only | Set `1` to skip post-deploy IndexNow ping |
+
+**Deploy command** (Workers Builds → Deploy command; do **not** ping from `build` — the key file must be live first):
+
+```bash
+npx wrangler deploy && node scripts/indexnow.mjs
+```
+
+Or locally: `npm run deploy:indexnow`.
 
 Redeploy after changing env vars.
 
@@ -205,7 +215,7 @@ Workers version URLs are useful for QA; set `PUBLIC_SITE_URL` to the preview ori
 3. Build command: `npm run build`
 4. Output directory: `dist`
 5. Environment variables: same as Cloudflare table above.
-6. Edit **`vercel.json`** redirect rule host from `www.example.com` to your domain.
+6. `vercel.json` already 301s `/sitemap.xml` → `/sitemap-index.xml`.
 7. Deploy → **Domains** → add apex + www; Vercel issues certificates.
 
 Preview URLs: each PR gets `*.vercel.app`.
@@ -253,20 +263,19 @@ https://yourdomain.com/guides/privacy-first-conversion/
 
 1. [Bing Webmaster](https://www.bing.com/webmasters/) → **Import from Google Search Console** (fastest).
 2. Submit the same sitemap URL.
-3. Confirm **IndexNow** key is reachable:
+3. Confirm **IndexNow** key is reachable at the site root:
 
 ```
 https://yourdomain.com/<PUBLIC_INDEXNOW_KEY>.txt
 ```
 
-(Also under `public/indexnow/` in repo.)
+(Committed as `public/<key>.txt`; current key documented in `.env.example`.)
 
-**Notify URL changes (optional script):**
+**Notify URL changes after deploy:**
 
 ```bash
-KEY=your-indexnow-key
-URL=https://yourdomain.com/tools/yaml-to-json/
-curl -s "https://api.indexnow.org/indexnow?url=${URL}&key=${KEY}"
+npm run indexnow              # POST all sitemap URLs (never fails deploy)
+node scripts/indexnow.mjs --dry-run
 ```
 
 Google does **not** use IndexNow.
@@ -360,8 +369,10 @@ Hashed assets under `/_astro/` are immutable. HTML updates propagate on new depl
 | Symptom | Likely cause | Fix |
 |---|---|---|
 | Build fails: Node version | Astro requires ≥22.22 | Set `NODE_VERSION=22.22.0` on host; use `npm run build` locally |
-| Wrong canonical / sitemap host | `PUBLIC_SITE_URL` unset at build | Set env var; rebuild |
-| `robots.txt` still shows example.com | postbuild not run | Use `npm run build` (includes postbuild) |
+| Wrong canonical / sitemap host | `PUBLIC_SITE_URL` unset / wrong at build | Set env var; rebuild (default is workers.dev) |
+| `robots.txt` still shows wrong host | postbuild not run | Use `npm run build` (includes postbuild) |
+| `/sitemap.xml` 404 | missing `_redirects` | Confirm `public/_redirects` ships in `dist/` |
+| `og:image` 404 with trailing slash | old `absoluteUrl` | Rebuild; file URLs must not end with `/` |
 | Tools blank / WASM error | Old browser or blocked WASM | Test current Chrome/Firefox/Safari |
 | AdSense not showing | Empty publisher ID (expected) | Set ID after approval; check ad blockers |
 | GSC “Couldn't fetch” sitemap | DNS/HTTPS not ready | Fix SSL; open sitemap URL in browser |

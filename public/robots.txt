@@ -37,4 +37,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://example.com/sitemap-index.xml
+Sitemap: https://file-converter-tools.hammadiqbal117.workers.dev/sitemap-index.xml

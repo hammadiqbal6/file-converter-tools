@@ -9,6 +9,15 @@
     // Astro SSG output (no adapter → dist/, not dist/client/)
     "directory": "./dist",
     // Serve nearest 404.html for unknown paths (src/pages/404.astro)
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Match Astro trailingSlash: 'always' (folder index.html → trailing slash)
+    "html_handling": "force-trailing-slash"
+  },
+  // Build-time only: Astro inlines PUBLIC_* during `npm run build`.
+  // Set the same keys in Cloudflare Workers Builds → Variables (Production / Preview)
+  // as in `.env.example`. Listed here so deploy config documents the contract;
+  // static assets do not read vars at request time.
+  "vars": {
+    "PUBLIC_SITE_URL": "https://file-converter-tools.hammadiqbal117.workers.dev"
   }
 }

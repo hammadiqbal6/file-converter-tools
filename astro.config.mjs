@@ -1,10 +1,15 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { siteConfig } from './src/config/site.ts';
+import { DEFAULT_SITE_URL, siteConfig } from './src/config/site.ts';
+
+// Must stay in sync with DEFAULT_SITE_URL in src/config/site.ts.
+// Prefer process.env here: import.meta.env is not reliably available when
+// Node evaluates this config, which previously baked example.com into sitemaps.
+const siteUrl = (process.env.PUBLIC_SITE_URL || DEFAULT_SITE_URL).replace(/\/$/, '');
 
 export default defineConfig({
-  site: siteConfig.url,
+  site: siteUrl,
   trailingSlash: 'always',
   build: {
     format: 'directory',
@@ -13,7 +18,8 @@ export default defineConfig({
   compressHTML: true,
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/404'),
+      // Omit 404 and embed shells (embeds are noindex; mirror sibling SEO audits)
+      filter: (page) => !page.includes('/404') && !page.includes('/embed/'),
       changefreq: undefined,
       priority: undefined,
       lastmod: new Date(siteConfig.lastUpdated),
