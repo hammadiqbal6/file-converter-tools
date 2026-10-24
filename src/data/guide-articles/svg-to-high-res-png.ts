@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "svg to png",
   secondaryKeywords: ["svg export png","rasterize svg high res"],
   datePublished: "2026-10-23",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["svg-to-png","image-format-converter"],
   relatedGuides: ["webp-vs-png-vs-jpg","psd-without-photoshop"],
-  answerFirst: "SVG is resolution-independent vector markup; PNG is a raster grid of pixels. To create a high-res PNG, render the SVG at a higher device pixel ratio or explicit width/height, then encode PNG. Doing that in-browser keeps logo masters off upload converters while you produce CMS-ready stills.",
+  answerFirst: "SVG is resolution-independent; PNG is a pixel grid. At 3×, a 24×24 icon becomes 72×72 px; for print, target ~300 DPI (inches × 300). Rasterize locally so logo masters never upload.",
   takeaways: [
     "Pick an export width from the largest place the PNG will display (and 2× if needed).",
     "Keep the SVG as the editable master.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>External URL fonts/images may be blocked. Scripts inside SVG are not executed for export. Extreme scales exhaust RAM.</p><p>Safe defaults: inline styles; set viewBox; start at 2×–3× before 8×.</p>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Set viewBox and explicit width/height on SVG masters. External fonts/images may not load in canvas export—inline critical styles. Record scale (2×/3×/8×) beside each marketing export.</p><p>For print, compute pixels ≈ inches × 300 DPI. Huge scales exhaust memory; split artboards when needed.</p><p>Keep SVG as the editable master; PNG is a snapshot for CMS and social crops.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. SVG rasterization uses canvas in your browser. Logo masters are not uploaded.",
     },
     {
       question: "Where should I go next?",

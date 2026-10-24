@@ -1,14 +1,45 @@
 ---
-description: SEO requirements for tool, guide, and hub pages
-globs: src/pages/**/*.astro,src/layouts/**/*.astro,src/data/**/*.ts
+description: SEO / AEO requirements for tool, guide, and hub pages (research-first + per-page checklist)
+globs: src/pages/**/*.astro,src/layouts/**/*.astro,src/data/**/*.ts,src/data/guide-articles/**/*.ts
 alwaysApply: false
 ---
 
-- One H1, unique title (25–65 chars final `<title>`) and meta description (70–160); keep og/twitter description identical.
-- Self-referencing canonical via `BaseLayout` / `ToolLayout` using `absoluteUrl()` / `PUBLIC_SITE_URL` (never hardcode hosts; never `example.com`).
+# Research first (before any new page)
+
+1. One primary query; name intent (do / know / compare / navigate); match page type.
+2. Skim top 5 results: format, questions answered, gaps — plan one differentiator (worked example, table, reverse mode).
+3. Check `docs/KEYWORD-MAP.md` for cannibalization; extend an existing URL instead of duplicating intent.
+4. List 3–6 secondary / PAA questions → H2s and FAQ.
+
+Full checklist: keep this rule aligned with the shared per-page checklist (titles, schema, mobile, sources).
+
+# Structure
+
+- One H1 matching the query in plain words.
+- **Answer first:** opening 40–60 words answer the query with a number or clear verdict.
+- **Tools:** dropzone / first input above the mobile fold (390×844). ≤60 words between H1 and the tool. Byline and long privacy copy **after** the tool. Cookie banner ≤56px and must not cover the dropzone.
+- **Guides:** `.answer-box` immediately after H1 (before byline). Key takeaways next. Byline after takeaways.
+- H2/H3 in order; worked example with real numbers; at least one table/diagram you made; unique body (no copy-pasted Operations notes across guides).
+- Visible published / last-updated dates matching schema + sitemap lastmod.
+
+# Metadata & schema
+
+- Title 30–60 chars (CI also allows 25–65), unique, primary query near start, brand at end.
+- Meta description 70–155 (CI 70–160), unique; og/twitter description identical.
+- Canonical absolute, self-referencing, https, trailing slash; `absoluteUrl()` / `PUBLIC_SITE_URL` only — never hardcode hosts or `example.com`.
 - `og:image` absolute URL must not end with `/`.
-- Tool pages: answer-first intro (40–60 words), visible Hammad author byline, FAQPage (3–6), topical guide links, converter above the fold; 600+ words in `tools.ts`.
-- Guides: ~1000+ words (audit ≥800), FAQPage, author/dateModified, topical tools only + guide↔guide links.
-- JSON-LD must match visible content; Person `@id` `https://github.com/hammadiqbal6#person`; no fake ratings.
-- Follow `docs/KEYWORD-MAP.md` — no duplicate primary intent.
-- Governing playbook: `docs/SEO-PLAYBOOK.md`. Hard indexing rules: `docs/SEO-GUARDRAILS.md`. Domain cutover: `docs/CUSTOM-DOMAIN.md`.
+- Tool pages: WebApplication + FAQPage (3–6 visible Qs) + BreadcrumbList; Hammad byline; ≥1 topical guide link; Person `@id` `https://github.com/hammadiqbal6#person`.
+- Guides: Article + FAQPage + BreadcrumbList; ≥800 words; author/dateModified match visible text.
+- No fake ratings. JSON-LD must parse and match visible content.
+
+# Claims & privacy
+
+- Do not claim “works offline” / service worker unless a real SW is shipped and tested.
+- Separate “file bytes never upload for conversion” from “page analytics may load.”
+- No AdSense placeholder / stub text in HTML when ads are disabled.
+- Cite primary sources for numbers; no invented credentials or benchmarks.
+
+# Ship
+
+- Add `docs/KEYWORD-MAP.md` row; page in sitemap; `npm test && npm run build && npm run audit` (includes `audit:pages`).
+- Governing playbooks: `docs/SEO-PLAYBOOK.md`, `docs/SEO-GUARDRAILS.md`, `docs/CUSTOM-DOMAIN.md`.

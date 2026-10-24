@@ -58,6 +58,27 @@ const title = cat.name.length + 21 <= 60 ? cat.name : cat.name.slice(0, 40);
         leaves your device. Browse the tools below or read the related guides for format trade-offs and limits.
       </p>
     </header>
+    <div class="content-prose" style="margin-bottom:1.25rem">
+      <h2>Which converter do I need?</h2>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">If you have…</th>
+            <th scope="col">Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.map((t) => (
+            <tr>
+              <td>{t.inputFormats.filter((f) => f.startsWith('.')).slice(0, 4).join(', ') || t.shortName}</td>
+              <td>
+                <a href={toolPath(t.slug)}>{t.name}</a> → {t.outputFormats.join(', ')}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
     <div class="card-grid">
       {list.map((t) => (
         <a class="tool-card" href={toolPath(t.slug)}>

@@ -10,15 +10,17 @@ import { siteConfig } from '../config/site';
     <p class="meta-row">Last updated: <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></p>
     <div class="answer-box">
       <p>
-        File conversion on {siteConfig.name} runs in your browser. Your uploaded-or-selected files are processed locally
-        and are not transmitted to our servers for conversion. Your file never leaves your device during conversion.
+        File <strong>content</strong> on {siteConfig.name} is processed locally in your browser and is not transmitted to our
+        servers for conversion — your file never leaves your device during conversion. That promise is about document bytes,
+        not about zero network activity: the page may still load scripts, analytics (when configured), or ad code separately.
       </p>
     </div>
     <h2>What we process</h2>
     <ul>
-      <li><strong>Conversion files:</strong> read only in your browser memory; not uploaded for processing.</li>
+      <li><strong>Conversion files:</strong> read only in your browser memory; not uploaded for processing. Verify in DevTools → Network while converting.</li>
       <li><strong>Hosting logs:</strong> standard CDN/host request logs (IP, user agent) may exist on the static host.</li>
       <li><strong>Preference cookies:</strong> e.g. dismissing the cookie notice (`lf_cookie_notice_v1`).</li>
+      <li><strong>Page analytics:</strong> when GA4 is configured, usage metrics may load; they are not your file contents.</li>
     </ul>
     <h2>Google AdSense and advertising cookies</h2>
     <p>

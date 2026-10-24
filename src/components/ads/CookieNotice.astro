@@ -20,24 +20,12 @@ const usesAds = Boolean(siteConfig.adsensePublisherId);
   data-defer={defer ? '1' : '0'}
 >
   <p>
-    We store a local preference when you dismiss this notice.
     {
-      usesAnalytics && (
-        <>
-          {' '}
-          Analytics may load when configured — see <a href="/privacy/">Privacy</a>.
-        </>
-      )
+      usesAnalytics
+        ? 'Local dismiss preference only. Analytics (not your files) may load — see Privacy.'
+        : 'Local dismiss preference only. Analytics stay off until configured — see Privacy.'
     }
-    {
-      !usesAnalytics && (
-        <>
-          {' '}
-          Analytics stays off until configured. See <a href="/privacy/">Privacy</a>.
-        </>
-      )
-    }
-    {usesAds ? ' Ads may use cookies when AdSense is enabled.' : ''}
+    {usesAds ? ' Ads may use cookies when enabled.' : ''}
   </p>
   <div class="btn-group">
     <button type="button" class="btn btn-primary" id="cookie-accept">OK</button>
@@ -48,11 +36,24 @@ const usesAds = Boolean(siteConfig.adsensePublisherId);
 <script>
   const key = 'lf_cookie_notice_v1';
   const el = document.getElementById('cookie-banner');
+  const root = document.documentElement;
+
+  function setBannerSpace(on) {
+    root.style.setProperty('--cookie-banner-offset', on ? '56px' : '0px');
+    root.classList.toggle('has-cookie-banner', on);
+  }
 
   function showBanner() {
     if (!el || localStorage.getItem(key)) return;
     el.hidden = false;
     el.classList.add('is-visible');
+    setBannerSpace(true);
+  }
+
+  function hideBanner() {
+    el?.classList.remove('is-visible');
+    if (el) el.hidden = true;
+    setBannerSpace(false);
   }
 
   if (el) {
@@ -77,7 +78,6 @@ const usesAds = Boolean(siteConfig.adsensePublisherId);
 
   document.getElementById('cookie-accept')?.addEventListener('click', () => {
     localStorage.setItem(key, '1');
-    el?.classList.remove('is-visible');
-    if (el) el.hidden = true;
+    hideBanner();
   });
 </script>

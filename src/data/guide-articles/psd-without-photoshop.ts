@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "convert psd to png without photoshop",
   secondaryKeywords: ["psd to png online private","open psd without photoshop"],
   datePublished: "2026-10-19",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["psd-to-png","image-format-converter","svg-to-png"],
   relatedGuides: ["webp-vs-png-vs-jpg","privacy-first-conversion","svg-to-high-res-png"],
-  answerFirst: "To convert PSD to PNG without Photoshop, use a local or in-browser PSD reader that composites layers to a bitmap. Our PSD to PNG tool runs with ag-psd in your browser so unpublished design files are not uploaded. Keep the PSD as the editable master; treat PNG as a flattened preview for review or CMS upload.",
+  answerFirst: "Export a flattened PNG from PSD without Photoshop via an in-browser reader (ag-psd). A 1200×800 PSD becomes a 1200×800 PNG preview. Keep the PSD master; treat PNG as review-only.",
   takeaways: [
     "PNG exports are flattened — keep the PSD as the editable master.",
     "Privacy matters for unpublished brand assets.",
@@ -36,7 +36,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Export PNG for review only. Layer structure, smart objects, and some blend modes may not match Photoshop’s composite. Note canvas size (e.g. 1200×800) and whether Maximize Compatibility was enabled when the PSD was saved—composites need that data.</p><p>For per-layer exports or PSB, use desktop tooling. This browser path targets flattened previews without uploading unpublished comps.</p><p>Keep PSD masters in versioned storage; name PNG previews with date and scale.</p>",
     }
   ],
   faqs: [

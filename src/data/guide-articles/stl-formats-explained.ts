@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "stl ascii vs binary",
   secondaryKeywords: ["stl to obj","stl to gcode limits"],
   datePublished: "2026-10-19",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["stl-to-obj","stl-to-gcode"],
   relatedGuides: ["stl-gcode-slicer-basics","privacy-first-conversion"],
-  answerFirst: "STL stores triangle meshes as ASCII text or a compact binary layout. OBJ is a common text mesh for DCC tools. G-code is machine motion—not a mesh—so “STL to G-code” is slicing. Use browser mesh tools for private prep; use a full slicer with profiles and supports for printable parts.",
+  answerFirst: "STL stores triangles only (ASCII or binary) — 0 units, colour, or materials metadata. OBJ is a common text mesh for DCC. G-code is machine motion from slicing, not a mesh. Confirm mm vs inches before printing.",
   takeaways: [
     "Binary STL is smaller; ASCII is greppable.",
     "Use STL→OBJ for Blender and many DCC handoffs.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>No colour/materials in STL. OBJ export may not weld vertices. Huge meshes are slow in-tab.</p><p>Safe defaults: confirm units; preview before share; use production slicers for G-code.</p>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>STL has no units—confirm mm vs inches with the CAD export dialog. Binary STL is smaller; ASCII is greppable. OBJ from STL often duplicates vertices per facet unless you weld in a DCC tool.</p><p>Colour and materials are not in STL; do not expect OBJ export here to invent MTL appearance. Use mesh tools for geometry chores, then a full slicer for print.</p><p>Document mesh triangle counts beside fixtures so regressions after library updates are obvious.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. STL/OBJ mesh parsing and preview load Three.js on demand in your browser — meshes are not uploaded.",
     },
     {
       question: "Where should I go next?",

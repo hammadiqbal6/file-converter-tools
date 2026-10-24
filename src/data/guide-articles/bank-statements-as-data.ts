@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "pdf bank statement to csv",
   secondaryKeywords: ["extract bank transactions pdf","statement to spreadsheet"],
   datePublished: "2026-10-19",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["pdf-bank-statement-to-csv","csv-to-json"],
   relatedGuides: ["csv-json-pipelines","privacy-first-conversion"],
-  answerFirst: "Digital PDF statements expose text glyphs with coordinates; clustering those positions can yield CSV columns. Scanned statements are images and need OCR first. Always spot-check amounts before accounting imports, and prefer bank CSV/OFX downloads when available.",
+  answerFirst: "Prefer your bank’s native CSV/OFX first. For text PDFs, glyph clustering can yield usable CSV; scanned pages need OCR first. Always reconcile: opening + Σ transactions = closing (spot-check at least 3 rows) before imports.",
   takeaways: [
     "Prefer official CSV/OFX downloads when the bank offers them.",
     "No-upload extraction protects financial PDFs.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>Text PDFs only—image scans need OCR first. Password-protected PDFs are unsupported. Column heuristics mis-read unusual layouts.</p><p>Safe defaults: prefer bank CSV; reconcile balances; never treat extraction as audit-ready without human checks.</p><ol><li>Confirm text is selectable in the PDF viewer.</li><li>Extract a short statement first.</li><li>Reconcile opening + Σ = closing.</li></ol>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Document which bank PDF layout you tested (e.g. three-column Date / Description / Amount) and the statement period. Heuristic column clustering can shift when the bank changes typography—re-check after any PDF redesign.</p><p>Always prefer the bank’s CSV/OFX download when available. Use PDF extraction only for gaps. Before accounting import, reconcile opening + sum(transactions) = closing, and spot-check 3–5 rows against the PDF.</p><p>Never email raw statement PDFs to third-party upload converters. Local pdf.js extraction keeps balances on-device; still delete downloaded CSVs from shared machines when done.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. Statement PDFs are parsed with pdf.js in your browser. We never receive the PDF for conversion.",
     },
     {
       question: "Where should I go next?",

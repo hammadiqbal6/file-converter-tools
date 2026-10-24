@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "csv to json pipeline",
   secondaryKeywords: ["json to csv for excel","tabular json export"],
   datePublished: "2026-10-19",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["csv-to-json","json-to-csv","pdf-bank-statement-to-csv"],
   relatedGuides: ["bank-statements-as-data","xml-json-attributes","privacy-first-conversion"],
-  answerFirst: "CSV is the spreadsheet lingua franca; JSON is the API lingua franca. Convert CSV to JSON to feed scripts, and JSON to CSV to hand tabular exports to humans—keeping IDs as strings when leading zeros matter. Local conversion avoids uploading customer tables to unknown servers.",
+  answerFirst: "CSV feeds spreadsheets; JSON feeds APIs. Keep IDs like 00123 as strings when converting — our CSV→JSON tool does. Local conversion avoids uploading customer tables. Round-trip a 2-row fixture before production.",
   takeaways: [
     "Prefer string typing for identifiers with leading zeros.",
     "Flatten nested JSON before CSV export.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>Malformed quotes fail parsing. Mixed delimiters in one file confuse auto-detect. Dynamic typing is off here so IDs stay strings.</p><p>Safe defaults: UTF-8, header row present, explicit delimiter when not comma.</p><ol><li>Validate row counts.</li><li>Spot-check leading-zero fields.</li><li>Keep masters.</li></ol>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Pin delimiter and header assumptions in your runbook: comma vs semicolon (Excel locales), UTF-8 vs UTF-16, and whether leading zeros must survive as strings.</p><p>For CI, prefer a pinned CLI (or checked-in fixtures) over posting customer CSVs to HTTP APIs. Browser tools here are for interactive private transforms.</p><p>When round-tripping JSON→CSV→JSON, compare key sets and row counts. Nested objects need flattening before CSV; document the flat key names your pipeline expects.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. CSV/JSON parsing runs in-tab with Papa Parse. Customer tables stay on your device.",
     },
     {
       question: "Where should I go next?",

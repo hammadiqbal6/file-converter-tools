@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "toml vs yaml vs json",
   secondaryKeywords: ["toml to json","yaml vs toml"],
   datePublished: "2026-10-23",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["toml-to-json","json-to-yaml","yaml-to-json"],
   relatedGuides: ["yaml-vs-json","privacy-first-conversion"],
-  answerFirst: "JSON is strict interchange, YAML is flexible human config, and TOML aims for unambiguous config with explicit types and tables. Convert TOML or YAML to JSON when a tool only accepts JSON. Keep the commented format as the source of truth when humans edit values regularly.",
+  answerFirst: "JSON is strict interchange; YAML adds comments; TOML (Cargo/pyproject) favors explicit tables and types. Convert TOML/YAML→JSON when a tool only accepts JSON — keep 1 commented file as the human source of truth.",
   takeaways: [
     "TOML shines for flat-to-moderate configs with clear types (for example many Rust/Cargo workflows).",
     "YAML still dominates Kubernetes-style deeply nested manifests.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>Each format’s type edge cases differ (dates, multiline strings). Invalid tables error clearly—fix the source rather than hand-editing JSON output.</p><p>Safe defaults: TOML/YAML as human source; JSON as interchange; cite toml.io / yaml.org / ECMA-404.</p>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Cargo.toml and pyproject.toml are everyday TOML; Kubernetes and many CI systems prefer YAML; APIs prefer JSON. Convert toward the consumer format and keep comments in the human-edited source.</p><p>TOML datetimes become JSON strings—document ISO-8601 expectations. Do not mix JSON snippets into TOML tables.</p><p>When teaching teams, show one side-by-side fixture in all three formats rather than abstract comparison prose alone.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. TOML/YAML/JSON converters parse in your browser so config secrets never upload for conversion.",
     },
     {
       question: "Where should I go next?",

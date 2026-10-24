@@ -103,16 +103,18 @@ const prefetch = [
       ]}
     />
 
-    <header class="hero" style="padding-block:0 1rem">
+    <header class="hero tool-hero">
       <h1>{tool.h1}</h1>
       <p class="lead answer-first">{tool.answerFirst}</p>
-      <AuthorMeta lastUpdated={tool.dateModified} lastReviewed={tool.dateModified} />
-      <p class="privacy-note"><strong>Privacy:</strong> your file never leaves your device.</p>
     </header>
 
     <section class="tool-shell" aria-label="Converter tool">
       <slot name="tool" />
     </section>
+
+    <div class="trust-row">
+      <AuthorMeta lastUpdated={tool.dateModified} lastReviewed={tool.dateModified} />
+    </div>
 
     <AdSlot placement="below-tool" />
 
@@ -185,9 +187,11 @@ const prefetch = [
 
       <h2>Privacy note</h2>
       <p class="privacy-note">
-        Your file never leaves your device. {siteConfig.name} runs this converter in your browser
-        {tool.library ? ` (lazy-loading ${tool.library} after you interact)` : ''}. We do not upload, store, or transmit
-        your content to a server for conversion.
+        <strong>Your file never leaves your device</strong> during conversion. {siteConfig.name} runs this converter in
+        your browser{tool.library ? ` (lazy-loading ${tool.library} after you interact)` : ''}. We do not upload, store,
+        or transmit your file content to a server for conversion. Page analytics (when configured) are separate from
+        file bytes — open DevTools → Network while converting to confirm there is no multipart upload of your document.
+        See <a href="/privacy/">Privacy</a> and <a href="/guides/privacy-first-conversion/">privacy-first conversion</a>.
       </p>
 
       <section class="faq" aria-label="FAQ">

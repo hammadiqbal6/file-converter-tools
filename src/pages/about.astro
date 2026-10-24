@@ -4,7 +4,7 @@ import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import { siteConfig } from '../config/site';
 ---
 <BaseLayout
-  title="About"
+  title="About Our Private File Converters"
   description={`${siteConfig.name} is maintained by ${siteConfig.defaultAuthor.name}: privacy-first niche file converters that run in your browser—your file never leaves your device.`}
   canonicalPath="/about/"
 >
@@ -21,15 +21,33 @@ import { siteConfig } from '../config/site';
     <h2>Why we built this</h2>
     <p>
       Sensitive configs, unpublished design comps, and financial PDFs should not be uploaded to unknown servers just to
-      change formats. Client-side conversion (JS/WASM) keeps bytes on-device after the tool code loads.
+      change formats. Client-side conversion (JS/WASM) keeps file bytes on-device after the tool code loads. Page analytics,
+      when configured, are separate from conversion — they measure visits, not your documents.
     </p>
+    <h2>Who builds it</h2>
+    <p>
+      {siteConfig.defaultAuthor.fullName} ({siteConfig.defaultAuthor.name}) maintains the converters, documentation, and
+      fixtures as an independent developer. There is no claim of affiliation with Adobe, Apple, banks, or CAD vendors.
+      See <a href="/authors/">Authors</a> for profiles and contact.
+    </p>
+    <h2>What we ship</h2>
+    <ul>
+      <li>Data: YAML↔JSON, CSV↔JSON, XML→JSON, TOML→JSON</li>
+      <li>Images: HEIC→JPG, PSD→PNG, SVG→PNG, WebP/PNG/JPG</li>
+      <li>Documents: Markdown→HTML (GFM), PDF bank statement text→CSV</li>
+      <li>CAD: STL viewer, STL→OBJ, ASCII/binary STL, educational STL→G-code</li>
+    </ul>
     <h2>Editorial standards</h2>
     <p>
-      Every tool page includes method notes, limits, worked examples, FAQs, and links to authoritative format specs. See
-      <a href="/methodology/">Methodology</a> and <a href="/authors/">Authors</a>.
+      Every tool page includes method notes, limits, worked examples, FAQs, and links to authoritative format specs. Guides
+      expand comparison and how-to queries with topic-specific steps. See <a href="/methodology/">Methodology</a> for how
+      we test converters and handle corrections.
     </p>
-    <h2>Contact</h2>
-    <p>Email <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> or visit <a href="/contact/">Contact</a>.</p>
+    <h2>Contact &amp; bugs</h2>
+    <p>
+      Email <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> or visit
+      <a href="/contact/">Contact</a>. Include the page URL and error text only — never attach confidential files.
+    </p>
     <p class="meta-row">Last updated: <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></p>
   </div>
 </BaseLayout>

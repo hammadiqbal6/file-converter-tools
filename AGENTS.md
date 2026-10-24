@@ -63,11 +63,21 @@ flowchart TB
 | `npm run dev` | Dev server (Node 22.22 via `scripts/run-astro.mjs`) |
 | `npm run build` | Production build + `postbuild` robots/llms patch |
 | `npm test` | Vitest converter tests |
-| `npm run audit` | SEO + SEO guardrails + AdSense + bundles + link check |
+| `npm run audit` | SEO + SEO guardrails + page checklist + AdSense + bundles + link check |
+| `npm run audit:pages` | Per-page checklist only (titles, canonical, JSON-LD, sitemap, stubs, answer-first) |
 | `npm run deploy:indexnow` | `wrangler deploy` then IndexNow ping |
 | `npm run preview:worker` | `wrangler preview` (needs `"previews": {}`) |
 | `npm run lighthouse` | LHCI mobile budgets |
 | `npm run screenshots` | 360px Playwright captures → `artifacts/screenshots/` |
+
+## New pages: research first
+
+Before adding or rewriting a tool, guide, or hub page:
+
+1. Confirm one primary query + intent; check `docs/KEYWORD-MAP.md` for cannibalization.
+2. Skim top results and list 3–6 PAA-style questions (FAQ/H2s).
+3. Follow `.cursor/rules/seo-pages.mdc` and the shared per-page checklist (answer-first, schema, mobile 390×844, no ad stubs, no unsupported offline claims).
+4. Run `npm run audit` (includes `audit:pages` / `scripts/audit/page-checklist.mjs`) — CI fails the PR on checklist breaks.
 
 ## Add a converter (summary)
 

@@ -75,11 +75,13 @@ const faqLd = {
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: guide.title }]} />
     <article class="content-prose">
       <h1>{guide.title}</h1>
-      <AuthorMeta lastUpdated={guide.dateModified} lastReviewed={guide.dateModified} />
       <div class="answer-box"><p>{guide.answerFirst}</p></div>
       <div class="takeaways">
         <h2>Key takeaways</h2>
         <ul>{guide.takeaways.map((t) => <li>{t}</li>)}</ul>
+      </div>
+      <div class="trust-row">
+        <AuthorMeta lastUpdated={guide.dateModified} lastReviewed={guide.dateModified} />
       </div>
       {guide.sections.map((s) => (
         <section>
