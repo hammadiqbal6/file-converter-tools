@@ -10,7 +10,7 @@ const guide: Guide = {
   dateModified: "2026-10-24",
   relatedTools: ["pdf-bank-statement-to-csv","csv-to-json"],
   relatedGuides: ["csv-json-pipelines","privacy-first-conversion"],
-  answerFirst: "Prefer your bank’s native CSV/OFX first. For text PDFs, glyph clustering can yield usable CSV; scanned pages need OCR first. Always reconcile: opening balance + Σ transactions = closing balance before imports.",
+  answerFirst: "Prefer your bank’s native CSV/OFX first. For text PDFs, glyph clustering can yield usable CSV; scanned pages need OCR first. Always reconcile: opening + Σ transactions = closing (spot-check at least 3 rows) before imports.",
   takeaways: [
     "Prefer official CSV/OFX downloads when the bank offers them.",
     "No-upload extraction protects financial PDFs.",

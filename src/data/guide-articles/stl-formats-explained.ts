@@ -10,7 +10,7 @@ const guide: Guide = {
   dateModified: "2026-10-24",
   relatedTools: ["stl-to-obj","stl-to-gcode"],
   relatedGuides: ["stl-gcode-slicer-basics","privacy-first-conversion"],
-  answerFirst: "STL is triangles only (ASCII or binary) — no units, colour, or materials. OBJ is a common text mesh for DCC. G-code is machine motion from slicing, not a mesh. Confirm mm vs inches before printing.",
+  answerFirst: "STL stores triangles only (ASCII or binary) — 0 units, colour, or materials metadata. OBJ is a common text mesh for DCC. G-code is machine motion from slicing, not a mesh. Confirm mm vs inches before printing.",
   takeaways: [
     "Binary STL is smaller; ASCII is greppable.",
     "Use STL→OBJ for Blender and many DCC handoffs.",

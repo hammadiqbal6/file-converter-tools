@@ -10,7 +10,7 @@ const guide: Guide = {
   dateModified: "2026-10-24",
   relatedTools: ["yaml-to-json","pdf-bank-statement-to-csv","heic-to-jpg"],
   relatedGuides: ["bank-statements-as-data","heic-vs-jpg","yaml-vs-json"],
-  answerFirst: "Privacy-first means file bytes never upload for conversion — only library scripts may load. In DevTools → Network during convert you should see zero multipart uploads of your document. That pattern protects configs, photos, and bank PDFs.",
+  answerFirst: "Privacy-first means file bytes never upload for conversion — only library scripts may load. In DevTools → Network during convert you should see 0 multipart uploads of your document. That pattern protects configs, photos, and bank PDFs.",
   takeaways: [
     "Configs, HEIC camera rolls, and bank PDFs are high-sensitivity.",
     "Lazy-loaded libraries still run locally after the library code downloads.",

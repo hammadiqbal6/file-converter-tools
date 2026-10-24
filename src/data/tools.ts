@@ -419,7 +419,7 @@ export const tools: ToolDefinition[] = [
       'Convert TOML (Cargo, pyproject, config) to JSON in your browser. No uploads.',
     h1: 'TOML to JSON Converter',
     answerFirst:
-      "TOML to JSON parses Cargo/pyproject-style tables into JSON. Example: [package] name=\"demo\" becomes {\"package\":{\"name\":\"demo\"}}. Drop .toml — conversion never uploads."s Obvious Minimal Language into JSON objects. Paste or drop a .toml file; smol-toml parses locally and emits pretty JSON for tools that only speak JSON.',
+      'TOML to JSON parses Cargo/pyproject-style tables into JSON. Example: [package] name="demo" becomes {"package":{"name":"demo"}}. Drop .toml — conversion never uploads.',
     inputFormats: ['.toml'],
     outputFormats: ['.json'],
     limits: ['Follows TOML v1 types as JSON allows', 'Dates become JSON strings', 'Invalid tables error clearly'],

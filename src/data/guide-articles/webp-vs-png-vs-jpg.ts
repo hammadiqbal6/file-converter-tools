@@ -10,7 +10,7 @@ const guide: Guide = {
   dateModified: "2026-10-24",
   relatedTools: ["image-format-converter","svg-to-png"],
   relatedGuides: ["heic-vs-jpg","svg-to-high-res-png","psd-without-photoshop"],
-  answerFirst: "PNG: lossless + alpha. JPG: lossy photos, no alpha. WebP: efficient lossy/lossless with modern browser support. Pick PNG for UI, JPG for opaque photos, WebP for web delivery — convert locally when a CMS demands a format.",
+  answerFirst: "PNG: lossless + alpha. JPG: lossy photos, no alpha. WebP: efficient lossy/lossless with modern browser support. Pick PNG for UI, JPG for opaque photos, WebP for web — convert locally when a CMS demands 1 specific format.",
   takeaways: [
     "Use PNG for UI and logos needing sharp edges or transparency.",
     "Use JPG for photographic content when you need maximum compatibility.",

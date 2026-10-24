@@ -9,6 +9,6 @@
   <rect width="1200" height="630" fill="url(#g)"/>
   <rect x="0" y="0" width="16" height="630" fill="#c45c26"/>
   <text x="80" y="120" fill="#9fc0be" font-size="28" font-family="ui-sans-serif,system-ui,sans-serif" font-weight="700" letter-spacing="0.08em">LOCALFILE CONVERT</text>
-  <text x="80" y="300" fill="#f4f7f6" font-size="48" font-family="ui-sans-serif,system-ui,sans-serif" font-weight="700">TOML to JSON Converter (Private)</text>
+  <text x="80" y="300" fill="#f4f7f6" font-size="48" font-family="ui-sans-serif,system-ui,sans-serif" font-weight="700">TOML to JSON – Cargo &amp; pyproject</text>
   <text x="80" y="560" fill="#cfd9d7" font-size="26" font-family="ui-sans-serif,system-ui,sans-serif">Private · In-browser</text>
 </svg>

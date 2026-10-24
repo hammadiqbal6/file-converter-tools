@@ -10,7 +10,7 @@ const guide: Guide = {
   dateModified: "2026-10-24",
   relatedTools: ["toml-to-json","json-to-yaml","yaml-to-json"],
   relatedGuides: ["yaml-vs-json","privacy-first-conversion"],
-  answerFirst: "JSON is strict interchange; YAML adds comments; TOML (Cargo/pyproject) favors explicit tables and types. Convert TOML/YAML→JSON when a tool only accepts JSON — keep the commented file as the human source of truth.",
+  answerFirst: "JSON is strict interchange; YAML adds comments; TOML (Cargo/pyproject) favors explicit tables and types. Convert TOML/YAML→JSON when a tool only accepts JSON — keep 1 commented file as the human source of truth.",
   takeaways: [
     "TOML shines for flat-to-moderate configs with clear types (for example many Rust/Cargo workflows).",
     "YAML still dominates Kubernetes-style deeply nested manifests.",
