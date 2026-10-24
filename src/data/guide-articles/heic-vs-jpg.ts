@@ -2,15 +2,15 @@ import type { Guide } from '../guide-types';
 
 const guide: Guide = {
   slug: "heic-vs-jpg",
-  title: "HEIC vs JPG and Opening HEIC",
+  title: "HEIC vs JPG: Open HEIC on Windows",
   description: "What HEIC/HEIF means for iPhone photos, how it differs from JPG, and how to open or convert HEIC on Windows privately in your browser.",
   primaryKeyword: "heic vs jpg",
   secondaryKeywords: ["open heic on windows","heic to jpg"],
   datePublished: "2026-10-23",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["heic-to-jpg","image-format-converter"],
   relatedGuides: ["webp-vs-png-vs-jpg","privacy-first-conversion"],
-  answerFirst: "HEIC (HEIF with HEVC) is Apple’s efficient default for many iPhone photos; JPG is older and universally supported on the web. To open HEIC on Windows without installing a full codec pack, convert to JPG locally. Our HEIC to JPG tool runs in the browser so camera rolls are not uploaded.",
+  answerFirst: "Use HEIC for on-device storage (often ~50% smaller than JPG at similar quality) and JPG for sharing. On Windows 10/11 without HEIF/HEVC codecs, convert HEIC→JPG locally — our tool keeps camera rolls off upload converters.",
   takeaways: [
     "HEIC typically needs less storage than JPG at similar quality—but support varies.",
     "JPG remains the safest share format for mixed devices and CMS uploads.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>HEIC multi-image bursts may export only the primary frame. JPEG quality below ~0.7 shows artifacts on large prints. WASM decode needs a modern Chromium/Safari build.</p><p>Safe defaults: quality 0.85–0.92 for sharing; keep HEIC masters; verify the JPG opens in the destination app before deleting anything.</p><ol><li>Convert a non-sensitive sample first.</li><li>Check width×height match.</li><li>Inspect Network: no upload of the photo.</li></ol>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>When validating HEIC→JPG, note the input pixel dimensions (e.g. 4032×3024) and the JPEG quality setting you used. Re-encode from the HEIC master rather than from a previous JPG to avoid stacked compression artifacts.</p><p>On Windows 10/11, Microsoft’s HEIF and HEVC extensions can open HEIC natively; if you cannot install codecs, local browser conversion is the reliable path. Android users can often share as JPG from the Photos app, or convert before air-dropping to mixed-device threads.</p><p>Keep originals in HEIC (or the camera roll backup) when storage allows. Treat JPG exports as distribution copies for email, CMS, and older apps that reject HEIC.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. HEIC→JPG decoding runs in your browser via WASM. Camera-roll bytes are not posted to a server for conversion.",
     },
     {
       question: "Where should I go next?",

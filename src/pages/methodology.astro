@@ -3,25 +3,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
 import { siteConfig } from '../config/site';
 ---
-<BaseLayout title="Methodology & Editorial Policy" description={`How ${siteConfig.name} builds converters, cites sources, and documents limits (E-E-A-T).`} canonicalPath="/methodology/">
+<BaseLayout title="Methodology & Editorial Policy" description={`How ${siteConfig.name} builds converters, cites sources, tests fixtures, and documents limits (E-E-A-T).`} canonicalPath="/methodology/">
   <div class="container content-prose">
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Methodology' }]} />
     <h1>Methodology & editorial policy</h1>
     <div class="answer-box">
       <p>
         We ship working client-side converters, document algorithms and limits in plain language, cite format authorities,
-        and never invent star ratings. Pages show published and last-updated dates.
+        and never invent star ratings. Pages show published and last-updated dates. Conversion is tested with checked-in
+        fixtures under <code>tests/</code> and Vitest.
       </p>
     </div>
     <h2>How tools are built</h2>
     <ul>
       <li>Pure conversion functions live under <code>src/lib/converters/</code> with unit tests and fixtures.</li>
-      <li>Heavy dependencies load dynamically after user interaction.</li>
-      <li>Known hard problems (full DWG, production MIDI transcription, full FDM slicing) are skipped or scoped with explicit limits.</li>
+      <li>Heavy dependencies (heic2any/WASM, ag-psd, pdf.js, Three.js, etc.) load dynamically after user interaction.</li>
+      <li>Known hard problems (full DWG, production MIDI transcription, full FDM slicing) are skipped or scoped with explicit limits on the tool page.</li>
+      <li>Library versions are pinned in <code>package.json</code>; upgrades re-run fixtures before release.</li>
     </ul>
+    <h2>How conversions are tested</h2>
+    <p>
+      Each converter has Vitest cases that feed small fixtures (YAML snippets, CSV rows, tiny meshes, sample XML) and assert
+      parse success or expected error messages. Image and PDF paths assert blob type / non-empty output where headless
+      canvas allows. We do not publish fabricated compression percentages or traffic claims.
+    </p>
     <h2>Content standards</h2>
-    <p>Tool pages include answer-first summaries, methods, worked examples, mistakes, FAQs, and sources. Guides expand topical clusters. Governing SEO guidance: repository <code>docs/SEO-PLAYBOOK.md</code>.</p>
-    <h2>Corrections</h2>
-    <p>Email <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> with page URL and suggested fix.</p>
+    <p>
+      Tool pages include answer-first summaries with a worked example number, methods, mistakes, FAQs (FAQPage schema), and
+      sources. Guides expand topical clusters with unique bodies — not copy-pasted operations boilerplate. Governing SEO
+      guidance: repository <code>docs/SEO-PLAYBOOK.md</code> and the per-page checklist in
+      <code>.cursor/rules/seo-pages.mdc</code>.
+    </p>
+    <h2>Privacy claims</h2>
+    <p>
+      “Your file never leaves your device” refers to conversion file bytes: we do not accept uploads for processing. Page
+      analytics (GA4 when configured) and future ads are disclosed on <a href="/privacy/">Privacy</a> and are separate from
+      document content. We do not claim a service worker or offline-after-load guarantee.
+    </p>
+    <h2>Changelog &amp; corrections</h2>
+    <p>
+      Material converter or documentation fixes land via pull requests on the public repository. For a factual error on a
+      live page, email <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> with the URL, the incorrect
+      sentence, and a primary source link. We correct the page and bump <code>dateModified</code>.
+    </p>
+    <p class="meta-row">Last reviewed: <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></p>
   </div>
 </BaseLayout>

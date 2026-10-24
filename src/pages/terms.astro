@@ -12,11 +12,33 @@ import { siteConfig } from '../config/site';
     <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Terms' }]} />
     <h1>Terms of Use</h1>
     <p class="meta-row">Last updated: <time datetime={siteConfig.lastUpdated}>{siteConfig.lastUpdated}</time></p>
-    <p>Tools are provided free of charge, as-is, without warranty. You are responsible for verifying outputs before production, printing, or accounting use.</p>
+    <div class="answer-box">
+      <p>
+        {siteConfig.name} provides free, browser-based file converters and educational articles. Tools are offered as-is,
+        without warranty. You are responsible for verifying outputs before production, printing, publishing, or accounting use.
+      </p>
+    </div>
     <h2>Acceptable use</h2>
-    <p>Do not abuse the site infrastructure, attempt to disrupt service, or use embeds without the required attribution credit link.</p>
+    <p>
+      Do not abuse the site infrastructure, attempt to disrupt service, scrape in ways that degrade availability, or use
+      embeds without the required attribution credit link back to the tool page.
+    </p>
+    <h2>No upload processing</h2>
+    <p>
+      Conversion runs in your browser. You agree not to rely on the site as a server-side file processor. Do not send us
+      confidential files by email when reporting bugs — paste error text and the page URL only.
+    </p>
     <h2>Educational STL → G-code</h2>
-    <p>Basic G-code export is educational. Simulate and adapt machine profiles before any print.</p>
+    <p>
+      Basic G-code export is educational. It lacks production slicer features (supports, infill, calibrated profiles).
+      Simulate and adapt machine profiles before any print. Physical damage or failed prints from unverified G-code are your
+      responsibility.
+    </p>
+    <h2>Bank statement CSV</h2>
+    <p>
+      PDF statement extraction is heuristic and limited to text-based PDFs. Always reconcile balances and verify rows before
+      bookkeeping imports.
+    </p>
     <h2>Contact</h2>
     <p><a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></p>
   </div>

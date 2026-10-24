@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "webp vs png vs jpg",
   secondaryKeywords: ["webp to png","png to jpg"],
   datePublished: "2026-10-23",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["image-format-converter","svg-to-png"],
   relatedGuides: ["heic-vs-jpg","svg-to-high-res-png","psd-without-photoshop"],
-  answerFirst: "PNG is lossless with alpha, JPG is widely supported lossy photography without alpha, and WebP offers efficient lossy or lossless modes with broader modern browser support than HEIC on the web. Convert locally when a CMS demands a specific format so original assets are not uploaded to unknown converters.",
+  answerFirst: "PNG: lossless + alpha. JPG: lossy photos, no alpha. WebP: efficient lossy/lossless with modern browser support. Pick PNG for UI, JPG for opaque photos, WebP for web delivery — convert locally when a CMS demands a format.",
   takeaways: [
     "Use PNG for UI and logos needing sharp edges or transparency.",
     "Use JPG for photographic content when you need maximum compatibility.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>Browser codec support required for WebP encode/decode. JPEG flattens transparency. Re-encoding lossy formats repeatedly degrades quality.</p><p>Safe defaults: PNG for UI/alpha; JPG for opaque photos; WebP for modern web when supported.</p>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Avoid generation loss: convert from the highest-quality master, not from a third-generation JPG. Transparency needs PNG or WebP—not JPG (white fill).</p><p>CMS constraints often force a single format; convert locally then upload to the CMS, rather than using unknown online converters.</p><p>Record target mime type and quality (e.g. 0.85) in the design handoff so engineering can reproduce assets.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. Raster re-encoding uses canvas.toBlob in your browser. Images are not uploaded for format changes.",
     },
     {
       question: "Where should I go next?",

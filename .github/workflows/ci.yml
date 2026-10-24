@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-test-proof:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       # Same PUBLIC_* pattern as Cloudflare Workers Builds (baked into static HTML).
@@ -17,11 +17,30 @@ jobs:
       PUBLIC_INDEXNOW_KEY: e0d80dcb289204f10564144f215e4a8e
       INDEXNOW_KEY: e0d80dcb289204f10564144f215e4a8e
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: '22.22'
           cache: npm
       - run: npm ci
       # proof:verify runs build + test + audit and checks committed docs/proof/
       - run: npm run proof:verify
+
+  page-checklist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PUBLIC_SITE_URL: https://file-converter-tools.hammadiqbal117.workers.dev
+      PUBLIC_GSC_VERIFICATION: 0-q_NxhBgfgCm4WOLfbe9VrHrjbLzaxh8SXsbo2Q-UU
+      PUBLIC_GA4_MEASUREMENT_ID: G-L73MEN86ZY
+      PUBLIC_INDEXNOW_KEY: e0d80dcb289204f10564144f215e4a8e
+      INDEXNOW_KEY: e0d80dcb289204f10564144f215e4a8e
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22.22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run audit:pages

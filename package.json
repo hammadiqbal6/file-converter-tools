@@ -15,6 +15,7 @@
     "audit": "node scripts/audit/run-all.mjs",
     "audit:seo": "node scripts/audit/seo-audit.mjs",
     "audit:seo-guardrails": "node scripts/audit/seo-guardrails.mjs",
+    "audit:pages": "node scripts/audit/page-checklist.mjs",
     "audit:adsense": "node scripts/audit/adsense-audit.mjs",
     "audit:bundles": "node scripts/audit/bundle-audit.mjs",
     "link-check": "node scripts/link-check.mjs",

@@ -7,6 +7,7 @@ const dir = path.dirname(fileURLToPath(import.meta.url));
 const steps = [
   'seo-audit.mjs',
   'seo-guardrails.mjs',
+  'page-checklist.mjs',
   'adsense-audit.mjs',
   'bundle-audit.mjs',
   '../link-check.mjs',

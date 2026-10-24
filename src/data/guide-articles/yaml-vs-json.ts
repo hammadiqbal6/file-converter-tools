@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "yaml vs json",
   secondaryKeywords: ["when to use yaml","json or yaml for configs","yaml to json"],
   datePublished: "2026-10-19",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["yaml-to-json","json-to-yaml","toml-to-json"],
   relatedGuides: ["toml-vs-yaml-vs-json","xml-json-attributes","privacy-first-conversion"],
-  answerFirst: "Use JSON when machines exchange strict data such as APIs and many CLIs. Use YAML when humans edit configs and need comments. Convert YAML to JSON for tooling that only accepts JSON; convert back when you want editable manifests. Prefer a local converter so secrets in values never upload.",
+  answerFirst: "Use JSON for APIs/CLIs; YAML when humans need comments. Example: `port: 8080` → {\"port\":8080}. Convert YAML→JSON for strict tooling; keep secrets off upload converters by running conversion in-browser.",
   takeaways: [
     "JSON is the interchange default; YAML is the human-edit default.",
     "Comments are the main reason teams keep YAML as the source of truth.",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Use JSON_SCHEMA-compatible YAML when the destination is JSON—custom tags will not survive. Indent with spaces; tabs cause “found character that cannot start any token.”</p><p>Multi-document YAML may become a JSON array depending on the tool—confirm before piping into strict single-object APIs.</p><p>Never paste production secrets into upload converters; local js-yaml keeps values on-device, but screen-sharing and clipboards are still risks.</p>",
     }
   ],
   faqs: [

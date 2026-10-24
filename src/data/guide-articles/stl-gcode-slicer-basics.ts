@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "stl to gcode",
   secondaryKeywords: ["stl to g-code converter","slicer basics"],
   datePublished: "2026-10-23",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["stl-to-gcode","stl-to-obj"],
   relatedGuides: ["stl-formats-explained","privacy-first-conversion"],
-  answerFirst: "STL to G-code is slicing: turning a triangle mesh into machine motion, temperatures, and extrusion commands. Full slicers add supports, infill, profiles, and safety checks. A basic browser path can illustrate the idea for tiny educational meshes but is not a substitute for Cura, PrusaSlicer, or vendor software on real parts.",
+  answerFirst: "Slicing turns STL into G-code motion. Full slicers add supports, infill, and printer profiles. A 20 mm cube at 0.2 mm layers is fine for learning contours — use Cura/PrusaSlicer/Orca for real parts.",
   takeaways: [
     "Mesh conversion (STL↔OBJ) is not slicing.",
     "G-code is machine-specific—profiles matter.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>No supports, infill patterns, or multi-extruder logic. Temperatures in preambles are placeholders. Always simulate.</p><p>Safe defaults: educational meshes only; mm Z-up; never print unverified paths.</p>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Treat educational G-code as a motion sketch. Edit placeholder temperatures, confirm machine dialect, and dry-run in firmware tools before any print. There is no support/infill/multi-extruder logic here.</p><p>For production, use Cura, PrusaSlicer, or OrcaSlicer with a printer profile. Point learners at layer-height experiments on tiny cubes (e.g. 20 mm) rather than functional parts.</p><p>Keep Z-up, mm meshes. Unit mistakes are the most common “why is this tiny/huge” failure.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. The educational contour exporter runs locally. Still use a full slicer for printable parts.",
     },
     {
       question: "Where should I go next?",

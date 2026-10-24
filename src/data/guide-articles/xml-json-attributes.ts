@@ -7,10 +7,10 @@ const guide: Guide = {
   primaryKeyword: "xml to json",
   secondaryKeywords: ["xml attributes to json","convert xml to json"],
   datePublished: "2026-10-23",
-  dateModified: "2026-10-23",
+  dateModified: "2026-10-24",
   relatedTools: ["xml-to-json"],
   relatedGuides: ["yaml-vs-json","csv-json-pipelines"],
-  answerFirst: "XML to JSON needs explicit rules for attributes, repeated child elements, and mixed text. Converters typically map attributes to keys (sometimes prefixed), collapse repeats into arrays, and place text in a configured property. Local conversion keeps XML exports with personal or business data off third-party upload forms.",
+  answerFirst: "XML attributes usually become JSON keys (often @_prefixed). Repeated siblings become arrays; a single child stays an object — so count 1 vs 2+ changes shape. Convert XML→JSON locally to keep payloads private.",
   takeaways: [
     "There is no single universal XML↔JSON mapping—document yours.",
     "Repeated elements should become arrays even when only one item appears, if your schema expects lists.",
@@ -28,7 +28,7 @@ const guide: Guide = {
     },
     {
       h2: "Limits and safe defaults",
-      html: "<p>Browser memory, main-thread time, and incomplete format coverage set hard limits. Very large files may freeze a tab; split batches when possible. Educational G-code, heuristic PDF extraction, and PSD compositing each document fidelity gaps on their tool pages—read those limits before relying on output.</p>\n<p>Safe defaults: keep masters, convert copies, verify with the consumer, and avoid uploading sensitive bytes to unknown websites. Our tool pages repeat the privacy line because it is the product promise: your file never leaves your device during conversion.</p><ol><li>Read the tool’s limits list.</li><li>Convert a non-sensitive fixture first.</li><li>Inspect Network during conversion.</li><li>Spot-check the output in the real consumer.</li></ol>",
+      html: "<p>Mixed content uses #text nodes. Namespace prefixes stay as written. Huge XML can freeze the tab.</p><p>Safe defaults: know your @_ prefix; test repeated vs single children; do not feed HTML to an XML parser.</p>",
     },
     {
       h2: "Related workflows on this site",
@@ -40,7 +40,7 @@ const guide: Guide = {
     },
     {
       h2: 'Operations notes',
-      html: "\n<p>Document the consumer application version beside each successful fixture so future upgrades do not silently change parse rules. When a library updates its default schema mode, re-run the fixture before you delete the previous export.</p>\n<p>Prefer explicit settings over “smart” defaults whenever the tool offers a choice: pretty versus compact JSON, quality sliders for images, scale factors for SVG, or delimiter overrides for CSV. Explicit settings make results reproducible across teammates and machines.</p>\n<p>If you automate conversions in CI, keep using headless desktop tools under your control rather than posting files to third-party HTTP APIs. Browser tools on this site are aimed at interactive private use; CI usually needs a CLI with pinned versions.</p>\n<p>Security reviews should treat file converters like any other local document processor: malicious crafted files can stress parsers. Only open files you trust, and keep the browser updated. Conversion privacy (no upload) does not mean the parser is a sandbox for hostile content.</p>\n<p>Accessibility and usability still matter on tool pages: labels on inputs, status text for screen readers, and clear errors when parsing fails. If conversion fails, read the error, fix the source file, and retry after a refresh so lazy libraries can reload cleanly.</p>\n<p>Finally, link related explainers from the tool page “Learn more” section rather than stuffing every guide with every converter. Topical clusters help humans and citation systems find the right depth without diluting primary keywords across near-duplicate URLs.</p>\n",
+      html: "<p>Record the attribute prefix your consumer expects (this site uses <code>@_</code>). Changing prefix mid-pipeline breaks field lookups. Note whether repeated elements always become arrays—even when count is 1—if your schema requires stable types.</p><p>DTDs and external entities should stay off; our client parser does not resolve XXE-style externals. Still avoid opening hostile XML.</p><p>Link the <a href=\"/guides/xml-json-attributes/\">attribute mapping guide</a> from API docs so engineers do not reverse-engineer one sample payload.</p>",
     }
   ],
   faqs: [
@@ -50,7 +50,7 @@ const guide: Guide = {
     },
     {
       question: "Does LocalFile Convert upload my file?",
-      answer: "No. Conversion runs in your browser. Your file never leaves your device.",
+      answer: "No. XML→JSON uses fast-xml-parser in your browser. Attributes and text never leave the device for conversion.",
     },
     {
       question: "Where should I go next?",
