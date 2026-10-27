@@ -54,7 +54,7 @@ npm run audit        # SEO + AdSense + bundle + links (needs dist/)
 npm run proof        # full evidence → docs/proof/ (build + tests + Lighthouse + screenshots)
 ```
 
-`npm run proof` is the “release gate”: it regenerates committed proof artifacts. CI runs the same on pull requests.
+`npm run proof` is the “release gate”: it regenerates committed proof artifacts. Run it locally (or via **Actions → Full checks**) before merge; PR CI is a fast build+test safety net only.
 
 ---
 

@@ -28,3 +28,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Python (UI/UX Pro Max skill search.py)
+__pycache__/
+*.py[cod]
