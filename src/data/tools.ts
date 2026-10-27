@@ -78,7 +78,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert yaml to json online', 'yaml json converter', 'yml to json'],
     title: 'YAML to JSON Converter (Private)',
     description:
-      'Convert YAML to JSON instantly in your browser. Files never leave your device. Free, no signup — conversion stays in your browser.',
+      'Convert YAML to JSON instantly in your browser. Files never leave your device. Free private conversion — no signup and no server-side upload.',
     h1: 'YAML to JSON Converter',
     answerFirst:
       "YAML to JSON turns indented YAML into JSON objects. Example: `port: 8080` becomes {\"port\":8080}. Paste or drop a .yaml file — conversion runs in your browser with no upload.",
@@ -158,7 +158,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert json to yaml', 'json yaml converter online'],
     title: 'JSON to YAML Converter (Private)',
     description:
-      'Convert JSON to readable YAML in your browser. No uploads. Ideal for Kubernetes manifests, CI configs, and docs.',
+      'Convert JSON to readable YAML in your browser with no uploads. Ideal for Kubernetes manifests, CI configs, docs, and private local rewrites.',
     h1: 'JSON to YAML Converter',
     answerFirst:
       "JSON to YAML rewrites strict JSON into 2-space YAML for editing. Example: {\"replicas\":3} becomes `replicas: 3`. Paste or drop .json — conversion stays on your device.",
@@ -226,7 +226,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert json to csv online', 'json array to csv'],
     title: 'JSON to CSV Converter (Private)',
     description:
-      'Convert a JSON array of objects to CSV in your browser. No upload. Great for exports, sheets, and pipelines.',
+      'Convert a JSON array of objects to CSV in your browser with no upload. Great for spreadsheet exports, data pipelines, and private analysis work.',
     h1: 'JSON to CSV Converter',
     answerFirst:
       "JSON to CSV flattens an array of objects into a header row plus data rows. Example: two {name,role} objects become 2 CSV rows. Paste JSON — Papa Parse runs locally, no upload.",
@@ -294,7 +294,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert csv to json', 'csv json parser browser'],
     title: 'CSV to JSON Converter (Private)',
     description:
-      'Parse CSV into a JSON array of objects in your browser. Auto-detects delimiters. Files stay on your device.',
+      'Parse CSV into a JSON array of objects in your browser. Auto-detects delimiters; files stay on your device for private data prep and ETL steps.',
     h1: 'CSV to JSON Converter',
     answerFirst:
       "CSV to JSON reads delimiter-separated rows into a JSON array of objects. Example: `name,score` / `Ada,10` becomes [{\"name\":\"Ada\",\"score\":\"10\"}]. Parsing stays in your browser.",
@@ -357,7 +357,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert xml to json online', 'xml json parser'],
     title: 'XML to JSON Converter (Private)',
     description:
-      'Convert XML documents to JSON in your browser. Attributes preserved with @_ prefixes. No uploads.',
+      'Convert XML documents to JSON in your browser. Attributes keep @_ prefixes. No uploads — private conversion for configs, feeds, and API payloads.',
     h1: 'XML to JSON Converter',
     answerFirst:
       "XML to JSON maps elements and @_attributes into JSON. Example: <book id=\"1\"/> becomes {\"book\":{\"@_id\":\"1\"}}. Drop .xml — fast-xml-parser runs locally with no upload.",
@@ -416,7 +416,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert toml to json', 'cargo toml to json'],
     title: 'TOML to JSON – Cargo & pyproject',
     description:
-      'Convert TOML (Cargo, pyproject, config) to JSON in your browser. No uploads.',
+      'Convert TOML (Cargo, pyproject, app config) to JSON in your browser with no uploads. Private, fast conversion for developers and CI tooling.',
     h1: 'TOML to JSON Converter',
     answerFirst:
       'TOML to JSON parses Cargo/pyproject-style tables into JSON. Example: [package] name="demo" becomes {"package":{"name":"demo"}}. Drop .toml — conversion never uploads.',
@@ -467,7 +467,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['md to html converter', 'convert markdown online'],
     title: 'Markdown to HTML (GFM, Private)',
     description:
-      'Convert Markdown (GFM) to HTML in your browser. Preview and download a full HTML document. No uploads.',
+      'Convert Markdown (GFM) to HTML in your browser. Preview and download a full HTML document with no uploads — private for blogs, docs, and email.',
     h1: 'Markdown to HTML Converter',
     answerFirst:
       "Markdown to HTML turns GFM into HTML tags. Example: `# Hello` becomes one <h1>. Paste .md for a local preview or full document download — no upload.",
@@ -522,7 +522,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert psd to png online', 'photoshop to png browser'],
     title: 'PSD to PNG Converter (Private)',
     description:
-      'Convert Photoshop PSD files to PNG in your browser with ag-psd. Your design files never leave your device.',
+      'Convert Photoshop PSD files to PNG in your browser with ag-psd. Your design files never leave your device — private preview without Photoshop.',
     h1: 'PSD to PNG Converter',
     answerFirst:
       "PSD to PNG flattens a Photoshop document to a lossless PNG. Example: a 1200×800 PSD exports a 1200×800 PNG preview. ag-psd runs in your browser — artwork never uploads.",
@@ -585,7 +585,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['heic to jpeg', 'convert heic online browser'],
     title: 'HEIC to JPG Converter – Free, No Upload',
     description:
-      'Convert iPhone HEIC/HEIF photos to JPG in your browser. No uploads. Ideal for sharing and older apps.',
+      'Convert iPhone HEIC/HEIF photos to JPG in your browser with no uploads. Ideal for sharing, email attachments, and apps that still need JPEG.',
     h1: 'HEIC to JPG Converter',
     answerFirst:
       "HEIC to JPG converts iPhone HEIC/HEIF photos to JPEG. Example: a 4032×3024 HEIC becomes a shareable JPG. Decode runs via WASM in your browser — photos never upload.",
@@ -642,7 +642,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['png to jpg', 'jpg to webp', 'webp to jpg', 'png to webp'],
     title: 'WebP PNG JPG Converter (Private)',
     description:
-      'Convert between WebP, PNG, and JPG in your browser with canvas export. No uploads. Pick target format and quality.',
+      'Convert between WebP, PNG, and JPG in your browser with canvas export. No uploads — choose target format and quality for private image work.',
     h1: 'WebP, PNG, and JPG Converter',
     answerFirst:
       "WebP/PNG/JPG conversion re-encodes rasters between formats. Example: a 800×600 PNG → JPG at quality 0.85. Canvas export runs locally — files never leave your device.",
@@ -704,7 +704,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['convert svg to png', 'svg rasterize browser'],
     title: 'SVG to PNG Converter – High-Res, Private',
     description:
-      'Rasterize SVG to PNG in your browser at a chosen scale. No uploads. Perfect for icons and simple illustrations.',
+      'Rasterize SVG to PNG in your browser at a chosen scale with no uploads. Perfect for icons, logos, and simple illustrations before CMS upload.',
     h1: 'SVG to PNG Converter',
     answerFirst:
       "SVG to PNG rasterizes vectors at a chosen scale. Example: a 24×24 icon at 3× exports a 72×72 PNG. Drawn on canvas in your browser — no upload.",
@@ -759,7 +759,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['stl viewer online', 'stl ascii to binary', 'binary stl to ascii'],
     title: 'STL to OBJ Converter & Viewer',
     description:
-      'View STL files, convert STL to OBJ, and switch ASCII/binary STL — all in-browser. No uploads. Three.js viewer loads on demand.',
+      'View STL files, convert STL to OBJ, and switch ASCII/binary STL — all in-browser with no uploads. Three.js viewer loads on demand when needed.',
     h1: 'STL to OBJ Converter & Viewer',
     answerFirst:
       "STL to OBJ converts triangle meshes for DCC tools. Example: a binary benchy.stl exports an .obj with the same facet count. Parsing and preview stay on your device.",
@@ -817,7 +817,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['stl to g-code converter', 'browser slicer basic'],
     title: 'STL to G-code: Basic Educational Slicer',
     description:
-      'Generate basic educational G-code contours from STL in your browser. Documented limits — not a full production slicer.',
+      'Generate basic educational G-code contours from STL in your browser. Documented limits — not a full production slicer; mesh files stay local.',
     h1: 'STL to G-code (Basic Slicer)',
     answerFirst:
       "STL to G-code (educational) emits simple Z-layer contours. Example: a 20 mm cube at 0.2 mm layers yields stacked square paths — not a full slicer. Runs locally; simulate before any print.",
@@ -881,7 +881,7 @@ export const tools: ToolDefinition[] = [
     secondaryKeywords: ['bank statement pdf to excel', 'extract transactions pdf csv'],
     title: 'PDF Bank Statement to CSV',
     description:
-      'Extract text from PDF bank statements to CSV in your browser with pdf.js and column detection. Clear limits; no uploads.',
+      'Extract text from PDF bank statements to CSV in your browser with pdf.js and column detection. Clear limits; your bank statements never upload.',
     h1: 'PDF Bank Statement to CSV',
     answerFirst:
       "PDF bank statement to CSV clusters text positions into spreadsheet rows. Example: Date/Description/Amount columns often become 3 CSV fields. pdf.js runs locally — statements never upload.",

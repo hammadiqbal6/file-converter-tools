@@ -60,12 +60,12 @@ const {
     browse?.addEventListener('click', () => input?.click());
     drop?.addEventListener('dragover', (e) => {
       e.preventDefault();
-      drop.classList.add('is-active');
+      drop.classList.add('is-active', 'is-dragover');
     });
-    drop?.addEventListener('dragleave', () => drop.classList.remove('is-active'));
+    drop?.addEventListener('dragleave', () => drop.classList.remove('is-active', 'is-dragover'));
     drop?.addEventListener('drop', (e) => {
       e.preventDefault();
-      drop.classList.remove('is-active');
+      drop.classList.remove('is-active', 'is-dragover');
       const f = e.dataTransfer?.files?.[0];
       if (f && input) {
         const dt = new DataTransfer();

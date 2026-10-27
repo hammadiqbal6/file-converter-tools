@@ -9,34 +9,45 @@ interface Props {
 const { defer = true } = Astro.props;
 const usesAnalytics = Boolean(siteConfig.ga4MeasurementId);
 const usesAds = Boolean(siteConfig.adsensePublisherId);
+const measurementId = siteConfig.ga4MeasurementId || '';
 ---
 
 <div
   class="cookie-banner"
   id="cookie-banner"
   role="dialog"
-  aria-label="Cookie notice"
+  aria-label="Cookie and analytics preferences"
   hidden
   data-defer={defer ? '1' : '0'}
+  data-measurement-id={measurementId}
 >
   <p>
     {
       usesAnalytics
-        ? 'Local dismiss preference only. Analytics (not your files) may load — see Privacy.'
-        : 'Local dismiss preference only. Analytics stay off until configured — see Privacy.'
+        ? 'Analytics (not your files) load only if you Accept. Reject keeps GA off — see Privacy.'
+        : 'Local preference only. Analytics stay off until configured — see Privacy.'
     }
     {usesAds ? ' Ads may use cookies when enabled.' : ''}
   </p>
   <div class="btn-group">
-    <button type="button" class="btn btn-primary" id="cookie-accept">OK</button>
+    {
+      usesAnalytics ? (
+        <button type="button" class="btn btn-secondary" id="cookie-reject">Reject</button>
+      ) : null
+    }
+    <button type="button" class="btn btn-primary" id="cookie-accept">
+      {usesAnalytics ? 'Accept' : 'OK'}
+    </button>
     <a class="btn btn-secondary" href="/privacy/">Privacy</a>
   </div>
 </div>
 
 <script>
-  const key = 'lf_cookie_notice_v1';
+  const CONSENT_KEY = 'lf_analytics_consent_v1';
+  const LEGACY_KEY = 'lf_cookie_notice_v1';
   const el = document.getElementById('cookie-banner');
   const root = document.documentElement;
+  const measurementId = el?.getAttribute('data-measurement-id') || '';
 
   function setBannerSpace(on) {
     root.style.setProperty('--cookie-banner-offset', on ? '56px' : '0px');
@@ -44,7 +55,7 @@ const usesAds = Boolean(siteConfig.adsensePublisherId);
   }
 
   function showBanner() {
-    if (!el || localStorage.getItem(key)) return;
+    if (!el) return;
     el.hidden = false;
     el.classList.add('is-visible');
     setBannerSpace(true);
@@ -56,28 +67,74 @@ const usesAds = Boolean(siteConfig.adsensePublisherId);
     setBannerSpace(false);
   }
 
-  if (el) {
-    const deferred = el.getAttribute('data-defer') === '1';
-    if (deferred) {
-      const schedule =
-        typeof requestIdleCallback === 'function'
-          ? (cb) => requestIdleCallback(cb, { timeout: 4000 })
-          : (cb) => setTimeout(cb, 2500);
-      schedule(showBanner);
-      const unlock = () => {
-        showBanner();
-        window.removeEventListener('scroll', unlock);
-        window.removeEventListener('pointerdown', unlock);
-      };
-      window.addEventListener('scroll', unlock, { once: true, passive: true });
-      window.addEventListener('pointerdown', unlock, { once: true });
-    } else {
-      showBanner();
+  function loadAnalytics() {
+    if (!measurementId || window.__lfGaLoaded) return;
+    window.__lfGaLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
     }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', measurementId);
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+    document.head.appendChild(s);
+  }
+
+  function scheduleBanner() {
+    if (!el) return;
+    const deferred = el.getAttribute('data-defer') === '1';
+    if (!deferred) {
+      showBanner();
+      return;
+    }
+    const schedule =
+      typeof requestIdleCallback === 'function'
+        ? (cb) => requestIdleCallback(cb, { timeout: 4000 })
+        : (cb) => setTimeout(cb, 2500);
+    schedule(showBanner);
+    const unlock = () => {
+      showBanner();
+      window.removeEventListener('scroll', unlock);
+      window.removeEventListener('pointerdown', unlock);
+    };
+    window.addEventListener('scroll', unlock, { once: true, passive: true });
+    window.addEventListener('pointerdown', unlock, { once: true });
+  }
+
+  // Migrate away from dismiss-only legacy key so users get a real Accept/Reject choice.
+  if (localStorage.getItem(LEGACY_KEY) && !localStorage.getItem(CONSENT_KEY)) {
+    localStorage.removeItem(LEGACY_KEY);
+  }
+
+  const consent = localStorage.getItem(CONSENT_KEY);
+  if (consent === 'granted') {
+    loadAnalytics();
+  } else if (consent === 'denied') {
+    // Banner stays hidden; analytics stay off.
+  } else if (!measurementId) {
+    // No analytics configured — informational dismiss only (legacy OK path).
+    if (!localStorage.getItem(LEGACY_KEY)) scheduleBanner();
+  } else {
+    scheduleBanner();
   }
 
   document.getElementById('cookie-accept')?.addEventListener('click', () => {
-    localStorage.setItem(key, '1');
+    if (measurementId) {
+      localStorage.setItem(CONSENT_KEY, 'granted');
+      localStorage.removeItem(LEGACY_KEY);
+      loadAnalytics();
+    } else {
+      localStorage.setItem(LEGACY_KEY, '1');
+    }
+    hideBanner();
+  });
+
+  document.getElementById('cookie-reject')?.addEventListener('click', () => {
+    localStorage.setItem(CONSENT_KEY, 'denied');
+    localStorage.removeItem(LEGACY_KEY);
     hideBanner();
   });
 </script>

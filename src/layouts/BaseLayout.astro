@@ -119,26 +119,7 @@ const defaultGraph = [personLd, orgLd];
     {ld.filter(Boolean).map((obj) => (
       <JsonLd data={obj} />
     ))}
-
-    {
-      siteConfig.ga4MeasurementId && (
-        <>
-          <script
-            is:inline
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.ga4MeasurementId}`}
-          ></script>
-          <script is:inline define:vars={{ measurementId: siteConfig.ga4MeasurementId }}>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', measurementId);
-          </script>
-        </>
-      )
-    }
+    {/* GA4 loads only after Accept in CookieNotice — never before consent. */}
   </head>
   <body data-last-updated={lastUpdated}>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -214,9 +195,22 @@ const defaultGraph = [personLd, orgLd];
     <script>
       const toggle = document.getElementById('nav-toggle');
       const nav = document.getElementById('site-nav');
+
+      function setNavOpen(open) {
+        nav?.classList.toggle('is-open', open);
+        toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
       toggle?.addEventListener('click', () => {
-        const open = nav?.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        const open = !(nav?.classList.contains('is-open'));
+        setNavOpen(open);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        if (!nav?.classList.contains('is-open')) return;
+        setNavOpen(false);
+        toggle?.focus();
       });
     </script>
   </body>
