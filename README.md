@@ -138,6 +138,8 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for host env setup.
 
 **Article:** add to `src/data/guides.ts`, create route via `src/pages/guides/[slug].astro` (static paths), link from tools/hubs, update `docs/KEYWORD-MAP.md`.
 
+**UI / UX:** for any change to how the site looks or behaves, follow the **UI/UX Pro Max** section in [AGENTS.md](AGENTS.md) (skill at `.cursor/skills/ui-ux-pro-max/`).
+
 ## Testing
 
 ```bash
@@ -152,7 +154,7 @@ Fixtures in `tests/fixtures/`. Covers YAML/JSON, CSV, XML/TOML, STL, PDF bank he
 npm run build && npm run audit
 ```
 
-GitHub Actions (`.github/workflows/ci.yml`): `npm run proof` on PRs (uploads `docs/proof/` artifact).
+GitHub Actions (`.github/workflows/ci.yml`) on PRs and `main`: fast safety net — `npm ci`, `npm run build`, `npm test`. Full proof/audit/Lighthouse/Playwright suite is manual via **Actions → Full checks** (`.github/workflows/full-checks.yml`). Run the heavy suite locally before opening PRs.
 
 ## Proof
 

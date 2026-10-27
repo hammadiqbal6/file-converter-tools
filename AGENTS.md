@@ -113,6 +113,40 @@ Same roles can be used in other tools (Codex, Claude Code) by pointing at this f
 - [ ] PR to `main` ready for review with Lighthouse + screenshots
 - [ ] `PROGRESS.md` at 100% and pushed
 
+## UI/UX Pro Max
+
+Use the **UI/UX Pro Max** skill for any change to how the site looks or behaves (layout, components, interaction, a11y, responsive, typography, color, motion).
+
+1. Read [`.cursor/skills/ui-ux-pro-max/SKILL.md`](.cursor/skills/ui-ux-pro-max/SKILL.md).
+2. Search the local design/UX database:
+
+```bash
+python3 .cursor/skills/ui-ux-pro-max/scripts/search.py "<query>" --domain <domain>
+```
+
+Useful flags from `SKILL.md`:
+
+- `--design-system` — product-wide visual direction for new pages/projects
+- `--stack astro` — Astro-specific implementation guidance (this repo’s stack)
+
+Example (verified locally):
+
+```bash
+python3 .cursor/skills/ui-ux-pro-max/scripts/search.py "contrast focus touch target" --domain ux
+```
+
+Returns UX guidelines on touch target size, focus appearance, and contrast readability.
+
+**Priority checks before shipping UI:**
+
+- Contrast ≥ 4.5:1
+- Touch targets ≥ 44px
+- Visible focus indicators
+- Visible labels and inline errors on forms
+- Dark mode
+- No horizontal scroll
+- Respect `prefers-reduced-motion`
+
 ## Dev server
 
 ```
