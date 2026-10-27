@@ -1,16 +1,21 @@
 :root {
+  color-scheme: light dark;
   --color-bg: #f4f7f6;
   --color-bg-elevated: #ffffff;
   --color-ink: #14201f;
   --color-ink-muted: #3d524f;
   --color-brand: #0f3d3e;
+  --color-brand-fill: #0f3d3e;
   --color-brand-soft: #1a5c5e;
+  --color-link: #1a5c5e;
   --color-accent: #c45c26;
   --color-accent-soft: #f3e0d4;
   --color-border: #cfd9d7;
   --color-success: #1b6b4a;
   --color-danger: #9b2c2c;
   --color-focus: #0b6e99;
+  --color-on-brand: #ffffff;
+  --mix-base: #ffffff;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -27,6 +32,41 @@
   --max: 72rem;
   --header-h: 3.5rem;
   --ad-slot-h: 100px;
+  --cookie-banner-offset: 0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0c1615;
+    --color-bg-elevated: #152422;
+    --color-ink: #e8efec;
+    --color-ink-muted: #a8bcb8;
+    /* Headings/wordmark lighten for contrast; button fills stay dark. */
+    --color-brand: #9fd4d0;
+    --color-brand-fill: #0f3d3e;
+    --color-brand-soft: #1a5c5e;
+    --color-link: #7ec9c4;
+    --color-accent: #e08a55;
+    --color-accent-soft: #3a2a22;
+    --color-border: #2f4543;
+    --color-success: #5cbc8d;
+    --color-danger: #e88888;
+    --color-focus: #5eb8e0;
+    --color-on-brand: #ffffff;
+    --mix-base: #152422;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 *,
@@ -60,7 +100,7 @@ canvas {
 }
 
 a {
-  color: var(--color-brand-soft);
+  color: var(--color-link);
   text-underline-offset: 0.15em;
 }
 
@@ -77,8 +117,8 @@ a:hover {
   position: absolute;
   left: -9999px;
   top: 0;
-  background: var(--color-brand);
-  color: #fff;
+  background: var(--color-brand-fill);
+  color: var(--color-on-brand);
   padding: var(--space-3) var(--space-4);
   z-index: 1000;
 }
@@ -128,7 +168,7 @@ a:hover {
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: linear-gradient(145deg, var(--color-brand), var(--color-brand-soft));
+  background: linear-gradient(145deg, var(--color-brand-fill), var(--color-brand-soft));
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
@@ -180,7 +220,7 @@ a:hover {
 
 .site-nav a:hover,
 .site-nav a[aria-current='page'] {
-  background: color-mix(in srgb, var(--color-brand) 8%, white);
+  background: color-mix(in srgb, var(--color-brand-fill) 12%, var(--color-bg-elevated));
 }
 
 @media (min-width: 768px) {
@@ -288,18 +328,24 @@ a.btn {
 }
 
 .btn-primary {
-  background: var(--color-brand);
-  color: #fff;
+  background: var(--color-brand-fill);
+  color: var(--color-on-brand);
 }
 
 .btn-primary:hover {
   background: var(--color-brand-soft);
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .btn-secondary {
   background: var(--color-bg-elevated);
   border-color: var(--color-border);
+  color: var(--color-ink);
+}
+
+.btn-secondary:hover {
+  background: color-mix(in srgb, var(--color-brand-fill) 10%, var(--color-bg-elevated));
+  border-color: var(--color-brand-soft);
   color: var(--color-ink);
 }
 
@@ -328,16 +374,25 @@ a.btn {
   border-radius: var(--radius);
   padding: var(--space-4);
   text-align: center;
-  background: color-mix(in srgb, var(--color-brand) 3%, white);
+  background: color-mix(in srgb, var(--color-brand-fill) 4%, var(--mix-base));
   min-height: 112px;
   display: grid;
   place-content: center;
   gap: var(--space-2);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-.dropzone.is-active {
-  border-color: var(--color-brand);
-  background: color-mix(in srgb, var(--color-brand) 8%, white);
+.dropzone:hover {
+  border-color: var(--color-brand-soft);
+  background: color-mix(in srgb, var(--color-brand-fill) 8%, var(--mix-base));
+}
+
+.dropzone.is-active,
+.dropzone.is-dragover {
+  border-color: var(--color-brand-fill);
+  background: color-mix(in srgb, var(--color-brand-fill) 14%, var(--mix-base));
+  outline: 2px solid color-mix(in srgb, var(--color-brand-fill) 40%, transparent);
+  outline-offset: 2px;
 }
 
 .dropzone input[type='file'] {
@@ -367,13 +422,16 @@ a.btn {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   font: inherit;
-  background: #fff;
+  font-size: max(1rem, 16px);
+  background: var(--color-bg-elevated);
+  color: var(--color-ink);
+  color-scheme: inherit;
 }
 
 .field textarea {
   min-height: 160px;
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: max(1rem, 16px);
   resize: vertical;
 }
 
@@ -394,8 +452,8 @@ a.btn {
 .privacy-note {
   margin: 0;
   padding: var(--space-3);
-  border-left: 3px solid var(--color-brand);
-  background: color-mix(in srgb, var(--color-brand) 6%, white);
+  border-left: 3px solid var(--color-brand-fill);
+  background: color-mix(in srgb, var(--color-brand-fill) 8%, var(--mix-base));
   font-size: 0.95rem;
 }
 
@@ -443,7 +501,7 @@ a.btn {
 }
 
 .content-prose th {
-  background: color-mix(in srgb, var(--color-brand) 8%, white);
+  background: color-mix(in srgb, var(--color-brand-fill) 10%, var(--mix-base));
 }
 
 .answer-box,
@@ -560,7 +618,7 @@ a.btn {
   overflow: hidden;
   display: grid;
   place-items: center;
-  background: color-mix(in srgb, var(--color-border) 35%, white);
+  background: color-mix(in srgb, var(--color-border) 35%, var(--mix-base));
   border: 1px dashed var(--color-border);
   border-radius: var(--radius);
   color: var(--color-ink-muted);
@@ -611,10 +669,6 @@ a.btn {
   gap: 0.4rem;
 }
 
-:root {
-  --cookie-banner-offset: 0px;
-}
-
 body {
   padding-bottom: var(--cookie-banner-offset);
 }
@@ -626,6 +680,7 @@ body {
   bottom: 0;
   z-index: 60;
   background: var(--color-bg-elevated);
+  color: var(--color-ink);
   border-top: 1px solid var(--color-border);
   border-radius: 0;
   padding: 0 0.75rem;
@@ -667,8 +722,8 @@ body {
 .cookie-banner .btn {
   min-height: 44px;
   min-width: 44px;
-  padding: 0.25rem 0.65rem;
-  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 1rem;
   line-height: 1;
 }
 

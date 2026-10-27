@@ -34,7 +34,7 @@ npx wrangler deploy && node scripts/indexnow.mjs
 
 ## GA4
 
-Set `PUBLIC_GA4_MEASUREMENT_ID` at build time; `BaseLayout.astro` emits the standard gtag.js snippet when it is set (see [DEPLOYMENT.md](./DEPLOYMENT.md) §9).
+Set `PUBLIC_GA4_MEASUREMENT_ID` at build time; `CookieNotice.astro` loads the standard gtag.js snippet only after the visitor Accepts the cookie banner (see [DEPLOYMENT.md](./DEPLOYMENT.md) §9).
 
 ## Keyword workflow (free tools)
 

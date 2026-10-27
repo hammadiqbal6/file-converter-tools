@@ -19,8 +19,8 @@ import { siteConfig } from '../config/site';
     <ul>
       <li><strong>Conversion files:</strong> read only in your browser memory; not uploaded for processing. Verify in DevTools → Network while converting.</li>
       <li><strong>Hosting logs:</strong> standard CDN/host request logs (IP, user agent) may exist on the static host.</li>
-      <li><strong>Preference cookies:</strong> e.g. dismissing the cookie notice (`lf_cookie_notice_v1`).</li>
-      <li><strong>Page analytics:</strong> when GA4 is configured, usage metrics may load; they are not your file contents.</li>
+      <li><strong>Preference cookies:</strong> e.g. analytics consent (`lf_analytics_consent_v1` = granted or denied).</li>
+      <li><strong>Page analytics:</strong> when GA4 is configured, usage metrics load <strong>only after you Accept</strong> the cookie banner; they are not your file contents. Reject keeps GA off.</li>
     </ul>
     <h2>Google AdSense and advertising cookies</h2>
     <p>
@@ -32,10 +32,12 @@ import { siteConfig } from '../config/site';
     </p>
     <h2>Google Analytics (GA4)</h2>
     <p>
-      GA4 is inactive until `PUBLIC_GA4_MEASUREMENT_ID` is set at build time. When enabled, every page loads Google’s
-      standard gtag.js snippet for that measurement ID and Google Analytics may collect usage metrics via cookies or
-      similar identifiers per Google’s documentation. The on-site cookie notice is informational (dismiss-only); it is
-      not an accept/decline gate for analytics.
+      GA4 is inactive until `PUBLIC_GA4_MEASUREMENT_ID` is set at build time. When enabled, Google’s gtag.js snippet
+      loads <strong>only after you click Accept</strong> on the cookie banner. Until then (and if you choose Reject),
+      no requests are sent to Google Analytics. Accepted consent is stored in
+      <code>lf_analytics_consent_v1</code> so returning visits can load analytics without asking again. You can clear
+      site data in your browser to reset the choice. Analytics measure page usage only — never your converted file
+      contents. This banner is not a Google-certified CMP for personalized ads in the EEA/UK/CH.
     </p>
     <h2>EEA, UK, and Switzerland</h2>
     <p>
